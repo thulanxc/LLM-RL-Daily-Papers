@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM RL Daily Papers — April 16, 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --paper: #faf9f6;
+    --accent: #8b0000;
+    --rule: #2c2c2c;
+    --light-rule: #d4d0c8;
+    --sidebar-bg: #f0efe8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', 'Georgia', serif;
+    line-height: 1.65;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Newspaper Masthead */
+  .masthead {
+    text-align: center;
+    padding: 32px 0 16px;
+    border-bottom: 4px double var(--rule);
+  }
+
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 3.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .masthead .subtitle {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #666;
+  }
+
+  .masthead .dateline {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    color: #444;
+  }
+
+  .masthead .edition-info {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* Thin rule below masthead */
+  .thin-rule {
+    border: none;
+    border-top: 1px solid var(--light-rule);
+    margin: 0;
+  }
+
+  /* Editorial Summary */
+  .editorial {
+    margin: 28px 0;
+    padding: 24px 32px;
+    background: var(--sidebar-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .editorial h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .editorial p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+
+  .editorial ul {
+    margin: 8px 0 8px 20px;
+    font-size: 0.98rem;
+  }
+
+  .editorial li {
+    margin-bottom: 6px;
+  }
+
+  /* Section Headers */
+  .section-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 36px 0 6px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--rule);
+  }
+
+  .section-count {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #888;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* Paper Cards */
+  .paper {
+    margin: 20px 0;
+    padding: 20px 24px;
+    border: 1px solid var(--light-rule);
+    border-radius: 3px;
+    background: #fff;
+    transition: box-shadow 0.2s;
+  }
+
+  .paper:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  .paper-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+
+  .paper-title a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .paper-title a:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .paper-meta {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .paper-meta .arxiv-id {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .paper-summary {
+    font-size: 0.96rem;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .paper-takeaways {
+    background: var(--sidebar-bg);
+    padding: 12px 16px;
+    border-radius: 3px;
+    margin-top: 10px;
+  }
+
+  .paper-takeaways h4 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .paper-takeaways ul {
+    margin: 0 0 0 18px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .paper-takeaways li {
+    margin-bottom: 4px;
+  }
+
+  .methodology {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--light-rule);
+  }
+
+  .methodology strong {
+    color: var(--ink);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    margin-top: 48px;
+    border-top: 4px double var(--rule);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    color: #888;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .masthead h1 { font-size: 2rem; }
+    .section-header { font-size: 1.3rem; }
+    .paper { padding: 16px; }
+    .editorial { padding: 16px 20px; }
+    body { padding: 0 12px; }
+  }
+
+  /* Foundational section */
+  .foundational-note {
+    margin: 24px 0;
+    padding: 16px 24px;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    background: #fdf6f6;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  .foundational-note strong {
+    color: var(--accent);
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 4px;
+  }
+
+  .tag-new { background: #e8f5e9; color: #2e7d32; }
+  .tag-infrastructure { background: #e3f2fd; color: #1565c0; }
+  .tag-method { background: #fff3e0; color: #e65100; }
+  .tag-reward { background: #fce4ec; color: #c62828; }
+  .tag-reasoning { background: #f3e5f5; color: #7b1fa2; }
+  .tag-agentic { background: #e0f2f1; color: #00695c; }
+  .tag-alignment { background: #e8eaf6; color: #283593; }
+  .tag-multimodal { background: #fff8e1; color: #f57f17; }
+  .tag-survey { background: #efebe9; color: #4e342e; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <h1>LLM RL Daily Papers</h1>
+  <div class="subtitle">A Daily Research Digest on Reinforcement Learning for Large Language Models</div>
+  <div class="dateline">Wednesday, April 16, 2026 — Inaugural Edition</div>
+  <div class="edition-info">Covering papers from April 1–16, 2026 &bull; 35 papers curated</div>
+</header>
+<hr class="thin-rule">
+
+<div class="foundational-note">
+  <strong>Inaugural Edition:</strong> This is the first issue of LLM RL Daily Papers. In addition to today's new papers, we include a broader sweep of papers from the past two weeks to establish comprehensive baseline coverage. Future editions will focus strictly on papers from the preceding 24–48 hours.
+</div>
+
+<div class="editorial">
+  <h2>Editorial Summary</h2>
+  <p>The LLM RL landscape in mid-April 2026 is remarkably vibrant. Several dominant themes emerge from this week's harvest of 35 papers:</p>
+  <p><strong>Policy optimization continues to diversify.</strong> We see a proliferation of GRPO variants — SKPO introduces skip connections for better early-token credit assignment, SPPO reformulates PPO at the sequence level for long-horizon reasoning, TEPO links group-level rewards to token-level updates, and StaRPO incorporates reasoning stability metrics. Meanwhile, TPO proposes a clean separation of "what to reinforce" from "how to update," and Policy Split explores dual-mode entropy regularization.</p>
+  <p><strong>Training efficiency is a first-class concern.</strong> Two infrastructure papers stand out: Relax provides a fully asynchronous, omni-modal RL engine achieving 2x speedups, while experience replay studies show 40% compute savings from well-designed replay buffers. QaRL tackles the training-inference mismatch from quantized rollouts, and NExt accelerates RLVR via low-rank trajectory extrapolation.</p>
+  <p><strong>RLVR (RL with Verifiable Rewards) matures.</strong> SUPERNOVA extends RLVR beyond math/code to general reasoning. SD-Zero converts binary rewards into dense supervision through self-revision. Multiple papers address exploration challenges in RLVR, including Cog-DRIFT's cognitive reformulation and bidirectional entropy modulation.</p>
+  <p><strong>Reward hacking gets serious attention.</strong> SignCert-PO, robust optimization with correlated proxies, and DRTO all tackle reward hacking from different angles — certification, distributionally robust optimization, and token-level robustness respectively.</p>
+  <ul>
+    <li><strong>Most impactful:</strong> SD-Zero (2604.12002) for its elegant approach to sample-efficient RL, and Relax (2604.11554) for advancing multi-modal RL infrastructure</li>
+    <li><strong>Most novel:</strong> SKPO (2604.08690) for its skip-connection insight on credit assignment, and Cog-DRIFT (2604.04767) for cognitive reformulation of hard problems</li>
+    <li><strong>Best survey:</strong> Credit Assignment in LLM RL (2604.09459) — a comprehensive map of 47 methods across reasoning and agentic settings</li>
+  </ul>
+</div>
+
+<!-- ==================== SECTION 1: POLICY OPTIMIZATION METHODS ==================== -->
+<h2 class="section-header">Policy Optimization Methods <span class="section-count">— 8 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08690">SKPO: Skip-Connected Policy Optimization for Implicit Advantage in LLM Reasoning</a></div>
+  <div class="paper-meta">Fengwei Teng, Jinyi Bai, Xinhao Yao, et al. &bull; <span class="arxiv-id">2604.08690</span> &bull; April 11, 2026 &bull; <span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    GRPO is effective for LLM reasoning but struggles with credit assignment for early tokens under practical sampling budgets, where dense outcome rewards yield high-variance advantage estimates. SKPO addresses this by decomposing reasoning into upstream (early exploration) and downstream (solution convergence) phases connected by a skip connection. The upstream phase receives implicit advantage signals propagated backward from the downstream phase's verified outcomes, reducing variance for early-step tokens without requiring explicit process reward models.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Achieves 3.91% and 6.17% relative gains over baselines on Qwen2.5-Math-7B and Llama-3.2-3B respectively</li>
+      <li>Addresses a known weakness of GRPO: noisy advantage estimates for tokens early in the reasoning chain</li>
+      <li>No additional reward model required — exploits structural decomposition of the reasoning trajectory</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Splits CoT into two phases; downstream phase trained with standard GRPO, upstream phase receives skip-connected advantage signal. Evaluated on mathematical reasoning benchmarks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08865">SPPO: Sequence-Level PPO for Long-Horizon Reasoning Tasks</a></div>
+  <div class="paper-meta">Tianyi Wang, Yixia Li, Long Li, et al. &bull; <span class="arxiv-id">2604.08865</span> &bull; April 11, 2026 &bull; <span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    Token-level PPO struggles with temporal credit assignment over long chain-of-thought (CoT) horizons — the value function must learn to evaluate partial reasoning sequences, which is notoriously difficult. SPPO reformulates LLM reasoning as a Sequence-Level Contextual Bandit problem, introducing a decoupled scalar value function that operates at the sequence level rather than the token level. This sidesteps the temporal credit assignment problem entirely while maintaining PPO's clipped objective for stable optimization.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Matches the performance of computation-heavy group-based methods (GRPO) while being significantly more resource-efficient</li>
+      <li>Eliminates the need for per-token value estimation, which is the primary bottleneck in token-level PPO for long sequences</li>
+      <li>Contextual bandit formulation is a clean theoretical framework for reasoning-as-generation</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Reformulates reasoning RL as contextual bandit; scalar value function scores complete sequences. Uses PPO clipping at the sequence level. Benchmarked on long-CoT reasoning tasks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.12736">TEPO: Token-Level Policy Optimization — Linking Group-Level Rewards to Token-Level Aggregation</a></div>
+  <div class="paper-meta">Xingyu Lin, Yilin Wen, Du Su, et al. (Jilin University, Baidu, Tsinghua) &bull; <span class="arxiv-id">2604.12736</span> &bull; April 14, 2026 &bull; <span class="tag tag-method">Method</span><span class="tag tag-new">New</span></div>
+  <div class="paper-summary">
+    While GRPO assigns the same group-level advantage to all tokens in a response, individual tokens contribute differently to correctness. TEPO bridges this gap by leveraging sequence-level likelihood to create a principled link between group-level rewards and individual token contributions. It introduces a token-level KL-divergence mask constraint that selectively applies regularization, preventing the optimization from over-rotating on low-confidence tokens while still allowing high-confidence tokens to be reinforced strongly.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Addresses the "uniform credit" problem in GRPO — not all tokens deserve equal reinforcement</li>
+      <li>Token-level KL-divergence masking is a practical, low-overhead improvement over standard KL penalties</li>
+      <li>Strong results on CoT reasoning where sparse token-level rewards make standard GRPO suboptimal</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Uses sequence likelihood as proxy for token importance; applies masked KL constraint. Built on GRPO framework, evaluated on mathematical reasoning tasks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.11510">Policy Split: Dual-Mode Exploration via Dual-Mode Entropy Regularization</a></div>
+  <div class="paper-meta">Jiashu Yao, Heyan Huang, Chuwei Luo, et al. &bull; <span class="arxiv-id">2604.11510</span> &bull; April 13, 2026 &bull; <span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    Exploration-exploitation tradeoffs in LLM RL are typically managed by a single entropy regularization term, which creates a fundamental tension: high entropy for exploration degrades response quality, while low entropy for exploitation stifles discovery of novel reasoning paths. Policy Split resolves this by bifurcating the policy into two modes — a normal mode optimized for task correctness and a high-entropy mode (triggered by a special prompt) optimized for exploration. Both modes share model parameters but undergo collaborative dual-mode entropy regularization, allowing the model to explore aggressively without contaminating its task performance.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Elegant solution to the exploration-exploitation dilemma: separate the modes but share parameters</li>
+      <li>High-entropy mode acts as a controlled "brainstorming" phase that feeds discoveries to the normal mode</li>
+      <li>Applicable to any policy gradient method without architectural changes</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Dual-mode policy with shared parameters; high-entropy prompt triggers exploration mode. Collaborative regularization ensures modes benefit from each other.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.06159">TPO: Target Policy Optimization — Separating What to Reinforce from How to Update</a></div>
+  <div class="paper-meta">Jean Kaddour &bull; <span class="arxiv-id">2604.06159</span> &bull; April 7, 2026 &bull; <span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    TPO makes a clean conceptual separation between two questions in RL for LLMs: (1) which completions should gain probability mass, and (2) how should the parameters move to achieve this. It constructs an explicit target distribution by mixing high-reward completions and then fits the policy to this target via cross-entropy minimization. This avoids the instabilities of policy gradient estimation while preserving the benefits of reward-weighted optimization. The framework subsumes several existing methods (policy gradient, PPO, GRPO, DPO) as special cases, providing a unifying perspective.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Provides a unifying theoretical framework: PG, PPO, GRPO, and DPO are all special cases of target policy optimization</li>
+      <li>Matches existing methods on easy tasks and substantially outperforms them under sparse reward settings</li>
+      <li>Clean, principled approach: construct the target distribution first, then distill into the policy</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Constructs target distribution from reward-weighted completions; policy fitted via cross-entropy. Theoretical analysis shows connections to PG/PPO/GRPO/DPO.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08905">StaRPO: Stability-Augmented Reinforcement Policy Optimization</a></div>
+  <div class="paper-meta">Jinghan Zhang, Fengran Mo, Tharindu Cyril Weerasooriya, et al. &bull; <span class="arxiv-id">2604.08905</span> &bull; April 11, 2026 &bull; <span class="tag tag-method">Method</span><span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    Standard RL objectives for reasoning LLMs optimize only for final-answer correctness, ignoring the quality and stability of the reasoning process itself. StaRPO incorporates reasoning stability as an explicit optimization signal by decomposing it into two measurable dimensions: Autocorrelation Function (ACF) for local step-to-step coherence, and Path Efficiency (PE) for global goal-directedness. These stability metrics are combined with task rewards to create process-aware feedback, encouraging the model to find not just correct but also stable and efficient reasoning paths.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>First method to formalize and optimize "reasoning stability" in LLM RL</li>
+      <li>ACF and Path Efficiency are intuitive, interpretable metrics that capture coherence and directedness</li>
+      <li>Stable reasoning paths generalize better and are more interpretable to users</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Augments reward with stability metrics (ACF + PE). Process-aware feedback replaces pure outcome reward. Evaluated on multi-step reasoning benchmarks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.11119">DDO-RM: Distributionally Guided Preference Optimization with Reward Models</a></div>
+  <div class="paper-meta">Tiantian Zhang, Jierui Zuo, Wenping Wang &bull; <span class="arxiv-id">2604.11119</span> &bull; April 13, 2026 &bull; <span class="tag tag-method">Method</span><span class="tag tag-alignment">Alignment</span></div>
+  <div class="paper-summary">
+    DDO-RM bridges the gap between reward-model-based and reward-model-free preference optimization. It forms a policy distribution over candidate responses, centers reward-model scores under that distribution, and distills a reward-guided target distribution back into the policy. The approach provides a minimal held-out benchmark against DPO, showing that incorporating reward model information during optimization can improve over pure preference-based methods, particularly when the reward model captures aspects of quality that pairwise preferences miss.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Hybrid approach: combines strengths of reward-model-based and preference-based optimization</li>
+      <li>Centering reward scores under the policy distribution reduces reward hacking tendencies</li>
+      <li>Directly benchmarked against DPO, providing a useful comparison point</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Policy distribution over candidates; centered reward scores; target distribution distillation. Benchmarked against DPO on standard alignment tasks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08577">DRTO: Distributionally Robust Token Optimization in RLHF</a></div>
+  <div class="paper-meta">Yeping Jin, Jiaming Hu, Ioannis Ch. Paschalidis &bull; <span class="arxiv-id">2604.08577</span> &bull; April 11, 2026 &bull; <span class="tag tag-method">Method</span><span class="tag tag-reward">Reward</span></div>
+  <div class="paper-summary">
+    Combines token-level RLHF with Distributionally Robust Optimization (DRO) to address the fragility of reward models at the token level. Standard token-level optimization can exploit spurious token-reward correlations; DRTO bounds worst-case token-wise rewards via an f-divergence ambiguity set. This ensures that the policy is optimized against the worst plausible token-level reward function within a neighborhood of the learned reward model, providing robustness guarantees against reward model inaccuracies at fine granularity.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>9.17% improvement on GSM8K and 2.49% on MathQA over standard token-level RLHF</li>
+      <li>DRO at the token level is a principled way to handle reward model uncertainty</li>
+      <li>f-divergence ambiguity sets provide tunable robustness without excessive conservatism</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Token-level RLHF with DRO using f-divergence ambiguity sets for worst-case reward bounds. Evaluated on math reasoning benchmarks.</div>
+</div>
+
+<!-- ==================== SECTION 2: RLVR (RL WITH VERIFIABLE REWARDS) ==================== -->
+<h2 class="section-header">RL with Verifiable Rewards (RLVR) <span class="section-count">— 7 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.12002">Self-Distillation Zero: Self-Revision Turns Binary Rewards into Dense Supervision</a></div>
+  <div class="paper-meta">Yinghui He, Simran Kaur, Adithya Bhaskar, et al. (Princeton) &bull; <span class="arxiv-id">2604.12002</span> &bull; April 13, 2026 &bull; <span class="tag tag-method">Method</span><span class="tag tag-new">New</span></div>
+  <div class="paper-summary">
+    SD-Zero is a remarkably elegant approach to sample-efficient RL that requires no external teacher or high-quality demonstrations. A single model plays two roles: a Generator that produces an initial response, and a Reviser that conditions on that response plus its binary reward to produce an improved version. On-policy self-distillation then transfers the Reviser's knowledge back to the Generator — the Reviser's token distributions (conditioned on the Generator's response and reward) serve as dense, token-level supervision. In effect, the model learns to transform sparse binary rewards into rich self-supervision, dramatically improving sample efficiency over standard RL approaches.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Substantially more sample-efficient than standard RL — no need for large rollout budgets</li>
+      <li>No external teacher, reward model, or demonstration data required — fully self-contained</li>
+      <li>The Generator→Reviser→Distill loop is a general-purpose framework applicable beyond RLVR</li>
+      <li>Dense token-level supervision from binary rewards is a powerful conceptual insight</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Dual-role model (Generator + Reviser). Reviser conditions on response + binary reward. Self-distillation transfers token distributions from Reviser to Generator. Evaluated on math and code reasoning tasks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08477">SUPERNOVA: Eliciting General Reasoning in LLMs with Reinforcement Learning on Natural Instructions</a></div>
+  <div class="paper-meta">Ashima Suvarna, Kendrick Phan, Mehrab Beikzadeh, et al. &bull; <span class="arxiv-id">2604.08477</span> &bull; April 11, 2026 &bull; <span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    RLVR has achieved impressive gains in formal domains (math, code) where correctness is easily verified, but extending it to general reasoning — where ground truth is ambiguous and verification is harder — has remained an open challenge. SUPERNOVA addresses this with a data curation framework that identifies natural-language instructions amenable to verifiable reward signals. Models trained with SUPERNOVA outperform strong baselines including Qwen3.5 on BBEH (up to 52.8% relative improvement), Zebralogic, and MMLU-Pro, demonstrating that RLVR can be effectively extended to broad reasoning domains.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>First demonstration that RLVR can match or exceed SFT-trained models on general (non-math) reasoning</li>
+      <li>52.8% relative improvement on BBEH over strong baselines is a striking result</li>
+      <li>Data curation is the key insight: not all instructions are suitable for RLVR, and systematic selection matters</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Data curation framework filters instructions suitable for verifiable reward. RLVR training with curated data. Evaluated on BBEH, Zebralogic, MMLU-Pro.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.07666">An Imperfect Verifier is Good Enough: Learning with Noisy Rewards in RLVR</a></div>
+  <div class="paper-meta">Andreas Plesner, Francisco Guzman, Anish Athalye &bull; <span class="arxiv-id">2604.07666</span> &bull; April 10, 2026 &bull; <span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    A critical practical question for RLVR: how noisy can the verifier be before training breaks down? This paper provides a reassuring answer — noise rates up to 15% yield peak validation accuracy within 2 percentage points of clean baselines. The finding is consistent across three model families (Qwen3, GLM4, Llama 3.1) at sizes 4B–9B, and across code generation and scientific reasoning tasks. This suggests that perfect verifiers are unnecessary for effective RLVR, significantly lowering the bar for applying RLVR to new domains where verifiers may be approximate.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>RLVR is robust to 15% verifier noise — a reassuring result for practical deployment</li>
+      <li>Consistent across 3 model families and 2 task types, suggesting generalizability</li>
+      <li>Lowers the barrier for RLVR in new domains: approximate verifiers are sufficient</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Systematic noise injection at varying rates (0–40%) into verifiers for RLVR. Evaluated across Qwen3-4B/9B, GLM4-9B, Llama-3.1-8B on code generation and scientific reasoning.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.04894">Rethinking Exploration in RLVR: Bidirectional Entropy Modulation</a></div>
+  <div class="paper-meta">Hengrui Gu, Xiaotian Han, Yujing Bian, Kaixiong Zhou &bull; <span class="arxiv-id">2604.04894</span> &bull; April 7, 2026 &bull; <span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    Addresses the "restricted exploration" problem in RLVR where the policy rapidly converges to a narrow set of solutions. Standard entropy regularization is unreliable for LLMs because it conflates two types of entropy: informative entropy (diverse solution paths) and spurious entropy (eroding reasoning patterns). The paper decomposes policy entropy along these axes and shows that group-relative advantage estimation (as in GRPO) implicitly acts as an entropy refinement mechanism, selectively preserving informative entropy while reducing spurious entropy. This insight motivates a bidirectional entropy modulation technique.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Informative vs. spurious entropy decomposition is a key conceptual contribution</li>
+      <li>Reveals that GRPO's advantage estimation implicitly refines entropy — explains part of its success</li>
+      <li>Bidirectional modulation: boost informative entropy, suppress spurious entropy</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Entropy decomposition analysis; bidirectional modulation technique. Evaluated on math reasoning with GRPO as base algorithm.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.04767">Cog-DRIFT: Exploration via Adaptively Reformulated Instances</a></div>
+  <div class="paper-meta">Justin Chih-Yao Chen, Archiki Prasad, Zaid Khan, et al. (UNC Chapel Hill) &bull; <span class="arxiv-id">2604.04767</span> &bull; April 7, 2026 &bull; <span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    Models cannot learn from problems they cannot solve — if the current policy gets zero reward on a problem, there is no gradient signal. Cog-DRIFT addresses this "exploration barrier" by transforming hard open-ended problems into cognitively simpler variants (multiple-choice, cloze formats) that preserve the original answer while reducing the effective search space. This creates a curriculum of decreasing cognitive assistance, allowing the model to gradually tackle harder problem formats as its capabilities improve. The approach is inspired by cognitive science research on how problem framing affects solving difficulty.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Novel cognitive-science-inspired approach: reformulate hard problems, don't just filter them out</li>
+      <li>Adaptive curriculum from guided (multiple-choice) to open-ended formats</li>
+      <li>Directly addresses the exploration barrier that limits RLVR on challenging problems</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Problem reformulation pipeline (open→MC→cloze). Adaptive curriculum based on policy success rate. Evaluated on hard math and reasoning problems.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.03128">Self-Distilled RLVR: Token-Level Self-Distillation for Verifiable Reward Training</a></div>
+  <div class="paper-meta">Chenxu Yang, Chuanyu Qin, Qingyi Si, et al. &bull; <span class="arxiv-id">2604.03128</span> &bull; April 4, 2026 &bull; <span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    RLSD combines self-distillation with RLVR, using token-level policy differences between current and previous checkpoints to determine fine-grained update magnitudes. While RLVR provides reliable update directions (which tokens to reinforce), self-distillation provides better-calibrated magnitudes (how much to reinforce each token). This combination achieves a higher convergence ceiling and superior training stability compared to either RLVR or on-policy self-distillation alone, suggesting the two techniques are complementary rather than competing.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>RLVR for direction + self-distillation for magnitude is a principled combination</li>
+      <li>Higher convergence ceiling than either method alone</li>
+      <li>Token-level policy differences between checkpoints provide meaningful fine-grained signal</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Token-level KL between current and previous policy as update magnitude; RLVR outcome as update direction. Evaluated on math reasoning.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.12160">PubSwap: Public-Data Off-Policy Coordination for Federated RLVR</a></div>
+  <div class="paper-meta">Anupam Nayak, Baris Askin, Muhammed Ustaomeroglu, et al. (CMU) &bull; <span class="arxiv-id">2604.12160</span> &bull; April 13, 2026 &bull; <span class="tag tag-infrastructure">Infrastructure</span></div>
+  <div class="paper-summary">
+    Scales RLVR to federated settings where training data is distributed across clients and cannot be centralized due to privacy constraints. PubSwap combines LoRA-based local adaptation (each client fine-tunes on private data) with public-data off-policy steps for cross-client coordination and communication efficiency. The off-policy public-data steps serve as a synchronization mechanism, ensuring that federated models don't diverge excessively while still benefiting from local private data. This is the first work to address the intersection of federated learning and RLVR.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>First work on federated RLVR — an important direction for privacy-preserving LLM training</li>
+      <li>LoRA for local adaptation + public data for coordination is a practical architecture</li>
+      <li>Off-policy public-data steps as a synchronization mechanism is a novel contribution</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Federated LoRA training with public-data off-policy coordination. Communication-efficient protocol for cross-client synchronization.</div>
+</div>
+
+<!-- ==================== SECTION 3: REWARD MODELING & REWARD HACKING ==================== -->
+<h2 class="section-header">Reward Modeling &amp; Reward Hacking <span class="section-count">— 5 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.10966">Multi-response Reward Modeling in a Single Forward Pass</a></div>
+  <div class="paper-meta">Authors not fully available &bull; <span class="arxiv-id">2604.10966</span> &bull; April 13, 2026 &bull; <span class="tag tag-reward">Reward</span><span class="tag tag-infrastructure">Infrastructure</span></div>
+  <div class="paper-summary">
+    Standard reward models evaluate each candidate response independently, requiring N forward passes to score N candidates. This paper proposes a Multi-Response discriminative reward model that concatenates all N candidate responses into a single input sequence and uses a multi-response scoring head to produce scores for all responses simultaneously. The approach exploits cross-response attention patterns to produce better-calibrated relative scores while dramatically reducing inference cost. At N=4 candidates, the method achieves up to 3.9x latency reduction and 4.0x FLOPs reduction with comparable or better reward quality.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>3.9x latency and 4.0x FLOPs reduction at N=4 candidates — directly impacts RLHF training throughput</li>
+      <li>Cross-response attention enables better relative scoring compared to independent evaluation</li>
+      <li>Directly pluggable into GRPO/Best-of-N pipelines that already generate multiple candidates</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Concatenates N responses into single sequence; multi-head scoring architecture. Evaluated on reward model benchmarks and downstream RLHF training quality.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.02986">SignCert-PO: Mitigating Reward Hacking via Advantage Sign Robustness</a></div>
+  <div class="paper-meta">Shinnosuke Ono, Johannes Ackermann, Soichiro Nishimori, et al. &bull; <span class="arxiv-id">2604.02986</span> &bull; April 3, 2026 &bull; <span class="tag tag-reward">Reward</span></div>
+  <div class="paper-summary">
+    Reward hacking in RLHF often arises from flipped advantage signs — the reward model incorrectly ranks a worse response above a better one, causing the policy to reinforce the wrong behavior. SignCert-PO derives a certified sign-preservation radius: a mathematical guarantee that the advantage sign is correct within a certain perturbation ball around the reward model's estimate. Completions whose advantages fall outside this certified radius are down-weighted during optimization. This is a lightweight, purely optimization-stage intervention that requires no changes to the reward model itself.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Certified robustness for advantage signs — a formal guarantee against a specific failure mode</li>
+      <li>Lightweight: operates purely at the policy optimization stage, no reward model changes needed</li>
+      <li>Down-weighting non-robust completions is more principled than uniform clipping</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Derives certified sign-preservation radius from reward model uncertainty. Down-weights completions outside certified radius. Compatible with any PG-based method.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.12086">Robust Optimization for Mitigating Reward Hacking with Correlated Proxies</a></div>
+  <div class="paper-meta">Zixuan Liu, Xiaolin Sun, Zizhan Zheng &bull; <span class="arxiv-id">2604.12086</span> &bull; April 13, 2026 &bull; <span class="tag tag-reward">Reward</span></div>
+  <div class="paper-summary">
+    Formulates reward hacking as a robust policy optimization problem over all r-correlated proxy rewards — the set of all reward functions that agree with the proxy reward model to a specified degree. This formulation captures the fundamental uncertainty in reward modeling: we know the proxy is correlated with the true reward, but we don't know exactly how. The paper derives a tractable max-min formulation that can be optimized efficiently, providing worst-case guarantees against reward model exploitation while not being overly conservative.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Elegant formulation: optimize against all r-correlated proxy rewards simultaneously</li>
+      <li>Tractable max-min formulation — theoretical rigor with practical applicability</li>
+      <li>Provides worst-case guarantees without excessive conservatism</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Robust optimization over r-correlated proxy reward set. Derives tractable max-min formulation. Evaluated on standard RLHF benchmarks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08178">Plan-RewardBench: Trajectory-Level Reward Modeling for Agentic Systems</a></div>
+  <div class="paper-meta">Authors (see paper) &bull; <span class="arxiv-id">2604.08178</span> &bull; April 11, 2026 &bull; <span class="tag tag-reward">Reward</span><span class="tag tag-agentic">Agentic</span></div>
+  <div class="paper-summary">
+    As LLMs evolve into agentic systems with multi-step tool use, reward models must evaluate entire trajectories rather than single responses. Plan-RewardBench is a trajectory-level preference benchmark for evaluating how well reward models and LLM judges can distinguish preferred agent trajectories in complex tool-using scenarios. The benchmark covers planning, execution, error recovery, and tool selection across diverse agentic tasks, providing the first systematic evaluation of reward models in the agentic setting.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>First benchmark specifically designed for trajectory-level reward modeling in agentic systems</li>
+      <li>Covers planning, execution, error recovery — all critical dimensions for agent evaluation</li>
+      <li>Reveals significant gaps in current reward models' ability to judge agent trajectories</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Curated trajectory pairs across diverse agentic tasks with human preference annotations. Evaluates reward models and LLM judges on trajectory-level preference prediction.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.00997">Uncertainty-Aware Variational Reward Factorization for LLM Personalization</a></div>
+  <div class="paper-meta">Gyuseok Lee, Wonbin Kweon, Zhenrui Yue, et al. (UIUC) &bull; <span class="arxiv-id">2604.00997</span> &bull; April 1, 2026 &bull; <span class="tag tag-reward">Reward</span><span class="tag tag-alignment">Alignment</span></div>
+  <div class="paper-summary">
+    Standard reward models learn a single preference function, but real users have diverse, often conflicting preferences. VRF represents each user's preferences as a variational distribution in a shared preference basis space, with variance-attenuated loss to handle uncertainty in individual user preferences. The factorized representation enables efficient personalization: a new user's reward function can be approximated from a small number of preference judgments by projecting onto the learned basis, without retraining the reward model.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Variational factorization enables per-user reward models without per-user training</li>
+      <li>Variance attenuation handles noisy individual preferences gracefully</li>
+      <li>Shared preference basis captures common structure across users while allowing personalization</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Variational reward factorization into user-specific weights over shared preference bases. Variance-attenuated loss for robust training. Evaluated on personalized alignment tasks.</div>
+</div>
+
+<!-- ==================== SECTION 4: TRAINING INFRASTRUCTURE & EFFICIENCY ==================== -->
+<h2 class="section-header">Training Infrastructure &amp; Efficiency <span class="section-count">— 5 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.11554">Relax: An Asynchronous Reinforcement Learning Engine for Omni-Modal Post-Training at Scale</a></div>
+  <div class="paper-meta">Liujie Zhang, Benzhe Ning, Rui Yang, et al. (Xiaohongshu, HKU, USTC) &bull; <span class="arxiv-id">2604.11554</span> &bull; April 13, 2026 &bull; <span class="tag tag-infrastructure">Infrastructure</span><span class="tag tag-new">New</span></div>
+  <div class="paper-summary">
+    As RL training extends to omni-modal inputs (image, text, audio, video) and agentic multi-turn workflows, existing systems face three interdependent challenges: heterogeneous data flows, operational robustness at scale, and the staleness-throughput tradeoff. Relax addresses all three with an architecture where each RL role runs as an independent, fault-isolated service connected via a TransferQueue data bus. A single staleness parameter smoothly interpolates among on-policy, near-on-policy, and fully asynchronous execution. The omni-native design builds multimodal support into the full stack rather than retrofitting it onto a text-centric pipeline. Relax achieves 1.76x speedup on Qwen3-4B and 2.00x on Qwen3-Omni-30B in fully async mode, and demonstrates stable omni-modal RL convergence across modalities including 2000+ training steps on video.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>2x speedup over synchronous baselines with fully async execution — critical for large-scale training</li>
+      <li>First open-source RL engine with native multimodal support across text, image, audio, and video</li>
+      <li>Fault-isolated services enable independent scaling and recovery — production-grade robustness</li>
+      <li>Staleness-throughput tradeoff is explicitly parametrized rather than binary</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Service-oriented architecture with TransferQueue data bus. Configurable staleness parameter. Benchmarked on Qwen3-4B and Qwen3-Omni-30B across modalities.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08706">Efficient RL Training for LLMs with Experience Replay</a></div>
+  <div class="paper-meta">Charles Arnal, Vivien Cabannes, Taco Cohen, Julia Kempe, Remi Munos &bull; <span class="arxiv-id">2604.08706</span> &bull; April 9, 2026 &bull; <span class="tag tag-infrastructure">Infrastructure</span></div>
+  <div class="paper-summary">
+    Challenges the conventional wisdom that strict on-policy sampling is essential for LLM RL training. Through a systematic study, the paper formalizes the optimal design of replay buffers as a three-way tradeoff between staleness-induced variance, sample diversity, and computational cost. The key finding: when generation is expensive (as it is for large LLMs), a well-designed replay buffer that reuses slightly stale samples can save up to 40% of the compute budget while maintaining — and sometimes surpassing — the final accuracy of purely on-policy methods. This is because sample diversity from the buffer compensates for staleness.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>40% compute savings from well-designed replay buffers — significant practical impact</li>
+      <li>Staleness-diversity tradeoff is formalized: diversity gains can outweigh staleness costs</li>
+      <li>Simple, easy-to-implement buffer strategies — no complex architectures required</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Systematic study of replay buffer designs varying retention policy, refresh rate, and mixing ratio. Evaluated on LLM reasoning tasks with compute-matched comparisons.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.11446">NExt: Low-Rank Optimization Trajectories Modeling for LLM RLVR Acceleration</a></div>
+  <div class="paper-meta">Zhipeng Chen, Tao Qian, Wayne Xin Zhao, Ji-Rong Wen &bull; <span class="arxiv-id">2604.11446</span> &bull; April 13, 2026 &bull; <span class="tag tag-infrastructure">Infrastructure</span></div>
+  <div class="paper-summary">
+    RLVR requires extensive exploration and learning, leading to substantial computational overhead. NExt observes that while the rank-1 subspace of model parameters evolves non-linearly during RLVR training, this evolution is predictable. It models and extrapolates low-rank parameter trajectories during training, effectively predicting where the model would be after several more training steps. The dominance of low-rank structure is further amplified during LoRA training. By extrapolating rather than computing these updates, NExt reduces computational overhead by approximately 37.5% while remaining compatible with various RLVR algorithms.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>37.5% compute reduction via trajectory extrapolation — orthogonal to other efficiency methods</li>
+      <li>Low-rank trajectory structure is a fundamental property of RLVR training, not an approximation</li>
+      <li>Compatible with any RLVR algorithm — a general-purpose acceleration technique</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Models rank-1 subspace evolution during RLVR training; uses nonlinear extrapolation to predict future parameters. Compatible with LoRA and full-parameter training.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.07853">QaRL: Rollout-Aligned Quantization-Aware RL for Fast and Stable Training</a></div>
+  <div class="paper-meta">Hao Gu, Hao Wang, Jiacheng Liu, et al. (HKUST, CityU, ZJU) &bull; <span class="arxiv-id">2604.07853</span> &bull; April 10, 2026 &bull; <span class="tag tag-infrastructure">Infrastructure</span></div>
+  <div class="paper-summary">
+    Using quantized models for rollout generation (to reduce inference cost) introduces a training-inference mismatch that can destabilize RL training. QaRL identifies and addresses a specific failure mode: repetitive garbled tokens that emerge when the quantized rollout model diverges from the full-precision training model. The paper proposes TBPO (Trust-Band Policy Optimization), a sequence-level objective with dual clipping that constrains the update magnitude for both positive and negative samples. This prevents the training model from chasing artifacts of quantization while still benefiting from the computational savings of quantized rollouts.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Identifies a concrete failure mode of quantized rollouts: repetitive garbled tokens</li>
+      <li>TBPO's dual clipping prevents the training model from over-fitting to quantization artifacts</li>
+      <li>Enables practical use of quantized inference for rollouts, reducing compute costs significantly</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Trust-Band Policy Optimization with dual clipping at the sequence level. Evaluated with FP4/INT4 quantized rollout models against full-precision baselines.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.01597">I-PPO: Learning from the Right Rollouts via Influence-Guided PPO</a></div>
+  <div class="paper-meta">Dong Shu, Denghui Zhang, Jessica Hullman &bull; <span class="arxiv-id">2604.01597</span> &bull; April 2, 2026 &bull; <span class="tag tag-method">Method</span><span class="tag tag-infrastructure">Infrastructure</span></div>
+  <div class="paper-summary">
+    Not all RL training episodes are equally useful — some may even be harmful by encouraging unfaithful chain-of-thought reasoning. I-PPO integrates data attribution into the RL post-training loop, computing influence scores for each rollout episode based on its alignment with a validation gradient. Episodes that are anti-aligned (potentially harmful to downstream performance) are identified and eliminated before they influence the policy update. This acts as an intrinsic, data-driven early stopping mechanism that reduces unfaithful CoT reasoning while improving sample efficiency.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Data attribution in RL training — identifies and removes harmful training episodes</li>
+      <li>Reduces unfaithful chain-of-thought reasoning — a quality issue beyond mere accuracy</li>
+      <li>Acts as intrinsic early stopping without manually tuned stopping criteria</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Influence functions compute per-episode alignment with validation gradient. Anti-aligned episodes filtered before policy update. Built on PPO framework.</div>
+</div>
+
+<!-- ==================== SECTION 5: AGENTIC RL ==================== -->
+<h2 class="section-header">Agentic RL <span class="section-count">— 5 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.02721">GrandCode: Achieving Grandmaster Level in Competitive Programming via Agentic RL</a></div>
+  <div class="paper-meta">DeepReinforce Team &bull; <span class="arxiv-id">2604.02721</span> &bull; April 3, 2026 &bull; <span class="tag tag-agentic">Agentic</span><span class="tag tag-new">New</span></div>
+  <div class="paper-summary">
+    A multi-agent RL system that represents a landmark achievement in competitive programming. GrandCode introduces Agentic GRPO — extending GRPO to handle multi-stage agent rollouts with delayed rewards across planning, coding, debugging, and testing phases. The system is the first AI to consistently beat all human participants in live Codeforces contests, placing first in Rounds 1087–1089 (March 2026) and defeating legendary grandmasters. The key innovation is treating competitive programming as a multi-turn agentic task rather than single-shot code generation, with RL rewards delayed until final test execution.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>First AI system to beat all humans in live Codeforces contests — a concrete milestone</li>
+      <li>Agentic GRPO: extends GRPO to multi-stage rollouts with delayed rewards</li>
+      <li>Multi-agent architecture for planning, coding, debugging, testing — mirrors human workflow</li>
+      <li>Demonstrates that agentic RL can surpass single-shot generation in complex tasks</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Agentic GRPO with multi-stage rollouts (plan→code→debug→test). Delayed reward from final test execution. Multi-agent architecture with specialized roles. Evaluated on live Codeforces contests.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.00790">RefineRL: Self-Refinement Reinforcement Learning for Competitive Programming</a></div>
+  <div class="paper-meta">Shaopeng Fu, Xingxing Zhang, Li Dong, Di Wang, Furu Wei (Microsoft Research) &bull; <span class="arxiv-id">2604.00790</span> &bull; April 1, 2026 &bull; <span class="tag tag-agentic">Agentic</span></div>
+  <div class="paper-summary">
+    Introduces a Skeptical-Agent with local execution tools for iterative self-refinement in competitive programming, combined with RL using standard RLVR data. The agent generates initial code, tests it locally, identifies failures, and iteratively refines — all trained end-to-end with RL. The remarkable result: 4B-parameter models trained with RefineRL outperform 32B models and approach the single-attempt performance of 235B models, demonstrating that agentic self-refinement can dramatically amplify small model capabilities.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>4B models outperform 32B models — agentic self-refinement is a powerful compute multiplier</li>
+      <li>Standard RLVR training data suffices — no special agentic training data needed</li>
+      <li>Skeptical-Agent design: assumes initial solutions are wrong and actively seeks counterexamples</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Skeptical-Agent with local code execution for self-refinement. RL training with RLVR. Evaluated on competitive programming benchmarks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08124">HiExp: Beyond Stochastic Exploration — Hierarchical Experience for Agentic Search</a></div>
+  <div class="paper-meta">Chuzhan Hao, Wenfeng Feng, Guochao Jiang, et al. (Alibaba) &bull; <span class="arxiv-id">2604.08124</span> &bull; April 11, 2026 &bull; <span class="tag tag-agentic">Agentic</span></div>
+  <div class="paper-summary">
+    In agentic search tasks, stochastic exploration wastes compute on random, uninformative trajectories. HiExp proposes using hierarchical experiences to regularize exploration — transforming random exploration into strategic, experience-aligned search. The hierarchical structure captures both high-level search strategies (which directions are promising) and low-level tactical knowledge (how to execute within a direction), enabling the agent to explore efficiently from the start rather than relying on random initialization.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Transforms stochastic exploration into strategic, experience-guided search</li>
+      <li>Hierarchical experience captures both strategic and tactical knowledge</li>
+      <li>Significant efficiency gains in agentic search tasks over random exploration baselines</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Hierarchical experience framework with strategy-level and tactic-level guidance. Applied to RL-based agentic search systems.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.09855">Instructing LLMs to Negotiate using Reinforcement Learning with Verifiable Rewards</a></div>
+  <div class="paper-meta">Shuze Daniel Liu, Claire Chen, Jiabao Sean Xiao, et al. (Purdue, Caltech, UIUC, MIT) &bull; <span class="arxiv-id">2604.09855</span> &bull; April 10, 2026 &bull; <span class="tag tag-agentic">Agentic</span><span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    Investigates whether RLVR can teach LLMs to negotiate — a strategic, multi-turn task far removed from typical math/code domains. A buyer agent is trained against a regulated LLM seller using GRPO with verifiable rewards grounded in economic surplus maximization and budget constraint adherence. The paper reveals a fascinating four-phase strategic evolution: (1) naive bargaining, (2) aggressive starting prices, (3) deadlock from over-aggression, and (4) sophisticated linguistic persuasion. The resulting 30B agent outperforms GPT-5.4-high-reasoning and DeepSeek-V3.1-thinking on negotiation tasks.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>RLVR works for negotiation — extends beyond math/code to strategic multi-turn tasks</li>
+      <li>Four-phase strategic evolution reveals emergent sophisticated behaviors from simple reward signals</li>
+      <li>30B model outperforms GPT-5.4-high-reasoning on negotiation — RL-trained specialists beat generalists</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> GRPO with verifiable rewards (economic surplus + budget constraints). Buyer agent vs. regulated seller. Evaluated on real-world product negotiation scenarios.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.07791">SEARL: Joint Optimization of Policy and Tool Graph Memory for Self-Evolving Agents</a></div>
+  <div class="paper-meta">Xinshun Feng, Xinhao Song, Lijun Li, Gongshen Liu, Jing Shao (ACL 2026) &bull; <span class="arxiv-id">2604.07791</span> &bull; April 9, 2026 &bull; <span class="tag tag-agentic">Agentic</span></div>
+  <div class="paper-summary">
+    Most agentic RL methods optimize either the policy or the agent's memory, but not both jointly. SEARL constructs a structured experience memory in the form of a Tool Graph that integrates planning knowledge with execution experience. The policy parameters and the external tool-based memory are jointly optimized via RL, creating a virtuous cycle: better policies generate better experiences that improve the memory, which in turn guides better policy exploration. Accepted at ACL 2026.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Joint optimization of policy and memory — a more complete approach to agent learning</li>
+      <li>Tool Graph Memory provides structured, reusable execution knowledge</li>
+      <li>Sustained capability growth through the policy-memory virtuous cycle</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Tool Graph Memory construction from execution traces. Joint RL optimization of policy parameters and memory contents. Accepted at ACL 2026.</div>
+</div>
+
+<!-- ==================== SECTION 6: REASONING RL ==================== -->
+<h2 class="section-header">Reasoning RL <span class="section-count">— 5 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.01302">Scaling Reasoning Tokens via RL and Parallel Thinking</a></div>
+  <div class="paper-meta">Qianfan Zhang, Tianyu Guo, Xuandi Ren, et al. (ByteDance Seed, Princeton, UC Berkeley, Stanford) &bull; <span class="arxiv-id">2604.01302</span> &bull; April 1, 2026 &bull; <span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    Studies the scaling behavior of reasoning token budgets for competitive programming and discovers a log-linear relationship between validation accuracy and the number of generated reasoning tokens. Introduces a multi-round parallel thinking pipeline where the model explores multiple solution threads simultaneously. The full pipeline with 16 threads and 16 rounds surpasses GPT-5-high on a set of 456 hard competitive programming problems, using 7.6M tokens per problem — demonstrating that massive test-time compute can substitute for model scale when structured properly.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Log-linear scaling of accuracy with reasoning tokens — a fundamental scaling law for test-time compute</li>
+      <li>Parallel thinking pipeline: 16 threads x 16 rounds for massive but structured exploration</li>
+      <li>Surpasses GPT-5-high on hard problems — test-time compute can substitute for model scale</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> RL-trained reasoning model with multi-round parallel thinking. Scaling analysis of reasoning token budget. Evaluated on hard competitive programming problems.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.10701">GenAC: Generative Actor-Critic — Bringing Value Models Back with Generative Critics</a></div>
+  <div class="paper-meta">Zikang Shan, Han Zhong, Liwei Wang, Li Zhao (Peking University, Microsoft Research Asia) &bull; <span class="arxiv-id">2604.10701</span> &bull; April 12, 2026 &bull; <span class="tag tag-reasoning">Reasoning</span><span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    Value models (critics) have been largely abandoned in LLM RL in favor of critic-free methods like GRPO. GenAC makes a case for bringing them back by replacing one-shot scalar value prediction with a generative critic that performs chain-of-thought reasoning before producing a value estimate. The generative critic uses In-Context Conditioning for calibration, effectively self-correcting its estimates. This improves value approximation accuracy, ranking reliability, and out-of-distribution generalization compared to both traditional value-based and modern value-free baselines.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Generative critics outperform both scalar value heads and critic-free methods (GRPO)</li>
+      <li>CoT reasoning in the critic enables better value estimation — reasoning helps evaluation too</li>
+      <li>In-Context Conditioning provides self-calibration for the critic's estimates</li>
+      <li>Challenges the trend away from value models in LLM RL</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Generative critic with CoT reasoning for value estimation. In-Context Conditioning for calibration. Actor-Critic framework. Evaluated on reasoning benchmarks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.11611">MISE: Hindsight Process Rewards via Mutual Information Self-Evaluation</a></div>
+  <div class="paper-meta">Jiashu Yao, Heyan Huang, Zeming Liu, Yuhang Guo (BIT, Beihang) &bull; <span class="arxiv-id">2604.11611</span> &bull; April 13, 2026 &bull; <span class="tag tag-reasoning">Reasoning</span><span class="tag tag-reward">Reward</span></div>
+  <div class="paper-summary">
+    Proposes an RL paradigm that uses hindsight generative self-evaluation as dense reward signals while calibrating them against environmental feedback. The paper proves that utilizing hindsight self-evaluation rewards is equivalent to minimizing an objective combining mutual information with KL divergence — providing the first formal theoretical foundation for generative self-rewarding. The calibration against environmental feedback prevents the self-evaluation from drifting and ensures the dense signals remain aligned with task objectives.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>First formal foundation for generative self-rewarding — MI + KL divergence objective</li>
+      <li>Dense hindsight rewards from self-evaluation, calibrated by environmental feedback</li>
+      <li>Bridges self-evaluation and RL: theoretically principled and practically effective</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Hindsight self-evaluation as dense rewards. Proves equivalence to mutual information + KL objective. Environmental feedback for calibration.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.00860">PIRL/PIPO: Policy Improvement Reinforcement Learning</a></div>
+  <div class="paper-meta">Researchers from Beihang University and Peking University &bull; <span class="arxiv-id">2604.00860</span> &bull; April 1, 2026 &bull; <span class="tag tag-method">Method</span><span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    Replaces the standard surrogate reward maximization objective with the explicit objective of maximizing cumulative policy improvement across iterations. PIPO (Policy Improvement Policy Optimization) implements this through retrospective verification — after each update, it evaluates whether the previous step yielded genuine improvement and adjusts subsequent updates accordingly. This closed-loop design prevents the policy from oscillating or regressing, improving stability over GRPO and its variants. The approach is motivated by the observation that maximizing reward at each step does not guarantee monotonic improvement.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Optimizes cumulative improvement rather than instantaneous reward — avoids oscillation</li>
+      <li>Retrospective verification creates a closed-loop optimization process</li>
+      <li>Improved stability over GRPO and variants on reasoning tasks</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Policy improvement objective with retrospective verification. Closed-loop optimization across iterations. Benchmarked against GRPO and variants.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.10660">CPMI: Efficient Process Reward Modeling via Contrastive Mutual Information</a></div>
+  <div class="paper-meta">Nakyung Lee, Sangwoo Hong, Jungwoo Lee &bull; <span class="arxiv-id">2604.10660</span> &bull; April 12, 2026 &bull; <span class="tag tag-reward">Reward</span><span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    Process reward models require expensive step-level annotations, typically obtained via Monte Carlo estimation. CPMI proposes using contrastive pointwise mutual information from the model's own internal probabilities to infer step-level supervision automatically. This reduces dataset construction time by 84% and token generation by 98% compared to MC estimation while achieving higher accuracy on process-level evaluations. The insight is that the model's conditional probability structure already encodes information about step quality.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>84% reduction in dataset construction time, 98% reduction in token generation</li>
+      <li>Model's own probability structure provides step-level quality signals — no external annotation needed</li>
+      <li>Higher accuracy than MC estimation — efficiency and quality are not at odds</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Contrastive pointwise mutual information from model internal probabilities. Automatic step-level reward labeling. Compared to MC estimation baselines.</div>
+</div>
+
+<!-- ==================== SECTION 7: MULTIMODAL RL ==================== -->
+<h2 class="section-header">Multimodal RL <span class="section-count">— 3 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08539">OpenVLThinkerV2: Gaussian GRPO for Multimodal Reasoning</a></div>
+  <div class="paper-meta">Wenbo Hu, Xin Chen, Yan Gao-Tian, et al. &bull; <span class="arxiv-id">2604.08539</span> &bull; April 11, 2026 &bull; <span class="tag tag-multimodal">Multimodal</span><span class="tag tag-method">Method</span></div>
+  <div class="paper-summary">
+    Introduces G2RPO (Gaussian GRPO), replacing the standard linear advantage scaling in GRPO with non-linear distributional matching based on Gaussian distributions. The motivation: linear scaling treats a reward gap of 0.1→0.2 the same as 0.8→0.9, but the latter is far more informative for learning. Gaussian distributional matching naturally handles this by assigning different weight profiles based on the reward distribution's shape. Additionally, the paper introduces response length shaping and entropy shaping to control output verbosity and exploration. Superior performance across 18 diverse multimodal benchmarks, outperforming both open-source and proprietary models.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>G2RPO: Gaussian distributional matching replaces linear scaling — better reward utilization</li>
+      <li>Outperforms across 18 multimodal benchmarks including proprietary models</li>
+      <li>Length and entropy shaping address practical issues (verbosity, exploration collapse)</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Gaussian GRPO with distributional matching. Response length shaping and entropy shaping. Evaluated on 18 multimodal reasoning benchmarks.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.09349">VGPO: Visually-Guided Policy Optimization for Multimodal Reasoning</a></div>
+  <div class="paper-meta">Zengbin Wang, Feng Xiong, Liang Lin, et al. (Alibaba, SYSU, BUPT) &bull; <span class="arxiv-id">2604.09349</span> &bull; April 10, 2026 &bull; <span class="tag tag-multimodal">Multimodal</span></div>
+  <div class="paper-summary">
+    During long-chain reasoning in vision-language models, the visual signal gets progressively diluted as text tokens accumulate — a phenomenon the authors call "visual forgetting." VGPO introduces a Visual Attention Compensation mechanism that leverages visual similarity to localize and amplify visual cues at each reasoning step. The compensation is progressive: later reasoning steps receive stronger visual reinforcement to counteract the accumulated dilution. This simple but effective technique ensures the model maintains visual grounding throughout extended reasoning chains.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Identifies and addresses "visual forgetting" during long-chain reasoning in VLMs</li>
+      <li>Progressive visual attention compensation — stronger reinforcement for later steps</li>
+      <li>Simple mechanism that can be integrated into existing VLM RL pipelines</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Visual Attention Compensation using visual similarity scores. Progressive reinforcement across reasoning steps. Integrated with policy optimization for VLMs.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08476">Faithful GRPO: Constrained Policy Optimization for Visual Spatial Reasoning</a></div>
+  <div class="paper-meta">Sai Srinivas Kancheti, Aditya Kanade, Rohit Sinha, et al. (Microsoft Research) &bull; <span class="arxiv-id">2604.08476</span> &bull; April 11, 2026 &bull; <span class="tag tag-multimodal">Multimodal</span><span class="tag tag-reasoning">Reasoning</span></div>
+  <div class="paper-summary">
+    RLVR training of multimodal models often improves final-answer accuracy at the cost of reasoning trace quality — the model gets the right answer for wrong reasons. Faithful GRPO (FGRPO) characterizes CoT quality along two axes: logical consistency (do the steps follow from each other?) and visual grounding (do the steps reference actual visual content?). Constraints on both dimensions are incorporated into the GRPO objective, ensuring that accuracy gains don't come at the expense of reasoning faithfulness. Evaluated on seven challenging spatial reasoning benchmarks.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Reveals accuracy-faithfulness tradeoff in multimodal RLVR — accuracy can mask reasoning failures</li>
+      <li>Two-axis CoT quality assessment: logical consistency + visual grounding</li>
+      <li>Constrained optimization preserves faithfulness without sacrificing accuracy</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Constrained GRPO with logical consistency and visual grounding constraints. Evaluated on 7 spatial reasoning benchmarks from Microsoft Research.</div>
+</div>
+
+<!-- ==================== SECTION 8: SURVEYS & THEORETICAL FOUNDATIONS ==================== -->
+<h2 class="section-header">Surveys &amp; Theoretical Foundations <span class="section-count">— 4 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.09459">From Reasoning to Agentic: Credit Assignment in Reinforcement Learning for Large Language Models</a></div>
+  <div class="paper-meta">Chenchen Zhang &bull; <span class="arxiv-id">2604.09459</span> &bull; April 13, 2026 &bull; <span class="tag tag-survey">Survey</span></div>
+  <div class="paper-summary">
+    A comprehensive survey of 47 credit assignment methods published between 2024 and early 2026. The survey organizes these methods along a key axis: reasoning RL (credit across tokens within a single CoT, 500–30K+ tokens) vs. agentic RL (credit across turns in multi-turn environment interaction, 100+ turns, 100K–1M tokens). The reasoning CA space is maturing around process reward models and critic-free group comparison (GRPO-style), while agentic CA is driving genuinely new approaches that handle partial observability, delayed feedback, and the immense horizon lengths of agent trajectories.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>47 methods cataloged — a comprehensive map of the credit assignment landscape</li>
+      <li>Clear taxonomy: reasoning CA (token-level) vs. agentic CA (turn-level)</li>
+      <li>Reasoning CA is maturing; agentic CA is the frontier requiring genuinely new ideas</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Systematic survey of 47 papers. Taxonomy along reasoning/agentic axis. Analysis of method similarities and gaps.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.07941">LLM Post-Training: A Unified View of Off-Policy and On-Policy Learning</a></div>
+  <div class="paper-meta">Shiwan Zhao, Zhihu Wang, Xuyang Zhao, et al. &bull; <span class="arxiv-id">2604.07941</span> &bull; April 9, 2026 &bull; <span class="tag tag-survey">Survey</span></div>
+  <div class="paper-summary">
+    Organizes the sprawling LLM post-training landscape by a single clean axis: trajectory provenance. Off-policy learning uses externally supplied trajectories (SFT, DPO, offline RL), while on-policy learning uses learner-generated rollouts (GRPO, PPO, online DPO). This framing reveals deep connections between seemingly different methods: SFT and offline RL both do off-policy learning, while GRPO and online DPO both do on-policy learning. The survey covers SFT, preference optimization, RL, process supervision, verifier-guided methods, and distillation through this unified lens.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Unifying axis: trajectory provenance (off-policy vs. on-policy) reveals deep method connections</li>
+      <li>SFT and offline RL are both off-policy; GRPO and online DPO are both on-policy</li>
+      <li>Comprehensive coverage of the full post-training taxonomy</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Survey organized by trajectory provenance. Covers SFT, preference optimization, RL, process supervision, distillation.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.02507">Reinforcement Learning from Human Feedback: A Statistical Perspective</a></div>
+  <div class="paper-meta">Multiple authors &bull; <span class="arxiv-id">2604.02507</span> &bull; April 2, 2026 &bull; <span class="tag tag-survey">Survey</span></div>
+  <div class="paper-summary">
+    Provides a rigorous statistical treatment of the RLHF pipeline, covering the statistical foundations of SFT, reward modeling, and policy optimization. The survey addresses a gap in the literature: while RLHF has become central to LLM alignment, its statistical properties — sample complexity, convergence guarantees, bias-variance tradeoffs — have not been systematically analyzed. This paper brings tools from statistical learning theory to bear on these questions, providing theoretical backing for practical design choices.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Rigorous statistical foundations for RLHF — sample complexity, convergence, bias-variance</li>
+      <li>Theoretical backing for practical design choices in reward modeling and policy optimization</li>
+      <li>Bridges the gap between empirical RLHF practice and statistical learning theory</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Statistical analysis of RLHF pipeline components. Sample complexity bounds, convergence analysis.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08723">Decomposing the Delta: What Do Models Actually Learn from Preference Pairs?</a></div>
+  <div class="paper-meta">Chia-Hsuan Lee, Mingyang Zhou, Renkun Ni, et al. &bull; <span class="arxiv-id">2604.08723</span> &bull; April 9, 2026 &bull; <span class="tag tag-alignment">Alignment</span></div>
+  <div class="paper-summary">
+    An empirical investigation into what models actually learn from preference data. The paper decomposes the "delta" between chosen and rejected responses into two components: generator-level delta (arising from capability differences between the models that generated the responses) and sample-level delta (arising from quality differences within individual preference pairs). This decomposition reveals that much of what preference optimization learns comes from generator-level differences rather than fine-grained quality distinctions — a finding with implications for how preference data should be constructed.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Generator-level delta (model capability) vs. sample-level delta (response quality) — a key distinction</li>
+      <li>Much preference learning comes from generator-level differences — implications for data construction</li>
+      <li>Analyzed across DPO and KTO, providing cross-method insights</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Delta decomposition analysis across preference pairs. Evaluated on DPO and KTO training dynamics. Controlled experiments varying generator quality.</div>
+</div>
+
+<!-- ==================== SECTION 9: ALIGNMENT & SAFETY ==================== -->
+<h2 class="section-header">Alignment &amp; Curriculum Learning <span class="section-count">— 3 papers</span></h2>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.07837">SPARD: Self-Paced Curriculum for RL Alignment via Reward Dynamics and Data Utility</a></div>
+  <div class="paper-meta">Xuyang Zhi, Peilun Zhou, Chengqiang Lu, et al. (USTC, Xiaohongshu) &bull; <span class="arxiv-id">2604.07837</span> &bull; April 9, 2026 &bull; <span class="tag tag-alignment">Alignment</span></div>
+  <div class="paper-summary">
+    Standard RL alignment treats all training data equally throughout training, ignoring that the model's capabilities and learning needs evolve. SPARD establishes an automated, self-paced curriculum that perceives learning progress to dynamically adjust both multi-objective reward weights and data importance. The curriculum prioritizes data that is maximally informative for the model's current learning stage — easy problems early on, harder problems later — while simultaneously adjusting how different reward objectives (helpfulness, safety, conciseness) are weighted over time.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Automated curriculum that adapts both data selection and reward weighting simultaneously</li>
+      <li>Self-paced: difficulty progression is driven by model learning progress, not manual scheduling</li>
+      <li>Multi-objective reward weighting evolves with training — different objectives matter at different stages</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Self-paced curriculum with reward dynamics tracking. Dynamic adjustment of data weights and multi-objective reward coefficients. Applied to RL alignment training.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.04144">PALM: Many Preferences, Few Policies for Scalable LLM Personalization</a></div>
+  <div class="paper-meta">Authors (see paper) &bull; <span class="arxiv-id">2604.04144</span> &bull; April 5, 2026 &bull; <span class="tag tag-alignment">Alignment</span></div>
+  <div class="paper-summary">
+    Addressing the challenge of diverse user preferences, PALM generates a small portfolio of LLMs such that for any preference weight vector, the portfolio contains a near-optimal LLM for the corresponding scalarized multi-objective reward. Rather than training a separate model for each user or preference combination, the algorithm identifies a small set of representative policies that collectively cover the Pareto front. New users are matched to the best policy in the portfolio based on a small number of preference queries.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Portfolio approach to personalization — small set of policies covers diverse preferences</li>
+      <li>Near-optimal coverage of the multi-objective Pareto front</li>
+      <li>New user onboarding requires only a few preference queries</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Portfolio optimization over multi-objective reward space. Pareto front coverage guarantee. Few-shot user matching.</div>
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2604.08986">PerMix-RLVR: Preserving Persona Expressivity under Verifiable-Reward Alignment</a></div>
+  <div class="paper-meta">Jihwan Oh, Soowon Oh, Murad Aghazada, Minchan Jeong, Sungnyun Kim, Se-Young Yun &bull; <span class="arxiv-id">2604.08986</span> &bull; April 10, 2026 &bull; <span class="tag tag-alignment">Alignment</span></div>
+  <div class="paper-summary">
+    Discovers that RLVR training systematically reduces sensitivity to persona prompts — the model becomes less able to adopt different personas after RL training. PerMix-RLVR proposes a persona-mixed RLVR strategy that preserves robustness to harmful persona variation (the model should resist harmful personas) while enabling faithful adoption of benign personas. This is achieved by mixing persona-conditioned rollouts during training, teaching the model to discriminate between personas it should follow and those it should resist.
+  </div>
+  <div class="paper-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>RLVR reduces persona sensitivity — a previously unknown side effect of RL training</li>
+      <li>+21.2% persona stability on MATH500, +11.4% persona fidelity on PersonaGym</li>
+      <li>Discriminative persona handling: follow benign, resist harmful</li>
+    </ul>
+  </div>
+  <div class="methodology"><strong>Methodology:</strong> Persona-mixed rollouts during RLVR training. Discriminative persona conditioning. Evaluated on MATH500 and PersonaGym benchmarks.</div>
+</div>
+
+<div class="footer">
+  <p><strong>LLM RL Daily Papers</strong> — Inaugural Edition, April 16, 2026</p>
+  <p>35 papers curated from arXiv, covering policy optimization, RLVR, reward modeling, training infrastructure, agentic RL, reasoning, multimodal RL, and alignment.</p>
+  <p>Generated by an AI research analyst. All papers are linked to their arXiv entries for full details.</p>
+  <p>&copy; 2026 LLM RL Daily Papers Project</p>
+</div>
+
+</body>
+</html>
