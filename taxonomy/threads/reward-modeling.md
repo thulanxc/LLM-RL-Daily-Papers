@@ -28,5 +28,24 @@ Scalar RM (2022) → Process RM (2023) → Generative RM (2024-25) → Efficient
 ### Value Models
 - **GenAC** — Generative Actor-Critic with CoT-reasoning critics. [2604.10701]
 
+## Late Edition (April 16 PM) — Process Reward Renaissance
+
+### PRM Expansion
+- **PROGRS** [2604.02341] — Outcome-conditioned centering: PRM scores zero-meaned within incorrect groups of each prompt. Preserves ranking, removes bias. Plug-and-play in GRPO.
+- **PRA** [2604.09482] — Process Reward Agents deploy PRMs at *test time* for frozen policies. 80.8% MedQA with Qwen3-4B (new SOTA at 4B scale); generalizes to 0.5B–8B with up to +25.7% gains.
+- **RTT** [2604.02795] — Rubrics-to-Tokens: Token-Level Relevance Discriminator + RTT-GRPO for fine-grained constraint credit assignment.
+- **SubSearch** [2604.07415] — Intrinsic process rewards for unsupervised guided reasoning in complex retrieval.
+
+### Generative Reward Modeling
+- **E-GRM** [2604.10072] — Parallel-generation-based uncertainty estimation; selective CoT triggering.
+
+### LLM-as-a-Judge as RL Reward
+- **RL-KD with LLM-as-Judge** [2604.02621] — RLAIF-distillation bridge.
+
 ## Key Trend
-Two simultaneous movements: (1) making reward models much more efficient (multi-response, CPMI, E-GRM), and (2) making them more robust to hacking (SignCert-PO, robust optimization). These are complementary — efficiency without robustness leads to faster exploitation.
+Three simultaneous movements:
+1. **Efficiency**: multi-response scoring, CPMI, E-GRM — reward models must be affordable.
+2. **Robustness**: SignCert-PO, robust optimization, DRTO — must resist hacking.
+3. **Decoupling**: PRA demonstrates PRMs can be fully decoupled from the policy, deployed as test-time plug-ins. PROGRS treats PRM as a ranking-only signal, freed from absolute-value calibration. RTT makes rubrics token-level.
+
+These three movements together describe a shift: reward models are becoming modular, composable, plug-and-play components of LLM systems rather than monolithic training-time artifacts.

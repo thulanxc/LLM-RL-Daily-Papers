@@ -139,18 +139,89 @@ Extending RL training to multimodal models:
 - **PerMix-RLVR** (2604.08986): Preserving persona expressivity under RLVR
 - **VRF** (2604.00997): Variational reward factorization for personalization
 
+## Late Edition Additions (April 16, 2026 PM — 19 new papers)
+
+### 10. Agentic RL Diagnosis — a new sub-thread
+
+The late edition introduces a distinct sub-thread around<br>**diagnosing failure modes in Agentic RL** beyond loss/entropy:
+
+- **RAGEN-2** (2604.06268): Template Collapse as an entropy-invisible failure. Mutual Information between input and output is a better proxy for reasoning quality than entropy. SNR-Aware Filtering uses reward variance for online prompt selection.
+
+This connects to Thread 6 (Agentic RL) but introduces the *diagnostic* dimension — parallel to how observability matured in distributed systems.
+
+### 11. Process Reward Expansion (sub-thread within Reward Modeling)
+
+Process reward modeling is exploding beyond math/code into new domains:
+
+- **PROGRS** (2604.02341): Outcome-conditioned PRM centering for group-relative preference
+- **PRA** (2604.09482): Process Reward Agents as test-time plug-ins; 80.8% MedQA with 4B
+- **RTT** (2604.02795): Rubric-to-Token relevance discriminator + RTT-GRPO
+- **SubSearch** (2604.07415): Intrinsic process rewards without external supervision
+- **E-GRM** (2604.10072): Selective CoT triggered by model-internal uncertainty
+
+**Connection**: These converge with Thread 4 (Reward Modeling) sub-thread A, but with a key evolution — PRM is no longer a *training-time only* artifact. PRA makes it test-time; E-GRM makes it adaptive; RTT makes it token-level.
+
+### 12. Tool Use Internalization (sub-thread within Agentic RL)
+
+- **TInR** (2604.10788): Tool knowledge internalized into LLM weights (no runtime docs)
+- **ToolCAD** (2604.07960): CAD modeling as long-horizon tool agent
+- **AnomalyAgent** (2604.07900): 5-tool closed-loop industrial anomaly synthesis
+- **COVERT** (2604.09813): Oracle-preserving RL-ready tool-use data synthesis
+
+**Key insight**: Tool use is migrating from "explicit documented API" to "internalized capability". This parallels how tokenizers absorbed word-piece models: once standardized, the boundary fades.
+
+### 13. Agentic Self-Supervision (new sub-thread)
+
+- **Skill-SD** (2604.10674): Natural-language skills as teacher-only privileged info
+- **RAGEN-2** (2604.06268): Uses agent trajectories as their own diagnostic signal
+- **SubSearch** (2604.07415): Intrinsic process rewards from generation dynamics
+
+These point toward agents that become their own supervisors.
+
+### 14. Multi-Hop KG Reasoning as RL Target
+
+- **KG-Reasoner** (2604.12487): Integrates multi-step KG traversal into single thinking phase via RL with backtracking
+- **TRACE** (2604.11193): Narrative-based coherence + reusable exploration priors
+- **AgentGL** (2604.05846): First RL-driven Agentic Graph Learning framework with curriculum
+
+**Pattern**: Pipeline-based KGQA is fragmenting; end-to-end RL unification is the new direction.
+
+### 15. Reasoning Efficiency (sub-thread within Reasoning RL)
+
+- **Graph-Based CoT Pruning** (2604.05643): -42% tokens via DAG + dual pruning + SFT/DPO/GRPO
+- **CURE** (2604.12046): Claim-level factuality calibration (+39.9% Biography)
+- **E-GRM** (2604.10072): Per-instance CoT triggering
+
+### 16. RL Domain Boundary Tests
+
+- **Regime Boundaries** (2604.10996): Valid LLM features (IC > 0.15) fail under macro shock
+- **OOM-RL** (2604.11477): Capital loss as un-hackable negative gradient (20-month study, Sharpe 2.06)
+
+These papers pressure-test the assumption that *verifiable reward + training stability → deployment success*.
+
+### 17. Alignment for Behavior Shape (style/editing/trust)
+
+- **Argumentation Editing** (2604.12770): Multi-component GRPO reward for human-like edits
+- **KE-CoT** (2604.05540): First GRPO for knowledge editing
+- **Curr-RLCER** (2604.05341): Curriculum-GRPO for explainable recommendation
+- **Trust Boundary MARL** (2604.05483): Multi-agent RL to detect black-box untrustworthy regions
+
 ## Cross-Cutting Themes (April 2026)
 
-1. **Credit Assignment is the central challenge**: SKPO, TEPO, SPPO, GenAC, and the survey (2604.09459) all focus on better credit assignment — at token, step, sequence, and trajectory levels.
+1. **Credit Assignment is the central challenge**: SKPO, TEPO, SPPO, GenAC, the survey (2604.09459), plus late-edition PROGRS and RTT all focus on better credit assignment — at token, step, claim, sequence, and trajectory levels.
 
-2. **RLVR is expanding**: From math/code to general reasoning (SUPERNOVA), negotiation, and multimodal tasks. The "imperfect verifier" result lowers barriers further.
+2. **RLVR is expanding**: From math/code to general reasoning (SUPERNOVA), negotiation, multimodal tasks, knowledge editing, and argumentation. Both late-edition OOM-RL (finance via capital loss) and Regime Boundaries (finance caveats) test the edges.
 
-3. **Efficiency is non-negotiable**: Every major contribution now includes efficiency considerations — replay buffers (40% savings), trajectory extrapolation (37.5%), multi-response scoring (4x), and async training (2x).
+3. **Efficiency is non-negotiable**: Every major contribution now includes efficiency considerations — replay buffers (40% savings), trajectory extrapolation (37.5%), multi-response scoring (4x), async training (2x), and late-edition CoT Pruning (42% token savings).
 
-4. **Agentic RL is producing superhuman results**: GrandCode and RefineRL show that RL-trained agents can dramatically exceed their base model capabilities.
+4. **Agentic RL is producing superhuman results — and diagnostic tools**: GrandCode and RefineRL showed the upside; RAGEN-2 introduces the diagnostic lens (Template Collapse) needed to scale such successes reliably.
 
-5. **Self-improvement loops are maturing**: SD-Zero, Self-Distilled RLVR, MISE, and GenAC all involve the model providing its own training signal in some form.
+5. **Self-improvement loops are maturing**: SD-Zero, Self-Distilled RLVR, MISE, GenAC, plus late-edition Skill-SD, SubSearch, and E-GRM — all provide self-generated training signal in different forms (skills, uncertainty, intrinsic rewards).
+
+6. **Process reward has left the training loop**: Late edition's PRA deploys PRMs as *test-time* steering; E-GRM as *uncertainty-gated* CoT; PROGRS as *group-relative preferences*. The PRM is no longer a fixed-role artifact.
+
+7. **Real-world deployment is the new benchmark**: Papers like OOM-RL (20 months of live trading) and Regime Boundaries (distribution shift failure) herald a shift from static benchmarks to sustained, observable deployment.
 
 ---
 
-*Last updated: April 16, 2026*
+*Last updated: April 16, 2026 (Late Edition, 19:00 UTC)*

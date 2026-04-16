@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>LLM RL Daily — 2026-04-16 晚间增刊 / Late Edition</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --line: #bbb;
+    --paper: #faf7f2;
+    --accent: #8b0000;
+    --tag-bg: #eee6d6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, "Songti SC", "STSong", serif;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 30px 60px 30px;
+    line-height: 1.65;
+  }
+  header.masthead {
+    text-align: center;
+    border-top: 4px double var(--ink);
+    border-bottom: 4px double var(--ink);
+    padding: 20px 10px;
+    margin-bottom: 14px;
+  }
+  header.masthead h1 {
+    font-size: 54px;
+    margin: 0;
+    letter-spacing: 4px;
+    font-weight: 900;
+    font-variant: small-caps;
+  }
+  header.masthead .subtitle {
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 2px;
+  }
+  header.masthead .date-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+  }
+  .editorial {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 22px 28px;
+    margin: 24px 0 32px 0;
+    column-count: 2;
+    column-gap: 28px;
+    column-rule: 1px dashed var(--line);
+    font-size: 15px;
+  }
+  .editorial h2 {
+    margin-top: 0;
+    font-size: 22px;
+    text-align: center;
+    column-span: all;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 6px;
+  }
+  .editorial p { margin: 0 0 10px 0; text-indent: 2em; }
+  section.category {
+    margin-top: 40px;
+    border-top: 3px solid var(--ink);
+    padding-top: 10px;
+  }
+  section.category > h2 {
+    font-size: 28px;
+    margin: 0 0 16px 0;
+    letter-spacing: 2px;
+    font-variant: small-caps;
+    color: var(--accent);
+  }
+  article.paper {
+    border-bottom: 1px dotted var(--line);
+    padding: 16px 0;
+    break-inside: avoid;
+  }
+  article.paper:last-child { border-bottom: none; }
+  article.paper h3 {
+    font-size: 20px;
+    margin: 0 0 6px 0;
+    line-height: 1.3;
+  }
+  article.paper h3 a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+  }
+  article.paper .meta {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  article.paper .tags {
+    margin: 6px 0 10px 0;
+  }
+  article.paper .tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--ink);
+    padding: 2px 8px;
+    margin-right: 5px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    font-variant: small-caps;
+  }
+  article.paper .summary { margin: 8px 0; font-size: 15px; }
+  article.paper .takeaways {
+    background: #fff;
+    border-left: 3px solid var(--accent);
+    padding: 8px 14px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  article.paper .takeaways h4 {
+    margin: 0 0 5px 0;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-variant: small-caps;
+    color: var(--accent);
+  }
+  article.paper .takeaways ul { margin: 4px 0 4px 20px; padding: 0; }
+  .arxiv-id {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    background: #333;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+  footer {
+    margin-top: 60px;
+    border-top: 4px double var(--ink);
+    padding-top: 16px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .note {
+    background: #fff3d9;
+    border-left: 4px solid #c08a00;
+    padding: 12px 16px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <h1>LLM RL Daily</h1>
+  <div class="subtitle">The Daily Digest of Reinforcement Learning for Large Language Models</div>
+  <div class="date-bar">
+    <span>Vol. I · No. 1.5 &nbsp;|&nbsp; 晚间增刊 Late Edition</span>
+    <span>2026 年 4 月 16 日 (星期四) · April 16, 2026 · Thursday</span>
+    <span>Deduped · 19 New Papers</span>
+  </div>
+</header>
+
+<div class="note">
+  <strong>编者按 / Editor's Note：</strong>
+  本期为 4 月 16 日晨报的晚间增刊，收录了早间遗漏或在发稿后补录的 19 篇新论文。所有论文均已与晨报 (<a href="2026-04-16.html">2026-04-16.html</a>) 中的 45 篇论文去重，确保无重复。
+</div>
+
+<section class="editorial">
+  <h2>编辑视角 · Editorial Overview</h2>
+  <p><strong>Agentic RL 的诊断时代到来。</strong>本期最引人注目的是 <em>RAGEN-2</em> 对 Agentic RL 中 "模板坍缩" (Template Collapse) 现象的系统诊断。与仅关注熵的传统做法不同，RAGEN-2 首次将推理质量分解为 "输入内多样性"（熵）与 "跨输入区分度"（互信息 MI），并证明 MI 才是与最终性能更相关的代理指标。这一工作标志着 LLM RL 领域从 "盲训" 向 "带诊断训练" 的范式跃迁。</p>
+
+  <p><strong>过程奖励 (Process Reward) 全线回归。</strong>本期有四篇独立工作围绕过程奖励展开：PROGRS 通过结果条件化居中化 (outcome-conditioned centering) 将 PRM 分数转化为无偏的相对偏好；Process Reward Agents (PRA) 将 PRM 变为可插拔的测试时组件；Rubrics-to-Tokens (RTT) 桥接响应级评分和 token 级信用；SubSearch 则用内在的过程奖励取代外部监督。过程奖励已从 "只适用于数学/代码" 扩展到知识密集型推理、指令遵循、复杂检索等领域。</p>
+
+  <p><strong>Tool-Use RL 多点开花。</strong>TInR 主张将工具知识内化到 LLM 中以避免文档依赖；TOOLCAD 将 LLM 变为 CAD 建模智能体；AnomalyAgent 用五工具闭环生成工业缺陷数据；COVERT 给出可验证的 tool-use 数据合成流程。这一组工作共同指向：Agentic RL 所需的环境基础设施正快速成熟。</p>
+
+  <p><strong>多跳知识推理成为新战场。</strong>KG-Reasoner 用 RL 把多步 KG 遍历内化到单一 "思考" 阶段；TRACE 通过叙事与经验先验增强多跳 KGQA 的一致性；AgentGL 将图学习形式化为智能体决策过程；这些工作表明 RL 正成为解决 KGQA 碎片化推理问题的主流路径。</p>
+
+  <p><strong>效率导向的 CoT 优化。</strong>Graph-Based CoT Pruning 指出 "低价值反思" 和 "重复反思" 两类冗余，用 DAG + 双层剪枝将推理 token 减少 42% 而精度不降。E-GRM 则在生成式奖励建模中引入 "按需 CoT"，通过模型内部不确定性触发思考。CURE 则把 "输出中哪些声明可信" 转化为 claim-level 置信估计。</p>
+
+  <p><strong>RLVR 的边界实验。</strong>Regime Boundaries 在金融交易域提醒研究者：即使 LLM 提取了有效的 IR(Information Coefficient ≥ 0.15) 信号，在宏观冲击引起的分布漂移下也会拖累下游 PPO 智能体。OOM-RL 反其道而行之，把 "真实资本损失" 作为不可黑客化的负梯度信号，历时 20 个月把 MAS 训练出 2.06 的 Sharpe Ratio。两篇论文共同展示了 RL 在非稳态现实环境中的两面性。</p>
+</section>
+
+<section class="category">
+  <h2>I. Agentic RL · 智能体强化学习</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.06268">RAGEN-2: Reasoning Collapse in Agentic RL</a><span class="arxiv-id">2604.06268</span></h3>
+    <div class="meta">Zihan Wang, Ziqi Pang, Manling Li et al. · Northwestern University · April 7, 2026</div>
+    <div class="tags">
+      <span class="tag">Agentic RL</span>
+      <span class="tag">Diagnosis</span>
+      <span class="tag">Mutual Information</span>
+      <span class="tag">Template Collapse</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>首次对 Agentic RL 中一个被反复观测但未被命名的失效模式——"模板坍缩 (Template Collapse)"——给出系统刻画和可观测的诊断工具。团队发现：即使熵保持稳定，模型也可能退化为依赖"看起来多样但其实与输入无关"的固定模板。熵只能衡量同一输入内的多样性，无法判断推理是否真正对不同输入做出响应。
+      <br><br>
+      <strong>方法：</strong>将推理质量分解为 (1) 输入内多样性 (Entropy) 与 (2) 跨输入区分度 (Mutual Information, MI)，并引入一组轻量 MI 代理指标用于在线诊断。实验表明 MI 与最终性能的相关性显著高于熵，是更可靠的推理质量代理。作者进一步用信噪比 (SNR) 机制解释模板坍缩：低 reward 方差削弱任务梯度，让正则项主导、擦除跨输入的推理差异。据此提出 <em>SNR-Aware Filtering</em>，按每轮的 reward 方差作为轻量代理挑选高信号 prompt。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>熵 ≠ 推理质量；跨输入互信息是更好的代理</li>
+        <li>模板坍缩是 entropy-invisible 失效模式，解释了为何"训练曲线看起来健康但性能不涨"</li>
+        <li>SNR-Aware Filtering 只用 reward 方差就能显著缓解，不引入额外训练成本</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.10674">Skill-SD: Skill-Conditioned Self-Distillation for Multi-turn LLM Agents</a><span class="arxiv-id">2604.10674</span></h3>
+    <div class="meta">Hao Wang, Guozhi Wang, Han Xiao et al. · April 12, 2026</div>
+    <div class="tags">
+      <span class="tag">Agentic RL</span>
+      <span class="tag">Self-Distillation</span>
+      <span class="tag">Dense Supervision</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>解决多轮 LLM 智能体 RL 训练在稀疏奖励与长视野下样本效率低的问题。现有 On-Policy Self-Distillation (OPSD) 依赖能看到 ground-truth 的 privileged teacher 提供密集 token-level 监督，但固定的 privileged info 无法覆盖 agent 任务中多样的有效策略，与 RL 直接组合常常引发训练坍缩。
+      <br><br>
+      <strong>方法：</strong>提出 <em>Skill-SD</em>，将智能体自身已完成的轨迹总结为紧凑的自然语言 "skill"（描述成功行为、错误与工作流），作为<strong>动态 privileged info 仅提供给 teacher</strong>。学生始终在普通 task prompt 下行动，通过 distillation 学会内化这些指导。skill 来自 agent 本身，因此多样且自适应，不会强行灌输单一策略。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>把轨迹总结成自然语言 skill，是把 RL 稀疏信号转化为 dense 监督的新思路</li>
+        <li>teacher/student 的不对称：teacher 看到 skill，student 只看任务——避免了推断时依赖</li>
+        <li>提供了 OPSD + RL 组合不坍缩的可操作方案</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.05846">AgentGL: Towards Agentic Graph Learning with LLMs via Reinforcement Learning</a><span class="arxiv-id">2604.05846</span></h3>
+    <div class="meta">Yuanfu Sun, Kang Li, Dongzhe Fan, Jiajin Liu, Qiaoyu Tan · April 7, 2026</div>
+    <div class="tags">
+      <span class="tag">Agentic RL</span>
+      <span class="tag">Graph Learning</span>
+      <span class="tag">Curriculum RL</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>首个面向 Agentic Graph Learning (AGL) 的 RL 框架。现有智能体框架把外部信息当成非结构化文本，忽略了真实数据中的拓扑依赖。AgentGL 将图学习重新表述为"拓扑感知导航 + LLM 推理"交替的过程。
+      <br><br>
+      <strong>方法：</strong>(1) 给 LLM 智能体装配 graph-native 工具支持多尺度结构探索；(2) 通过 search-constrained thinking 偏向于额外图查询之前先做反思；(3) <em>graph-conditioned curriculum RL</em> 策略——渐进式加大拓扑探索难度并整合多面向奖励，用来稳定没有 step-wise 监督下的长视野策略学习。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>图结构是 agentic tool use 的新战场——拓扑依赖被显式暴露给 agent</li>
+        <li>graph-conditioned curriculum 是稳定长视野 agentic RL 的关键技巧</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.09813">COVERT: Controllable and Verifiable Tool-Use Data Synthesis for Agentic RL</a><span class="arxiv-id">2604.09813</span></h3>
+    <div class="meta">Penn State, Amazon, Georgia Tech · April 10, 2026</div>
+    <div class="tags">
+      <span class="tag">Infrastructure</span>
+      <span class="tag">Tool Use</span>
+      <span class="tag">Data Synthesis</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>把现有 tool-use 语料从"离线 SFT 友好"升级为"RL 友好"——为可执行环境提供 reward-checkable online rollouts。
+      <br><br>
+      <strong>方法：</strong>两阶段 pipeline。Stage 1：通过 self-evolving 合成 + multi-level validation 生成可靠的基础工具调用轨迹。Stage 2：施加 oracle-preserving 增广——引入干扰工具、模糊/间接的用户查询、噪声/多格式/错误的工具输出，但严格保留 oracle 工具调用和最终答案作为 ground truth。由此通过引用匹配实现自动 reward，在特殊行为（如错误检测）上用轻量 judge 验证。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"Oracle-preserving augmentation" 提供了一个通用的 RL 数据增广范式</li>
+        <li>noise/distractor tool 是评估 agentic rollout 鲁棒性的关键设计</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.07900">AnomalyAgent: Agentic Industrial Anomaly Synthesis via Tool-Augmented RL</a><span class="arxiv-id">2604.07900</span></h3>
+    <div class="meta">April 9, 2026</div>
+    <div class="tags">
+      <span class="tag">Agentic RL</span>
+      <span class="tag">Tool Use</span>
+      <span class="tag">Industrial</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>将 agentic RL 带入工业异常数据合成。配备 5 类工具（PG / IG / QE / KR / MG）实现闭环优化，SFT + RL 两阶段训练。奖励分三部分：任务奖励（异常的质量与位置合理性）、反思奖励（合成 prompt 改进能力）、行为奖励（轨迹一致性）。
+      <br><br>
+      在 MVTec-AD 数据集上，AnomalyAgent 达到 IS/IC-L = 2.10/0.33；ResNet34 分类精度 57.0%；UNet 在图像/像素级 AP 分别达到 99.3% / 74.2%，全面超越 zero-shot SOTA。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"行为奖励 + 反思奖励 + 任务奖励"三元组是 agentic 合成的通用奖励结构</li>
+        <li>RL 能让工业 anomaly synthesis 从一次性 prompt 升级为可迭代的闭环</li>
+      </ul>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>II. Process Reward & Reward Modeling · 过程奖励与奖励建模</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.02341">PROGRS: LLM Reasoning with Process Rewards for Outcome-Guided Steps</a><span class="arxiv-id">2604.02341</span></h3>
+    <div class="meta">April 3, 2026</div>
+    <div class="tags">
+      <span class="tag">Process Reward</span>
+      <span class="tag">GRPO</span>
+      <span class="tag">Reward Hacking</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>解决 PRM 分数与最终正确性不完全对齐、易奖励"流畅但错误"推理的问题。PROGRS 把过程奖励当作 outcome 组内的<em>相对偏好</em>而非绝对目标来使用。
+      <br><br>
+      <strong>方法：</strong>(1) <em>Outcome-conditioned centering</em>：将错误轨迹的 PRM 分数在每个 prompt 组内零均值化，去除系统偏差但保留信息性排序；(2) 用 frozen quantile-regression PRM 结合 multi-scale coherence evaluator 惩罚短窗口内的置信度波动；(3) 将最终 centered process bonus 整合进 GRPO，无需辅助目标或额外可训练组件。
+      <br><br>
+      在 MATH-500 / AMC / AIME / MinervaMath / OlympiadBench 上，PROGRS 在 fewer rollouts 下一致优于仅用 outcome 的基线。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>把 PRM 当"组内相对偏好"而非"绝对值"用，是避免 reward hacking 的关键</li>
+        <li>centering within incorrect group 保留了有用的排序信号、去掉了 systematic bias</li>
+        <li>无需额外可训练模块即可嵌入 GRPO——易于部署</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.09482">Process Reward Agents for Steering Knowledge-Intensive Reasoning</a><span class="arxiv-id">2604.09482</span></h3>
+    <div class="meta">ETH Zürich, Heidelberg University · April 10, 2026</div>
+    <div class="tags">
+      <span class="tag">Process Reward</span>
+      <span class="tag">Medical</span>
+      <span class="tag">Test-time</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>把 PRM 从"训练时组件"扩展为"测试时可插拔推理引导器"。知识密集型域（如医学）中，中间步骤通常不可本地验证，因为要跨大型外部知识源综合线索。细微错误会在推理链中传播却不被察觉。
+      <br><br>
+      <strong>方法：</strong>Process Reward Agents (PRA)：在测试时为 frozen policy 提供领域接地的、在线的 step-wise 奖励。与以前的 retrieval-augmented PRM 不同，PRA 允许基于搜索的 decoding 在每一生成步对候选轨迹排序并剪枝。
+      <br><br>
+      <strong>结果：</strong>Qwen3-4B + PRA 在 MedQA 上达到 80.8% 精度（4B 规模新 SOTA）。对 0.5B–8B 的未见 frozen policy 也能提升最多 25.7%，且无需更新 policy。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>PRM 可以完全解耦于 policy，成为"可热插拔"的领域模块</li>
+        <li>在知识密集型推理上，测试时搜索 + PRA 比训练更大模型更有性价比</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.02795">Rubrics to Tokens: Bridging Response-level Rubrics and Token-level Rewards</a><span class="arxiv-id">2604.02795</span></h3>
+    <div class="meta">April 3, 2026 · <a href="https://github.com/TURLEing/Rubrics-To-Tokens">GitHub</a></div>
+    <div class="tags">
+      <span class="tag">Reward Modeling</span>
+      <span class="tag">Rubric</span>
+      <span class="tag">Credit Assignment</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>针对 rubric-based RL 长期存在的"response-level 奖励稀疏且模糊"问题，给出 token 级归因方案。
+      <br><br>
+      <strong>方法：</strong>RTT 引入一个 Token-Level Relevance Discriminator，用以预测哪些 token 与某条约束相关。然后通过 <em>RTT-GRPO</em> 在统一框架中整合 response 级与 token 级 advantage，实现细粒度信用分配。在多个模型与规模上，RTT 在 instruction-level 和 rubric-level 精度上一致优于所有基线。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>rubric-based RL 的下一步是 token 级信用——而非仅 response 级</li>
+        <li>Relevance Discriminator 可作为通用的"约束归因"模块插入其他 RL 流程</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.07415">SubSearch: Intermediate Rewards for Unsupervised Guided Reasoning in Complex Retrieval</a><span class="arxiv-id">2604.07415</span></h3>
+    <div class="meta">Roxana Petcu, Evangelos Kanoulas, Maarten de Rijke · IRLab, University of Amsterdam · April 8, 2026</div>
+    <div class="tags">
+      <span class="tag">Process Reward</span>
+      <span class="tag">Retrieval</span>
+      <span class="tag">Unsupervised</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>针对复杂检索中多步推理无明确路径、只能得到稀疏 outcome 信号的问题，提出直接用<em>内在过程奖励</em>优化生成器，不依赖外部过程监督。
+      <br><br>
+      <strong>方法：</strong>SubSearch 将 outcome-only 监督切换为 intermediate reward，激励模型规划高质量的推理轨迹。与先前的 PRM 工作不同，奖励来自模型/系统内部派生的信号，而非外部标注。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"内在过程奖励"思路让 PRM 摆脱标注瓶颈——把奖励从监督学习变成系统属性</li>
+        <li>检索系统成为 agentic RL 的一大催生场景</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.10072">Reason Only When Needed: Efficient Generative Reward Modeling via Model-Internal Uncertainty</a><span class="arxiv-id">2604.10072</span></h3>
+    <div class="meta">UNSW, Peking University, Tencent, Baidu · April 11, 2026</div>
+    <div class="tags">
+      <span class="tag">Reward Modeling</span>
+      <span class="tag">Generative RM</span>
+      <span class="tag">Efficiency</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>解决生成式奖励模型 (GRM) 对所有输入一视同仁地触发 CoT 推理的计算浪费问题。
+      <br><br>
+      <strong>方法：</strong>提出 E-GRM：基于并行生成的收敛行为估计内部不确定性，仅在需要时选择性触发 CoT 推理。不依赖手工特征或任务特定信号。这使 GRM 在简单任务上快速回答、复杂任务上才"思考"。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"按需 CoT" 是 GRM 的核心效率杠杆——与 test-time compute scaling 思路互补</li>
+        <li>用 self-consistency 的收敛速度作为 uncertainty 代理，plug-and-play</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.02621">RL-based Knowledge Distillation with LLM-as-a-Judge</a><span class="arxiv-id">2604.02621</span></h3>
+    <div class="meta">April 3, 2026</div>
+    <div class="tags">
+      <span class="tag">Reward Modeling</span>
+      <span class="tag">Distillation</span>
+      <span class="tag">LLM-as-Judge</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>将"LLM-as-a-Judge"的在线评估信号作为 RL 奖励用于蒸馏。学生模型通过 RL 直接受教师 LLM 的持续反馈指导，而非固定离线样本。该方法桥接了 RLAIF 与蒸馏两条主线，为资源受限场景下提供了"RLAIF-distillation" 的一体化范式。
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>III. Tool Use & Multi-Hop Reasoning · 工具使用与多跳推理</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.10788">TInR: Exploring Tool-Internalized Reasoning in Large Language Models</a><span class="arxiv-id">2604.10788</span></h3>
+    <div class="meta">April 12, 2026</div>
+    <div class="tags">
+      <span class="tag">Tool Use</span>
+      <span class="tag">Knowledge Internalization</span>
+      <span class="tag">Three-stage Training</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>提出"工具内化"新范式。现有 Tool-Integrated Reasoning (TIR) 在推理时依赖外部工具文档，导致工具掌握困难、工具规模受限、推理效率低。TInR 的主张是：<strong>把工具知识内化到 LLM 权重中</strong>，让模型在无需文档的情况下高效调用工具。
+      <br><br>
+      <strong>方法：</strong>TInR-U 框架的三阶段训练：(1) 工具内化 —— 双向知识对齐；(2) 用高质量推理标注做 SFT 预热；(3) RL with TInR-specific rewards。在 in-domain 与 out-of-domain 设置上均显著优于基线。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>工具文档从"推理时检索"转为"训练时内化"，是突破工具规模瓶颈的新思路</li>
+        <li>三阶段 pipeline 展示了 SFT → RL 的"内化 + 精调"互补</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.07960">ToolCAD: Tool-Using LLMs in Text-to-CAD Generation with RL</a><span class="arxiv-id">2604.07960</span></h3>
+    <div class="meta">Yifei Gong et al. · Shanghai University · April 9, 2026</div>
+    <div class="tags">
+      <span class="tag">Tool Use</span>
+      <span class="tag">Agentic</span>
+      <span class="tag">CAD</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>首次将 LLM 作为"工具使用智能体"用于 text-to-CAD 生成。CAD 是典型的长视野、多步骤、需要连贯建模动作的专家级任务。
+      <br><br>
+      <strong>方法：</strong>搭建交互式 CAD 建模 gym 用以 rollout 推理与工具增强的交互轨迹，加入混合反馈 + 人类监督；通过 end-to-end 后训练 + 在线 curriculum RL 让 LLM 演化出精细的 CAD Modeling Chain-of-Thought (CAD-CoT)。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>CAD 是现实世界中 agentic RL 的"终极长视野"测试场</li>
+        <li>curriculum + 混合反馈是高复杂度工具空间中必要的训练稳定器</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.12487">KG-Reasoner: Reinforced End-to-End Multi-Hop Knowledge Graph Reasoning</a><span class="arxiv-id">2604.12487</span></h3>
+    <div class="meta">Shuai Wang, Yinan Yu · April 14, 2026</div>
+    <div class="tags">
+      <span class="tag">Multi-hop</span>
+      <span class="tag">KG Reasoning</span>
+      <span class="tag">End-to-End</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>解决 LLM 在 KG 多跳推理中因 pipeline 碎片化、步骤相互孤立而效能下降的问题。
+      <br><br>
+      <strong>方法：</strong>KG-Reasoner 将多步推理整合进 Reasoning LLM 单一"思考"阶段；通过 RL 让模型内化 KG 遍历过程，动态探索推理路径，并在必要时回溯。在 8 个多跳 / 知识密集型推理 benchmark 上达到或超过 SOTA。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>将"图遍历"放进"思考阶段"——而非流程上游——是多跳推理的结构性改进</li>
+        <li>回溯 (backtracking) 能力是 RL 训练出的隐含能力</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.11193">TRACE: Experiential Framework for Coherent Multi-hop KGQA</a><span class="arxiv-id">2604.11193</span></h3>
+    <div class="meta">Yingxu Wang, Jiaxin Huang, Mengzhu Wang, Nan Yin · April 13, 2026</div>
+    <div class="tags">
+      <span class="tag">Multi-hop</span>
+      <span class="tag">KGQA</span>
+      <span class="tag">Experience Replay</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>现有 KGQA 方法把每个推理步视为独立事件，难以利用先前探索的经验，导致碎片化推理和冗余探索。TRACE 统一 LLM 上下文推理与探索先验整合，增强多跳 KGQA 的一致性与鲁棒性。
+      <br><br>
+      <strong>方法：</strong>(1) 动态把不断演化的推理路径翻译成自然语言叙事以保持语义连贯；(2) 把先前探索轨迹抽象成可复用的"经验先验"，捕捉反复出现的探索模式；(3) dual-feedback re-ranking 机制在关系选择阶段融合叙事与先验。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>将探索历史作为"学到的先验"而非一次性上下文，是 RL 多跳推理的重要可复用资产</li>
+        <li>自然语言叙事 + 经验先验的组合，为 reasoning trace 提供了"语义 + 结构"双重锚点</li>
+      </ul>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>IV. Reasoning Efficiency & Calibration · 推理效率与校准</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.05643">Graph-Based Chain-of-Thought Pruning for Reducing Redundant Reflections</a><span class="arxiv-id">2604.05643</span></h3>
+    <div class="meta">Hongyuan Yuan et al. · April 7, 2026</div>
+    <div class="tags">
+      <span class="tag">Reasoning RL</span>
+      <span class="tag">Efficiency</span>
+      <span class="tag">DPO + GRPO</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>系统识别 RL-trained reasoning LLM 中的两类冗余：<em>不加选择的反思</em> (Indiscriminate Reflection) 和<em>重复反思</em> (Repetitive Reflection)。
+      <br><br>
+      <strong>方法：</strong>将每条线性 CoT 转为 DAG，用双层剪枝策略：(1) 分支级剪枝去掉贡献弱的反思分支，(2) 深度级剪枝去除后期再验证。随后三阶段蒸馏：① SFT 用剪枝后的简洁轨迹初始化策略；② DPO 偏好"正确且更简洁"的轨迹；③ GRPO with length penalty 联合优化正确性与效率。
+      <br><br>
+      <strong>结果：</strong>平均推理 token 降低 42%，精度保持或提升。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"反思 ≠ 深思"——不是所有反思都有价值</li>
+        <li>SFT → DPO → GRPO 三段式 pipeline 是"效率 + 精度"联合优化的合理分工</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.12046">CURE: Think Through Uncertainty — Long-Form Factuality via Reasoning Calibration</a><span class="arxiv-id">2604.12046</span></h3>
+    <div class="meta">Xin Liu, Lu Wang · University of Michigan · April 13, 2026</div>
+    <div class="tags">
+      <span class="tag">Factuality</span>
+      <span class="tag">Calibration</span>
+      <span class="tag">Claim-level</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>现有长文事实性方法或依赖 post-hoc 改写，或用 correctness-based RL 奖励，但都未教会模型<em>估计自身生成的各部分可信度</em>。现有方法输出一个整体标量置信度，对长文不足——不同 claim 的不确定性差异巨大。
+      <br><br>
+      <strong>方法：</strong>CURE 通过<em>Claim-Aware Reasoning Protocol</em> 把输出结构化为原子 claim + 显式置信估计；再用多阶段训练流程：先对齐置信度与正确性，再对事实性做 RL 优化。
+      <br><br>
+      <strong>结果：</strong>在 4 个长文事实性 benchmark 上一致优于监督与 RL 基线；Biography 上 claim 级精度提升最多 39.9%，且不牺牲召回率。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"整体置信度"粒度不够——claim-level calibration 是长文事实性的下一个关键</li>
+        <li>先对齐置信度再优化事实性——这种 curriculum 让 RL 信号更稳定</li>
+      </ul>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>V. RL at Domain Boundaries · RL 在现实域边界的探索</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.10996">When Valid Signals Fail: Regime Boundaries Between LLM Features and RL Trading Policies</a><span class="arxiv-id">2604.10996</span></h3>
+    <div class="meta">Zhengzhe Yang · April 13, 2026</div>
+    <div class="tags">
+      <span class="tag">RL</span>
+      <span class="tag">Finance</span>
+      <span class="tag">Distribution Shift</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>提出一个警示性的负面结果：LLM 提取的"客观有效"信号不一定能转化为下游 RL 任务的性能提升。作者构建模块化 pipeline：frozen LLM 作为无状态特征提取器，把新闻与财报转换为固定维向量，喂给下游 PPO 智能体。
+      <br><br>
+      <strong>发现：</strong>通过把 prompt 当成离散超参数、直接对 Information Coefficient (IC) 优化，可以找到 <em>IC &gt; 0.15</em> 的真正具有预测力的特征。但在宏观冲击导致的分布漂移期间，这些"有效"特征反而给 agent 带来噪声，使得增强后的 agent 性能低于纯价格基线。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"特征有效" ≠ "策略有效"——中间表示质量与下游策略性能是两件事</li>
+        <li>non-stationary 环境暴露了 LLM 特征的 regime-sensitivity 问题</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.11477">OOM-RL: Out-of-Money Reinforcement Learning Market-Driven Alignment for LLM MAS</a><span class="arxiv-id">2604.11477</span></h3>
+    <div class="meta">April 13, 2026 · 20-month longitudinal study (July 2024 – Feb 2026)</div>
+    <div class="tags">
+      <span class="tag">Multi-Agent</span>
+      <span class="tag">Alignment</span>
+      <span class="tag">RLHF/RLAIF alt.</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>把"实际资本损失"作为不可 hack 的负梯度，用于 LLM 多智能体系统的目标对齐。作者认为 RLHF / RLAIF 常引发模型 sycophancy，而基于执行的评测又会被不受约束的 agent 通过"Test Evasion"钻空子。
+      <br><br>
+      <strong>方法：</strong>20 个月的纵向实证研究：系统从高换手、sycophantic 的基线演化为 liquidity-aware 架构。最终系统采用 <em>Strict Test-Driven Agentic Workflow</em> (STDAW)，enforcing 一种 Byzantine 启发的单向状态锁 (RO-Lock)，锚定在 ≥95% 代码覆盖率矩阵。最终对齐系统达到 annualized Sharpe Ratio 2.06。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"资本损失"是天然无法黑客化的 grounding 信号，是 RLHF/RLAIF 的激进替代</li>
+        <li>长期训练(20 个月)揭示出短期 RL 基准看不到的 alignment 收敛行为</li>
+      </ul>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>VI. Alignment, Knowledge, Editing · 对齐、知识与编辑</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.12770">Teaching LLMs Human-Like Editing of Inappropriate Argumentation via RL</a><span class="arxiv-id">2604.12770</span></h3>
+    <div class="meta">Timon Ziegenbein, Maja Stahl, Henning Wachsmuth · Leibniz University Hannover · April 14, 2026</div>
+    <div class="tags">
+      <span class="tag">RL</span>
+      <span class="tag">Argumentation</span>
+      <span class="tag">GRPO</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>识别 LLM 编辑行为与人类的本质差异：LLM 倾向做大量分散的小修改且易改变原意；人类更擅长把相关改动封装成自包含、保语义的编辑。
+      <br><br>
+      <strong>方法：</strong>用 GRPO + 多成分奖励函数（编辑级语义相似性、流畅性、模式一致性、论证级适当性）联合优化，生成可独立接受/拒绝的句子级编辑建议。
+    </div>
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>"像人一样编辑"是一个容易被忽视但非常明显的行为 gap</li>
+        <li>多组件奖励设计展示了 GRPO 在风格/行为对齐任务的表达力</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.05540">Learning to Edit Knowledge via Instruction-based Chain-of-Thought Prompting</a><span class="arxiv-id">2604.05540</span></h3>
+    <div class="meta">April 6, 2026</div>
+    <div class="tags">
+      <span class="tag">Knowledge Editing</span>
+      <span class="tag">GRPO</span>
+      <span class="tag">Cold Start</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>首次将 GRPO 应用于知识编辑任务。方法为轻量 SFT 冷启动 + data-evolving GRPO 优化，让模型学会按指令执行 CoT 式的知识编辑，同时保留未被编辑知识的稳定性。这是知识编辑与 RL 两条线的直接融合。
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.05341">Curr-RLCER: Curriculum RL for Coherent Explainable Recommendation</a><span class="arxiv-id">2604.05341</span></h3>
+    <div class="meta">April 6, 2026</div>
+    <div class="tags">
+      <span class="tag">RL</span>
+      <span class="tag">Recommendation</span>
+      <span class="tag">Curriculum</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>用 GRPO 训练 LLM 提升推荐系统中评分与自然语言解释的一致性。<em>难度感知</em>奖励机制把 curriculum learning 与 GRPO 结合：分阶段训练 LLM，从易到难地引入解释一致性约束。该工作展示了 GRPO 在"非 verifiable"但可建模一致性的任务上的可用性。
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.05483">Can We Trust a Black-box LLM? Untrustworthy Boundary Detection via Bias-Diffusion and MARL</a><span class="arxiv-id">2604.05483</span></h3>
+    <div class="meta">April 6, 2026</div>
+    <div class="tags">
+      <span class="tag">Multi-Agent RL</span>
+      <span class="tag">Trust</span>
+      <span class="tag">Black-box</span>
+    </div>
+    <div class="summary">
+      <strong>核心贡献：</strong>将"信任边界检测"形式化为 Multi-Agent RL 问题。bias-diffusion 模块在多个策略代理间扩散偏差信号，代理协同探索黑盒 LLM 的不可信区域。为 LLM 在敏感场景下的"不能回答"能力提供了一条可训练的自动化红线识别路径。
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>VII. Cross-Cutting Themes · 交叉主题与研究脉络</h2>
+  <article class="paper">
+    <h3>本期综合观察 · Synthesis</h3>
+    <div class="summary">
+      本期 19 篇新论文呈现出五条清晰的研究脉络：
+      <br><br>
+      <strong>1. 从"奖励是什么"到"奖励怎么用"</strong>——PROGRS / RTT / SubSearch / E-GRM / PRA 几乎同时出现，说明社区已不再纠结于"reward model 架构"，而是聚焦<em>如何将 reward 分配到 token / step / claim 级</em>。这与晨报中 SKPO/TEPO/SPPO 的 credit-assignment 主题呼应，形成"细粒度信用分配"的合奏。
+      <br><br>
+      <strong>2. Agentic RL 的"反思阶段"</strong>——RAGEN-2 的模板坍缩诊断是一个里程碑：社区开始意识到稳定 entropy / loss curve 并不等于稳定的推理质量。CoT Pruning 对"反思的反思"、TRACE 对"经验先验"的引入，都指向一个共同方向：<em>Agentic RL 需要跨 rollout 的信息流，而不仅是单轨迹内的奖励</em>。
+      <br><br>
+      <strong>3. Tool Use 从"显式"走向"内化"</strong>——TInR 主张把工具知识固化到权重中，代表一种可能的终局：当工具库足够标准化，工具的边界会模糊化，最终变为模型的隐式能力。这与晨报中的 TPO 统一视角有哲学上的呼应。
+      <br><br>
+      <strong>4. RLVR 的 domain-aware 扩张</strong>——Regime Boundaries、OOM-RL、Argumentation Editing 三篇论文一起描绘了 RLVR 在非稳态/真实世界中的边界：verifiable reward 在规则明确的领域（代码、数学、Sharpe ratio）极为强大，但在 regime shift 下会失效。OOM-RL 的 "capital depletion as negative gradient" 是一种极端但深刻的应对。
+      <br><br>
+      <strong>5. 数据基础设施成为一等公民</strong>——COVERT、AnomalyAgent、Skill-SD 的共同点是：不再简单从静态数据集训练，而是构造<em>合成的、可验证的、能 rollout 的</em>交互环境。这表明 Agentic RL 已经过了"证明可行"的阶段，进入"工程化规模化"阶段。
+    </div>
+  </article>
+</section>
+
+<footer>
+  <p>LLM RL Daily — 由 AI 研究员自动编辑 / Edited by an AI research analyst.<br>
+  与 <a href="2026-04-16.html">晨报 (Morning Edition)</a> 配合阅读。Stay curious.</p>
+</footer>
+
+</body>
+</html>

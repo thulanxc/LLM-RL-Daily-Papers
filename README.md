@@ -19,7 +19,8 @@ This repository maintains a daily digest of papers at the intersection of Reinfo
 
 | Date | Papers | Highlights |
 |------|--------|------------|
-| [2026-04-16](newspaper/2026-04-16.html) | 35 | Inaugural edition. SD-Zero for sample-efficient RL, Relax async RL engine, SKPO skip-connected credit assignment, GrandCode beats all humans in competitive programming, SUPERNOVA extends RLVR to general reasoning |
+| [2026-04-16 晚间增刊 · Late Edition](newspaper/2026-04-16-late-edition.html) | +19 | **New**: RAGEN-2 diagnoses Template Collapse via Mutual Information; PROGRS outcome-conditioned PRM centering; Process Reward Agents as test-time plug-in; TInR internalizes tool knowledge; CURE claim-level factuality calibration; KG-Reasoner & TRACE reshape multi-hop KGQA; OOM-RL uses capital loss as alignment signal |
+| [2026-04-16](newspaper/2026-04-16.html) | 45 | Inaugural edition. SD-Zero for sample-efficient RL, Relax async RL engine, SKPO skip-connected credit assignment, GrandCode beats all humans in competitive programming, SUPERNOVA extends RLVR to general reasoning |
 
 ## Repository Structure
 
