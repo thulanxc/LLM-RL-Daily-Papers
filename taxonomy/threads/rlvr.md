@@ -22,5 +22,13 @@ Instead of learning a reward model from human preferences, use verifiable signal
 - **Negotiation RLVR** — Verifiable rewards for strategic negotiation. [2604.09855]
 - **PerMix-RLVR** — Preserving persona expressivity under RLVR training. [2604.08986]
 
+## Night Edition (April 16, late-night) Additions — Vertical Expansion
+- **QuarkMedSearch** [2604.12867] — SFT (short→long) + RLVR for Chinese medical long-horizon deep search; explicit anti-hacking reward design.
+- **ReasonXL** [2604.12378] — SFT + **Dr. GRPO** recipe for multilingual reasoning (EN/DE/FR/IT/ES, 2M aligned samples per language). Representational analysis reveals language-identity "activation bottleneck" in early layers.
+- **HintMR** [2604.12229] — Distillation of the *meta-skill* of generating & consuming step-level hints into small LMs.
+- **MathAgent** [2604.11188] — Legislator-Executor adversarial constraint-graph evolution produces 1K synthesized samples outperforming LIMO / s1K.
+
 ## Key Trend
-RLVR is expanding beyond math/code to general reasoning (SUPERNOVA), negotiation, and multimodal tasks. The "imperfect verifier" result lowers the barrier for new domains.
+RLVR is expanding beyond math/code to general reasoning (SUPERNOVA), negotiation, multimodal tasks, medical deep search (QuarkMedSearch), multilingual reasoning (ReasonXL), content moderation (CARO via DPO), knowledge editing, and argumentation. The "imperfect verifier" result lowers the barrier for new domains. 
+
+**Night-edition pattern**: Every new RLVR domain is adopting the same recipe template — *SFT (short-to-long or style-shift) → RLVR with domain-specific anti-hacking reward*. This is becoming the de facto playbook for vertical-domain RL.

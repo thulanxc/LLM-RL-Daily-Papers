@@ -38,3 +38,26 @@ Train models to reason (produce chain-of-thought) through RL rather than supervi
 The "scaling reasoning tokens" result is foundational — it establishes a clean scaling law for test-time compute. Parallel thinking (multiple threads explored simultaneously) is the enabling technique for extracting maximum value from this scaling relationship.
 
 The **April 16 PM** additions introduce a complementary thread: **reasoning efficiency**. As test-time compute scaling becomes default, the cost of excess thinking is becoming prohibitive — hence Graph-Based CoT Pruning's 42% reduction, CURE's claim-granularity calibration, and E-GRM's uncertainty-gated CoT. The field is shifting from "how to reason more" to "how to reason better per token".
+
+## Night Edition (April 16, late-night) Additions
+
+### Trajectory-Shape Reward Design
+- **ETR (Entropy Trend Reward)** [2604.05355] — Challenges "low-entropy = good" heuristic; argues reasoning efficiency is governed by the *trajectory* of uncertainty reduction. Trajectory-level objective integrated into GRPO.
+
+### Multilingual Reasoning
+- **ReasonXL (deep-dive)** [2604.12378] — SFT shifts the reasoning language; **Dr. GRPO**-based RLVR recovers performance. Representational analysis pinpoints an early-layer "activation bottleneck" causally determining language identity.
+
+### Small-Model Reasoning
+- **HintMR** [2604.12229] — Distills the *meta-skill* of generating & consuming step-level hints into SLMs. Acts as a train-time analog to Process Reward Agents (late edition).
+
+### Data Synthesis for Reasoning RL
+- **MathAgent** [2604.11188] — Adversarial evolution of constraint graphs for math data. 1K synthesized samples > LIMO / s1K across 8 benchmarks.
+
+## Updated Key Trend
+
+Three parallel threads now structure reasoning RL research:
+1. **Scaling up**: more tokens, parallel thinking, larger test-time compute (pre-April-16).
+2. **Pruning down**: CoT Pruning, CURE, ETR trajectory shape (late + night editions).
+3. **Teaching across**: ReasonXL cross-language transfer, HintMR teacher-student meta-skill distillation (night edition).
+
+The field is converging on a template: **structural diversity in training data × trajectory-shape rewards × test-time efficient reasoning**.

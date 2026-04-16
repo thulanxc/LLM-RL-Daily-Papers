@@ -14,5 +14,19 @@ RL training for LLMs is 3-10x more expensive than SFT due to rollout generation.
 - **I-PPO** — Influence-guided data attribution for PPO. [2604.01597]
 - **FP4 Explore, BF16 Train** — FP4 rollouts for diffusion model RL. 4.64x acceleration. [2604.06916]
 
-## Key Trend
-Three orthogonal efficiency improvements are emerging: (1) async training (Relax), (2) data reuse (experience replay, trajectory extrapolation), and (3) reduced-precision rollouts (QaRL). These are composable — applying all three could yield >5x total speedup.
+## Night Edition (April 16, late-night) Additions
+- **SandMLE** [2604.04872] — Synthetic micro-environments for ML engineering agents. Training/test data constrained to 50–200 samples, ≤15s execution, **13× speedup**. First time trajectory-level on-policy RL becomes viable in MLE domain. 20.3%–66.9% medal-rate improvement on MLE-bench-lite.
+- **Frontier-Eng** [2604.12290] — Not strictly infra, but provides industrial-grade simulator / verifier infrastructure with continuous rewards + hard feasibility constraints across 47 engineering tasks.
+- **PTE (Prefill Token Equivalents)** [2604.05404] — Hardware-aware efficiency metric unifying internal reasoning + external tool-use cost, explicitly accounting for KV-Cache eviction and long-tool-response.
+- **Adaptive Simulation Experiment** [2604.08779] — Policy-identification (vs. policy-optimization) as a cheaper alternative: Thompson-Sampling-based pairwise comparisons for best-of-N policy selection with PAC guarantees.
+
+## Key Trend (updated)
+Four orthogonal efficiency directions are now emerging:
+1. **Async training** (Relax)
+2. **Data reuse** (experience replay, NExt trajectory extrapolation)
+3. **Reduced-precision rollouts** (QaRL, FP4 Explore)
+4. **Synthetic micro-environments** (SandMLE, MathAgent synthesis) — trade data scale for structural complexity
+
+These are composable — applying all four could yield >10× total speedup for domains like MLE that previously seemed intractable for on-policy RL.
+
+**Night-edition meta-insight**: The PTE metric signals a paradigm shift — RL research now must include *hardware-aware* efficiency in its design loop, not just algorithmic optimality.

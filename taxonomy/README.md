@@ -206,22 +206,80 @@ These papers pressure-test the assumption that *verifiable reward + training sta
 - **Curr-RLCER** (2604.05341): Curriculum-GRPO for explainable recommendation
 - **Trust Boundary MARL** (2604.05483): Multi-agent RL to detect black-box untrustworthy regions
 
-## Cross-Cutting Themes (April 2026)
+## Night Edition Additions (April 16, 2026 Late-Night — 19 new papers)
 
-1. **Credit Assignment is the central challenge**: SKPO, TEPO, SPPO, GenAC, the survey (2604.09459), plus late-edition PROGRS and RTT all focus on better credit assignment — at token, step, claim, sequence, and trajectory levels.
+### 18. Reward Hacking as a Discipline (new sub-thread)
 
-2. **RLVR is expanding**: From math/code to general reasoning (SUPERNOVA), negotiation, multimodal tasks, knowledge editing, and argumentation. Both late-edition OOM-RL (finance via capital loss) and Regime Boundaries (finance caveats) test the edges.
+Reward hacking research is maturing from ad-hoc observations into a systematic discipline:
 
-3. **Efficiency is non-negotiable**: Every major contribution now includes efficiency considerations — replay buffers (40% savings), trajectory extrapolation (37.5%), multi-response scoring (4x), async training (2x), and late-edition CoT Pruning (42% token savings).
+- **Reward Hacking Survey** (2604.13602): First unified taxonomy — Feature / Representation / Evaluator / Environment levels. Documents "Reward Collapse" in DPO — the implicit reward drifts at higher KL budgets even without a separate RM.
+- **MEDS** (2604.11297): Memory-augmented reward shaping — past rollouts' failure clusters penalize new rollouts. +4.13 pass@1 across 5 datasets.
 
-4. **Agentic RL is producing superhuman results — and diagnostic tools**: GrandCode and RefineRL showed the upside; RAGEN-2 introduces the diagnostic lens (Template Collapse) needed to scale such successes reliably.
+**Connection**: These extend Thread 4 (Reward Modeling) into a new diagnostic axis. Reward hacking is no longer just an RLHF concern — DPO, GRPO, RLAIF all share the vulnerability.
 
-5. **Self-improvement loops are maturing**: SD-Zero, Self-Distilled RLVR, MISE, GenAC, plus late-edition Skill-SD, SubSearch, and E-GRM — all provide self-generated training signal in different forms (skills, uncertainty, intrinsic rewards).
+### 19. TIR Evolution: Trust, Efficiency, Experience (new sub-thread within Agentic RL)
 
-6. **Process reward has left the training loop**: Late edition's PRA deploys PRMs as *test-time* steering; E-GRM as *uncertainty-gated* CoT; PROGRS as *group-relative preferences*. The PRM is no longer a fixed-role artifact.
+Tool-Integrated Reasoning research is fragmenting into three specialized directions:
 
-7. **Real-world deployment is the new benchmark**: Papers like OOM-RL (20 months of live trading) and Regime Boundaries (distribution shift failure) herald a shift from static benchmarks to sustained, observable deployment.
+- **E³-TIR** (2604.09455): Three-experience fusion (Expert Prefix / Expert Guided / Self-Exploration) as a training middle-path between Zero-RL and SFT-then-RL. +6% across 3B–8B.
+- **ATTC** (2604.08281): First framework to treat tool trust as a trainable decision — model explicitly chooses to accept/reject/recompute tool outputs.
+- **PTE — Beyond Accuracy** (2604.05404): Hardware-aware TIR efficiency metric (Prefill Token Equivalents). Reveals KV-Cache eviction and long-tool-response as dominant costs; higher PTE correlates with lower correctness.
+
+**Connection**: These build on Thread 12 (Tool Use Internalization) but shift the question from "how to use tools" to "when to trust them" and "how expensive is tool use really". Together with ToolCAD and TInR (late edition), TIR is now a complete research program.
+
+### 20. Policy-Reward Co-Evolution (new thread)
+
+Papers where the boundary between policy and reward becomes porous:
+
+- **Self-Guide** (2604.03098): Policy generates its own internal reward via self-guidance steps; no external RM required.
+- **LangMARL** (2604.00722): Cooperative MARL translated entirely into natural language — language critic, language gradient estimator, language optimizer.
+- **MIA** (2604.04503): Manager-Planner-Executor with alternating RL; parametric-nonparametric memory forms a co-evolving loop.
+- **ETR** (2604.05355): Entropy trend (not level) as a trajectory-level reward encouraging efficient reasoning.
+
+**Key insight**: The "reward comes from outside" assumption is weakening. Future RL pipelines may have the reward function *learned from the same rollouts that train the policy*, with no independent RM artifact.
+
+### 21. Multimodal Visual Reasoning via Internal Signals
+
+- **MedVR** (2604.08203): EVR (entropy-guided visual regrounding) + CCA (consensus-based credit assignment) — no human step-level annotations needed.
+- **Saliency-R1** (2604.04500): Saliency-map alignment reward with no extra forward/backward passes; enforces VLMs to ground in visual evidence.
+
+**Pattern**: Visual reasoning RL is converging on a template — use model-internal signal (uncertainty or saliency) as supervision, rather than external labels.
+
+### 22. RLVR Vertical Applications (expanding further)
+
+- **QuarkMedSearch** (2604.12867): SFT short→long + RLVR with anti-hacking reward design for Chinese medical deep search.
+- **ReasonXL** (2604.12378): SFT + Dr. GRPO recipe for multilingual reasoning (5 European languages, 2M aligned samples each).
+- **CARO** (2604.10504): DPO with analogy-chain preference pairs; +24.9% F1 on ambiguous content moderation.
+- **HintMR** (2604.12229): Distillation of a meta-skill (generating & consuming step-level hints) into small models.
+- **MathAgent** (2604.11188): Legislator-Executor adversarial synthesis — structural diversity beats scale (1K synthesized > LIMO/s1K).
+
+### 23. Engineering & MLE Agent Benchmarks (new sub-thread)
+
+- **Frontier-Eng** (2604.12290): 47 tasks × 5 engineering categories; continuous-reward Propose-Execute-Evaluate loop. First benchmark to expose "optimization degradation" — models get worse with more budget.
+- **SandMLE** (2604.04872): Synthetic micro-MLE environments (50-200 samples, ≤15s execution) enabling trajectory-level on-policy RL in ML engineering for the first time. 13× speedup.
+
+**Pattern**: Agentic RL research is finally getting proper training/evaluation environments with continuous signals and hard constraints, not just binary task suites.
+
+## Cross-Cutting Themes (April 2026, updated Night Edition)
+
+1. **Credit Assignment is the central challenge**: SKPO, TEPO, SPPO, GenAC, the survey (2604.09459), late-edition PROGRS/RTT, plus night-edition LangMARL (language-space credit assignment) and MEDS (population-level credit via failure clusters).
+
+2. **RLVR is expanding**: Math/code → reasoning (SUPERNOVA) → negotiation → multimodal → KG → knowledge editing → argumentation → now also medical deep search (QuarkMedSearch), multilingual reasoning (ReasonXL), content moderation (CARO). OOM-RL (finance) and Regime Boundaries test the edges.
+
+3. **Efficiency is non-negotiable**: Replay buffers (40%), trajectory extrapolation (37.5%), multi-response scoring (4×), async (2×), CoT Pruning (42%) — and now **night-edition PTE** frames *tool-call efficiency* as first-class, and **SandMLE** achieves 13× MLE speedup.
+
+4. **Agentic RL is producing superhuman results — and diagnostic tools**: GrandCode/RefineRL showed upside; RAGEN-2 introduced diagnostics (Template Collapse); night-edition MEDS adds population-level diagnostics, and Frontier-Eng exposes "optimization degradation".
+
+5. **Self-improvement loops are maturing**: SD-Zero, Self-Distilled RLVR, MISE, GenAC, late-edition Skill-SD/SubSearch/E-GRM, plus night-edition **Self-Guide** (policy-generated internal reward), **MIA** (alternating RL + parametric-nonparametric memory cycle), **HintMR** (meta-skill distillation).
+
+6. **Process reward has left the training loop**: PRA is test-time, E-GRM is uncertainty-gated, PROGRS is group-relative — and now night-edition **ATTC** makes trust itself a meta-decision, separating "tool signal" from "when to use it".
+
+7. **Real-world deployment is the new benchmark**: OOM-RL (20 months live), Regime Boundaries (distribution shift), and now **Frontier-Eng** (industrial-grade simulators + hard constraints + 47 tasks) plus **QuarkMedSearch** (medical deep-research evaluation).
+
+8. **Reward hacking is becoming a discipline (new in Night Edition)**: The 2604.13602 survey unifies mechanisms across RLHF / RLAIF / DPO; **DPO Reward Collapse** is a clear warning sign that cannot be ignored by open-source alignment stacks.
+
+9. **Policy and reward are co-evolving (new in Night Edition)**: Self-Guide, LangMARL, MEDS, MIA — four different architectural demonstrations that reward is no longer a static external artifact.
 
 ---
 
-*Last updated: April 16, 2026 (Late Edition, 19:00 UTC)*
+*Last updated: April 16, 2026 (Night Edition, 23:00 UTC)*

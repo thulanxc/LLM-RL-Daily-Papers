@@ -19,7 +19,8 @@ This repository maintains a daily digest of papers at the intersection of Reinfo
 
 | Date | Papers | Highlights |
 |------|--------|------------|
-| [2026-04-16 晚间增刊 · Late Edition](newspaper/2026-04-16-late-edition.html) | +19 | **New**: RAGEN-2 diagnoses Template Collapse via Mutual Information; PROGRS outcome-conditioned PRM centering; Process Reward Agents as test-time plug-in; TInR internalizes tool knowledge; CURE claim-level factuality calibration; KG-Reasoner & TRACE reshape multi-hop KGQA; OOM-RL uses capital loss as alignment signal |
+| [2026-04-16 深夜版 · Night Edition](newspaper/2026-04-16-night-edition.html) | +19 | **New**: Reward Hacking survey (4-level taxonomy + DPO Reward Collapse); MEDS memory-enhanced dynamic reward shaping; E³-TIR three-experience fusion warm-up; ATTC adaptive tool trust calibration; PTE hardware-aware TIR efficiency; Self-Guide policy-reward co-evolution; LangMARL language-space MARL; MIA memory intelligence agent with alternating RL; MedVR annotation-free visual reasoning (EVR+CCA); Saliency-R1; QuarkMedSearch; ReasonXL multilingual SFT+RLVR; CARO DPO analogy reasoning; Frontier-Eng engineering benchmark; SandMLE micro-scale MLE sandbox |
+| [2026-04-16 晚间增刊 · Late Edition](newspaper/2026-04-16-late-edition.html) | +19 | RAGEN-2 diagnoses Template Collapse via Mutual Information; PROGRS outcome-conditioned PRM centering; Process Reward Agents as test-time plug-in; TInR internalizes tool knowledge; CURE claim-level factuality calibration; KG-Reasoner & TRACE reshape multi-hop KGQA; OOM-RL uses capital loss as alignment signal |
 | [2026-04-16](newspaper/2026-04-16.html) | 45 | Inaugural edition. SD-Zero for sample-efficient RL, Relax async RL engine, SKPO skip-connected credit assignment, GrandCode beats all humans in competitive programming, SUPERNOVA extends RLVR to general reasoning |
 
 ## Repository Structure

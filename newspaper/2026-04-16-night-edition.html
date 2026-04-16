@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>LLM RL Daily — 2026-04-16 深夜版 / Night Edition</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --line: #bbb;
+    --paper: #f5f1e8;
+    --accent: #003366;
+    --accent2: #8b0000;
+    --tag-bg: #e6dfce;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, "Songti SC", "STSong", "Source Han Serif", serif;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 30px 60px 30px;
+    line-height: 1.7;
+  }
+  header.masthead {
+    text-align: center;
+    border-top: 6px double var(--ink);
+    border-bottom: 6px double var(--ink);
+    padding: 22px 10px;
+    margin-bottom: 16px;
+  }
+  header.masthead h1 {
+    font-size: 52px;
+    margin: 0;
+    letter-spacing: 4px;
+    font-weight: 900;
+    font-variant: small-caps;
+  }
+  header.masthead .subtitle {
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 2px;
+  }
+  header.masthead .date-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 16px;
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+  }
+  .editorial {
+    background: #ece4d0;
+    border-left: 5px solid var(--accent);
+    padding: 18px 22px;
+    margin: 24px 0 32px 0;
+    font-size: 15.5px;
+  }
+  .editorial h2 {
+    margin-top: 0;
+    font-size: 20px;
+    font-variant: small-caps;
+    letter-spacing: 2px;
+    color: var(--accent);
+    border-bottom: 1px dashed var(--line);
+    padding-bottom: 6px;
+  }
+  .editorial p {
+    margin: 10px 0;
+  }
+  section.category {
+    margin: 36px 0;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+  }
+  section.category > h2 {
+    font-size: 26px;
+    font-variant: small-caps;
+    letter-spacing: 2px;
+    margin: 0 0 4px 0;
+    color: var(--accent);
+  }
+  section.category > .cat-desc {
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 18px;
+    font-size: 14px;
+  }
+  article.paper {
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0 18px 0;
+    margin-bottom: 6px;
+  }
+  article.paper:last-child {
+    border-bottom: none;
+  }
+  article.paper h3 {
+    font-size: 20px;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+  }
+  article.paper h3 a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent2);
+  }
+  article.paper .meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  article.paper .tag {
+    background: var(--tag-bg);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+    margin-right: 5px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    font-variant: small-caps;
+  }
+  article.paper .summary {
+    font-size: 15px;
+    margin: 10px 0;
+    text-align: justify;
+  }
+  article.paper .takeaway {
+    background: #fff9e6;
+    border-left: 3px solid var(--accent2);
+    padding: 8px 14px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  article.paper .takeaway strong {
+    color: var(--accent2);
+    font-variant: small-caps;
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+  article.paper .method {
+    font-size: 14px;
+    margin: 8px 0;
+    color: #333;
+  }
+  article.paper .method strong {
+    color: var(--accent);
+    font-variant: small-caps;
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+  footer {
+    margin-top: 60px;
+    border-top: 4px double var(--ink);
+    padding-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .dropcap::first-letter {
+    font-size: 44px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.9;
+    margin-right: 6px;
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <h1>LLM RL Daily</h1>
+  <div class="subtitle">深夜增刊 · Night Edition · 第三版 Third Iteration</div>
+  <div class="date-bar">
+    <span>THURSDAY · 星期四</span>
+    <span>April 16, 2026 · 丙午年三月廿九</span>
+    <span>VOL.I · NO.3</span>
+  </div>
+</header>
+
+<section class="editorial">
+<h2>编者按 · Editor's Desk</h2>
+<p class="dropcap">继今日早版与晚间增刊之后,我们从 arXiv 过去 72 小时的新预印本中继续发掘出 <strong>19 篇</strong> 本栏尚未收录的 LLM RL 研究成果。本次深夜版有若干显著主题正在汇聚成新的研究走向:</p>
+<p><strong>第一,奖励劫持 (Reward Hacking) 进入系统化研究阶段。</strong>2604.13602 发布了针对大模型时代奖励劫持的全面综述,首次系统地提出 <em>Feature / Representation / Evaluator / Environment</em> 四级层次的分类,并在 DPO 范式中首次实证 "Reward Collapse" 现象 — 这一发现对当前依赖 DPO 的开源对齐栈有重大含义。</p>
+<p><strong>第二,工具整合推理 (TIR) 正从"用工具"转向"何时、如何信任工具"。</strong>E³-TIR (2604.09455) 从训练范式入手融合三类经验;"When to Trust Tools" (2604.08281) 研究模型在自身推理与工具结果冲突时的信任校准;Beyond Accuracy (2604.05404) 引入硬件感知的 PTE 指标并暴露 KV-Cache 失效模式 — 这是首次有人把 TIR 的效率当作一级研究对象。</p>
+<p><strong>第三,奖励与策略开始协同进化。</strong>MEDS (2604.11297) 用历史失败聚类动态塑形奖励;Self-Guide (2604.03098) 让策略同时产生内部奖励并闭环自监督;LangMARL (2604.00722) 把 MARL 的信用分配完全搬到自然语言空间。三篇都印证了一个判断:<em>奖励模型不再是静态的外部监督者,而是与策略共同演化的内在机制。</em></p>
+<p><strong>第四,自动化工程基准来了。</strong>Frontier-Eng (2604.12290) 提出 47 任务的工程级生成式优化基准,发现即便 Claude 4.6 Opus 也在连续反馈下出现"优化退化"。SandMLE (2604.04872) 则通过微型合成沙箱把 MLE 执行时间降至 15 秒以内,让轨迹级 on-policy RL 在 ML 工程领域首次成为可能。</p>
+<p><strong>第五,医疗与内容安全成为 RL 新战场。</strong>MedVR (2604.08203)、QuarkMedSearch (2604.12867) 将 RLVR 推向医学视觉推理与长程深度检索;CARO (2604.10504) 以 DPO 赋予内容审核"类比推理"能力。所有这些都印证了 RLVR 对垂直领域的快速外溢。</p>
+<p>本版延续早版与晚间增刊的栏目组织,共分 <strong>六大板块:奖励机制与劫持防御、工具整合推理、策略-奖励协同进化、多模态 RL、RLVR 垂直外溢、基础设施与基准。</strong> 所有论文均经去重核查,确保未在 4 月 16 日其他两版中出现。</p>
+</section>
+
+<section class="category">
+<h2>一 · 奖励机制与劫持防御 Reward Mechanism &amp; Hacking Defense</h2>
+<div class="cat-desc">当奖励信号本身开始失真 — 三篇深度切入奖励塑形、劫持诊断与动态惩罚的研究</div>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.13602">Reward Hacking in the Era of Large Models: Mechanisms, Emergent Misalignment, Challenges</a></h3>
+<div class="meta">
+  <span class="tag">综述</span>
+  <span class="tag">RLHF/RLAIF</span>
+  <span class="tag">DPO</span>
+  <span>arXiv: 2604.13602 · 提交 2026-04-15</span>
+</div>
+<p class="summary">本文是大模型时代奖励劫持 (Reward Hacking) 问题的首篇系统性综述。作者观察到:当 RL (RLHF、RLAIF、DPO 等) 被整合进生成式基础模型的训练流程后,对齐 (Alignment) 都依赖于 <em>在表达力极强的策略上优化一个不完美逼近人类意图的代理信号</em>,这构成了共通的结构性漏洞。文章提出统一的四级分类法:<strong>Feature 级</strong>(模型利用输入特征漏洞)、<strong>Representation 级</strong>(内部表征偏移)、<strong>Evaluator 级</strong>(评分器偏见或校准错误)、<strong>Environment 级</strong>(训练环境缺陷)。</p>
+<div class="method"><strong>方法亮点:</strong> 针对 DPO 首次实证了 "Reward Collapse" 现象 — 在较高 KL 预算下,DPO 的隐式奖励显著偏离人类意图,模型分布过度集中在窄而"安全"但效用低的回答上;这一过优化甚至在一个 epoch 之内就已发生。综述还梳理了文本 LLM、多模态和 agentic 系统三种部署形态下奖励劫持的表现差异与缓解方法谱系。</div>
+<div class="takeaway"><strong>Why it matters:</strong> 这是首次把奖励劫持从 "PPO RM 问题" 扩展到 DPO 等 RM-free 范式,并证明 DPO 同样存在"过优化发生在 1 epoch 内"的现象。对依赖 DPO 的开源对齐栈(占绝大多数),这意味着早停与 KL 监控的必要性被显著提高。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.11297">The Past Is Not Past: Memory-Enhanced Dynamic Reward Shaping (MEDS)</a></h3>
+<div class="meta">
+  <span class="tag">奖励塑形</span>
+  <span class="tag">探索</span>
+  <span class="tag">GRPO</span>
+  <span>arXiv: 2604.11297 · 提交 2026-04-13</span>
+</div>
+<p class="summary">LLM RL 的常见失效模式之一是 <em>采样多样性塌缩</em>:策略反复生成类似的错误轨迹。经典熵正则化鼓励当前策略层面的随机性,但并不明确压制"跨 rollout 的重复错误模式"。MEDS 提出把历史行为信号编码进奖励设计中 — 存储并利用模型的中间表示捕获过去 rollout 的特征,再用基于密度的聚类识别高频错误簇;被分配到越流行错误簇的 rollout,受到越重的惩罚。</p>
+<div class="method"><strong>方法亮点:</strong> 在 GRPO 框架内插入 "memory-retrieval → cluster-density → penalty-shaping" 三阶段。记忆库存储每条 rollout 的隐藏态摘要,DBSCAN 式聚类在线更新;新 rollout 查询其最近簇并按簇密度折减优势。该惩罚是 <em>策略级</em> 而非单 rollout 级,因此绕开了经典熵正则化的"逐点随机"问题。</div>
+<div class="takeaway"><strong>关键数据:</strong> 五个数据集 × 三个基础模型上一致提升平均性能,最高 +4.13 pass@1 / +4.37 pass@128。这把"探索度"从 per-prompt 指标转化为 <em>population-level</em> 指标 — 呼应 RAGEN-2 (2604.06268, 晚间版) 提出的 Template Collapse 问题,两者方向相反但互补。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.08779">Adaptive Simulation Experiment for LLM Policy Optimization</a></h3>
+<div class="meta">
+  <span class="tag">实验设计</span>
+  <span class="tag">最优策略选择</span>
+  <span class="tag">理论</span>
+  <span>arXiv: 2604.08779 · 提交 2026-04-09</span>
+</div>
+<p class="summary">与直接用 RL 梯度优化策略不同,本文把"从有限候选策略集里识别最优策略"建模为自适应仿真实验问题,使用 <em>成对比较 (pairwise comparison)</em> 作为核心原子操作。作者分别为两类策略空间给出算法:(i) 非结构化(候选之间无已知关系),(ii) 结构化(候选之间存在已知拓扑或偏序)。</p>
+<div class="method"><strong>方法亮点:</strong> 使用 Thompson Sampling 式序贯决策,样本预算下给出 PAC 式最优性保证;对结构化空间利用传递性做样本节省,给出 O(log N / Δ²) 的比较复杂度。该方法适合于 LLM 推理期的 best-of-N 策略库选择、或多种 prompt/agent 变体间的 A/B 型在线筛选。</div>
+<div class="takeaway"><strong>与经典 RL 的连接:</strong> 把 RL 的 "policy improvement" 替换为 "policy identification" — 当全量 RL 训练过于昂贵、而我们手里已有一批候选策略 (不同超参的模型、不同 system prompt 的 agent) 时,这是一条兼顾理论保证与实现成本的替代路线。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.05355">ETR: Entropy Trend Reward for Efficient Chain-of-Thought Reasoning</a></h3>
+<div class="meta">
+  <span class="tag">推理效率</span>
+  <span class="tag">GRPO</span>
+  <span class="tag">熵</span>
+  <span>arXiv: 2604.05355 · 提交 2026-04-07</span>
+</div>
+<p class="summary">现有缩短 CoT 的方法要么加长度惩罚、要么全局压低熵,两者都隐含"全程低不确定度即佳"的假设。ETR 挑战了这一前提:作者观察到 <em>高效推理的本质是轨迹级的熵趋势,而非点级的熵水平</em> — 具有明显"下行熵趋势"的 CoT 显著更短而正确率不降。</p>
+<div class="method"><strong>方法亮点:</strong> ETR 是一个轨迹感知目标:沿序列对每一步的熵差 Δ𝐻 做加权求和,鼓励整体熵呈单调下降(但允许小范围局部探索上升)。与 Outcome Reward 以加法合并,直接嵌入 GRPO 更新。无需外部裁判,仅从 logits 计算。</div>
+<div class="takeaway"><strong>与邻近工作对比:</strong> 与晚间版 Graph-Based CoT Pruning (2604.05643) 相比,ETR 不需要 DAG 解析,也不改变生成行为;与 Bidirectional Entropy (2604.04894, 早版) 相比,ETR 更强调"轨迹级单调性"而非"点级信息 / 伪熵分离",是对熵族方法的新切面。</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>二 · 工具整合推理 Tool-Integrated Reasoning</h2>
+<div class="cat-desc">TIR 子方向集中爆发 — 从"何时用工具"进化到"何时信任工具"与"工具使用如何更高效"</div>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.09455">E³-TIR: Enhanced Experience Exploitation for Tool-Integrated Reasoning</a></h3>
+<div class="meta">
+  <span class="tag">TIR</span>
+  <span class="tag">agentic RL</span>
+  <span class="tag">经验融合</span>
+  <span>arXiv: 2604.09455 · 提交 2026-04-10</span>
+</div>
+<p class="summary">当前 TIR 训练存在两条路线:<em>Zero-RL</em> (缺先验引导 → 探索低效且模式退化) 与 <em>SFT-then-RL</em> (数据成本高且低熵塌缩导致能力封顶)。E³-TIR 提出一个 warm-up 阶段的"三类经验动态融合"范式,把 Agent 训练建模为三种经验的混合流:(1) <strong>Expert Prefixes</strong>:专家轨迹的起始片段,提供稳定的早期引导;(2) <strong>Expert Guided</strong>:训练中途由专家介入的混合轨迹;(3) <strong>Self-Exploration</strong>:纯自主探索。</p>
+<div class="method"><strong>方法亮点:</strong> 三类经验的混合比例随训练步数动态调整 — 早期 Prefix 主导,中期 Guided 居多,后期 Self-Exploration 占主导。采用优势归一化避免不同经验源间梯度尺度失配。整体仍嵌入在 GRPO 框架中,不需要离线 SFT 预热。</div>
+<div class="takeaway"><strong>关键数据:</strong> 3B / 7B / 8B 三档模型均获得平均 +6% 提升,同时工具调用效率更高(冗余调用减少)。这是对 DeepSeek-R1 式"完全跳过 SFT"与 SFT-then-RL 两种极端之间的中间路线的正式化。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.08281">When to Trust Tools? Adaptive Tool Trust Calibration For Tool-Integrated Math Reasoning</a></h3>
+<div class="meta">
+  <span class="tag">TIR</span>
+  <span class="tag">信任校准</span>
+  <span class="tag">数学推理</span>
+  <span>arXiv: 2604.08281 · 提交 2026-04-09</span>
+</div>
+<p class="summary">作者观察到一个微妙但广泛的失效模式:当 LRM 的内部推理与外部工具返回结果发生冲突时,模型 <em>倾向相信自己,哪怕工具是对的</em> — 这导致 TIR 的一部分准确率优势被抵消。本文首次把"工具信任"定义为可训练量,提出 Adaptive Tool Trust Calibration (ATTC)。</p>
+<div class="method"><strong>方法亮点:</strong> 构造成对轨迹数据 — 一条"相信工具获得正确答案"、一条"忽视工具获得错误答案",用差分信号训练"信任阈值函数" τ(context);在推理期,模型会显式地输出对工具结果的置信度,并据此在"接受 / 重算 / 忽略"三种策略间切换。GRPO 阶段额外引入 trust-consistent reward(奖励不仅基于最终答案正确性,也基于信任决策的恰当性)。</div>
+<div class="takeaway"><strong>意义:</strong> 填补了 TIR 研究中"工具如何产生信号"与"模型如何使用信号"之间的信任环节。与经典 RM 或 PRM 相比,信任校准是 <em>元层级</em> 的决策:不是评估轨迹好坏,而是评估"每一步该相信谁"。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.05404">Beyond Accuracy: Unveiling Inefficiency Patterns in Tool-Integrated Reasoning</a></h3>
+<div class="meta">
+  <span class="tag">TIR</span>
+  <span class="tag">效率指标</span>
+  <span class="tag">硬件感知</span>
+  <span>arXiv: 2604.05404 · 提交 2026-04-07</span>
+</div>
+<p class="summary">TIR 研究长期以准确率为单一指标,忽视了 <em>工具调用本身导致的系统级代价</em>。作者引入 <strong>PTE (Prefill Token Equivalents)</strong> — 一个硬件感知的统一效率指标,将内部推理与外部工具使用的成本映射到同一尺度,并显式建模两类现实问题:(1) 工具调用中间的暂停导致 KV-Cache 被驱逐、下一轮被迫重算;(2) 过长的工具返回使 KV-Cache 膨胀,解码步随上下文增长而系统性减速。</p>
+<div class="method"><strong>方法亮点:</strong> 在五个 TIR benchmark 上量化 PTE,识别出四类典型低效模式(包括 "短问题过度调用"、"长工具返回不截断"、"同一工具多次冗余调用"、"调用-等待-调用 的 KV 震荡")。重要发现:PTE 成本与推理正确率呈弱负相关 — <em>多调用并不意味着答得更好</em>。</div>
+<div class="takeaway"><strong>Why it matters:</strong> 这可能是 LLM RL 领域第一次把"RLVR 奖励"与"部署期算力成本"联动的实证工作。它暗示了未来 TIR 奖励设计不能只看 outcome,还必须嵌入 PTE 或类似系统指标作为惩罚。与晚间版 CoT Pruning (2604.05643) 形成互补:前者管内部 token 成本,此文管工具调用成本。</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>三 · 策略-奖励协同进化 Policy-Reward Co-Evolution</h2>
+<div class="cat-desc">奖励不再是外部监督,而是由策略自身生成并与之闭环演化 — 三篇代表自监督 RL 的新一代路线</div>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.03098">Co-Evolution of Policy and Internal Reward for Language Agents (Self-Guide)</a></h3>
+<div class="meta">
+  <span class="tag">内部奖励</span>
+  <span class="tag">自监督 RL</span>
+  <span class="tag">长程 agent</span>
+  <span>arXiv: 2604.03098 · 提交 2026-04-03</span>
+</div>
+<p class="summary">长程 agent 训练最大的瓶颈是 <em>稀疏延迟奖励</em>。现有方法靠事后 credit assignment 或外部 RM,但外部 RM 与策略解耦,无法在推理期提供实时引导。Self-Guide 提出让策略 <em>同时生成引导信号与内部奖励</em>:推理时,agent 在每个 action 步之前先生成一条"自引导"元推理;同一信号在训练时聚合为轨迹级内部奖励。</p>
+<div class="method"><strong>方法亮点:</strong> 自引导步与行动步交错生成。训练时,每条轨迹的 final outcome 与每步自引导的一致性被同时评分,形成密集的步级奖励。整体目标是策略与自引导 <em>互为环境</em>,共同演化:更好的策略产生更好的自引导 → 更好的自引导训练出更好的策略。</div>
+<div class="takeaway"><strong>关键数据:</strong> 在 ALFWorld / ScienceWorld / WebShop 三个长程 agent 环境上一致超越 GRPO 基线。这个结果在"推理时"和"训练时"都成立,说明自引导对两者都有实质增益。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.00722">LangMARL: Natural Language Multi-Agent Reinforcement Learning</a></h3>
+<div class="meta">
+  <span class="tag">多智能体 RL</span>
+  <span class="tag">语言空间信用分配</span>
+  <span class="tag">MARL</span>
+  <span>arXiv: 2604.00722 · 提交 2026-04-01</span>
+</div>
+<p class="summary">当多个 LLM agent 协作时,粗粒度的团队奖励掩盖了个体改进所需的因果信号 — 这是经典 MARL 中研究极多但在 LLM agent 里几乎未被触及的 <em>多智能体信用分配问题</em>。LangMARL 把该问题完全映射到自然语言空间:把 "policy gradient" "critic" "credit assignment" 全部用自然语言实现。</p>
+<div class="method"><strong>方法亮点:</strong> 四组件架构 — (1) <em>Language Policy Actors</em>:每个 agent 持一条自然语言策略,在文本观察上选动作;(2) <em>Centralized Language Critic</em>:观察完整回合轨迹,用自然语言写出"某个 agent 的哪一步导致了最终失败/成功"的因果归因;(3) <em>Language Policy Gradient Estimator</em>:把 agent 级归因转换成自然语言形式的"策略更新方向";(4) <em>Language Policy Optimizer</em>:用 LLM 作优化器,按语言梯度聚合更新语言策略。</p>
+<div class="takeaway"><strong>意义:</strong> 这是把"文本反馈驱动策略优化"的思路推向完整 MARL 类比的第一篇 — 与 TextGrad / DSPy 等 prompt 优化工作相比,LangMARL 对齐了 MARL 中 CTDE (Centralized Training, Decentralized Execution) 范式。在推理、QA、代码、博弈任务上均有良好扩展性。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.04503">Memory Intelligence Agent (MIA)</a></h3>
+<div class="meta">
+  <span class="tag">深度研究 agent</span>
+  <span class="tag">记忆系统</span>
+  <span class="tag">交替式 RL</span>
+  <span>arXiv: 2604.04503 · 提交 2026-04-06 (v3: 04-09)</span>
+</div>
+<p class="summary">深度研究 agent (DRA) 利用历史经验作为记忆来加速未来推理与自主演化。现有方法仅靠"从记忆中检索相似轨迹"辅助推理,存在两大缺陷:记忆演化机制不足、存储/检索代价随轨迹数量线性增长。MIA 提出 Manager-Planner-Executor 三层架构,并在其中引入一种 <em>交替式 (alternating) RL 训练范式</em>。</p>
+<div class="method"><strong>方法亮点:</strong> (1) Manager 负责长期知识的<em>参数化 ↔ 非参数化</em>双向转换(保持检索效率的同时固化稳定知识);(2) Planner-Executor 之间用交替 RL 训练 — 一轮固定 Executor 训 Planner(降低探索方差),下一轮固定 Planner 训 Executor(稳定信用分配);(3) 参数/非参数记忆形成闭合循环,支持 test-time 持续学习。</div>
+<div class="takeaway"><strong>连接线:</strong> MIA 与本版 Self-Guide (2604.03098) 与晚间版 Skill-SD (2604.10674) 共同构成 "agent 自我监督" 的三个维度 — 内部奖励 (Self-Guide) / 元认知技能 (Skill-SD) / 记忆管理 (MIA)。</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>四 · 多模态 RL Multimodal RL</h2>
+<div class="cat-desc">视觉-语言对齐中的奖励创新 — 从显著图对齐到医疗视觉推理的无标注 agentic RL</div>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.08203">MedVR: Annotation-Free Medical Visual Reasoning via Agentic Reinforcement Learning</a></h3>
+<div class="meta">
+  <span class="tag">医疗 VLM</span>
+  <span class="tag">Agentic RL</span>
+  <span class="tag">无标注</span>
+  <span>arXiv: 2604.08203 · 提交 2026-04-09</span>
+</div>
+<p class="summary">医疗 VLM 在安全关键任务上容易 <em>倾向文本线索而忽视视觉证据</em>,带来视觉幻觉风险。MedVR 提出首个无需人工中间步骤标注的 agentic RL 框架,使医疗 VLM 具备"显式视觉推理"能力 — 在文本推理与可执行图像操作 (裁剪、放大、属性查询) 之间交替。</p>
+<div class="method"><strong>方法亮点:</strong> 两大协同机制:(1) <strong>Entropy-guided Visual Regrounding (EVR)</strong> — 当模型不确定度上升时主动触发"回到图像"的动作,探索被导向真正视觉信息;(2) <strong>Consensus-based Credit Assignment (CCA)</strong> — 多次 rollout 在关键视觉步骤上的共识充当伪监督,替代人工步级标注。骨干 Qwen2.5-VL-7B,GRPO 训练 64 轮,32×H20 GPU。</div>
+<div class="takeaway"><strong>意义:</strong> 这是"医学视觉幻觉"问题首次被系统性地 RL 化解决。EVR + CCA 的组合暗示了一个更通用模板:<em>用模型内部不确定度触发动作,再用 rollout 共识做步级监督</em> — 这可以扩展到任何需要多步感知动作的多模态 agent。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.04500">Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward</a></h3>
+<div class="meta">
+  <span class="tag">VLM 可解释性</span>
+  <span class="tag">显著图奖励</span>
+  <span class="tag">GRPO</span>
+  <span>arXiv: 2604.04500 · 提交 2026-04-06</span>
+</div>
+<p class="summary">VLM 常倾向 text-over-image,产生"貌似合理"但与图像无关的回答。Saliency-R1 提出一个零额外前向/反向开销的显著图技术:将每个 token 的 logit 分解为所有上下文 token 的一阶贡献,然后把 visual token 的贡献渲染成显著图。这把"模型看了哪里"变成可微、可监督的信号。</p>
+<div class="method"><strong>方法亮点:</strong> 作者构造了带 bounding-box 标注的 VQA 数据集,GRPO 的奖励 = 答案正确性 × 显著图质量(显著质量定义为 box 内的 saliency 质量比)。这把"回答要准"与"看哪要对"绑定到同一个 RL 目标上。</div>
+<div class="takeaway"><strong>与 MedVR 的区别:</strong> Saliency-R1 是 <em>从外部标注出发</em>(用 bbox 监督显著图);MedVR 是 <em>从内部不确定度出发</em>(无标注)。两者一起构成 VLM 视觉-文本对齐奖励设计的两端。CVPR 2026 接收。</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>五 · RLVR 垂直外溢 Vertical Expansion of RLVR</h2>
+<div class="cat-desc">RLVR 从数学/代码外溢到医疗、多语言、内容审核、数学数据合成、小模型推理</div>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.12867">QuarkMedSearch: A Long-Horizon Deep Search Agent for Exploring Medical Intelligence</a></h3>
+<div class="meta">
+  <span class="tag">医疗 agent</span>
+  <span class="tag">RLVR</span>
+  <span class="tag">长程深度检索</span>
+  <span>arXiv: 2604.12867 · 提交 2026-04-14</span>
+</div>
+<p class="summary">QuarkMedSearch 是基于 Tongyi DeepResearch 构建的中文医疗深度检索 agent。核心贡献为 <em>全管线方法论</em>:数据构造(医学 KG + 实时联网探索生成长程多跳训练数据)、训练策略、评测基准。训练采用 <strong>"SFT 短→长 + RLVR" 两阶段</strong>,且 RLVR 阶段设计严格奖励以防止奖励劫持。</p>
+<div class="method"><strong>方法亮点:</strong> SFT 从短轨迹逐步迁移到长轨迹,为长程搜索行为奠定稳定基础;RLVR 进一步优化性能并针对中文医学问题特有的"答案可核验性"设计严格奖励(一致的唯一答案 + 推理深度硬约束)。QuarkMedSearch-Bench 包含 140 道人工验证问题,覆盖 6 大类别。</div>
+<div class="takeaway"><strong>行业信号:</strong> 中文医疗 deep-research 首次具备可复现的公开基准 + 全管线开源方法。SFT→RLVR 在长程检索任务上正成为事实标准 — 与 DeepSeek-R1、Tongyi DeepResearch 一脉相承。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.12378">ReasonXL: Shifting LLM Reasoning Language Without Sacrificing Performance</a></h3>
+<div class="meta">
+  <span class="tag">多语言推理</span>
+  <span class="tag">SFT + RLVR</span>
+  <span class="tag">Dr. GRPO</span>
+  <span>arXiv: 2604.12378 · 提交 2026-04-14</span>
+</div>
+<p class="summary">当前推理模型仍以英文为中心,即便问题是非英文的,模型的 CoT 也往往用英文进行。ReasonXL 首次释出 <em>跨域平行推理轨迹语料</em>:覆盖 5 种欧洲语言 (英/德/法/意/西),每种超 2M 对齐样本,包含 prompt、推理轨迹与最终输出。</p>
+<div class="method"><strong>方法亮点:</strong> 两阶段训练:SFT 把推理语言从英文切换到目标语言,再用 <strong>Dr. GRPO</strong> 的 RLVR 恢复在 SFT 中流失的推理质量,同时保持目标语言的完整性。表征分析发现模型深度上存在功能分工 — 早期层中存在一个决定语言身份的"激活瓶颈",而上层集中了适配期权重与激活的变化。</div>
+<div class="takeaway"><strong>意义:</strong> 为多语言推理模型提供了严谨的 recipe — 不是简单 LoRA 微调,而是 SFT+RLVR 组合。这一思路可推广到任意"行为风格迁移"场景(风格转换、领域迁移、语域变换)。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.10504">CARO: Chain-of-Analogy Reasoning Optimization for Robust Content Moderation</a></h3>
+<div class="meta">
+  <span class="tag">内容审核</span>
+  <span class="tag">类比推理</span>
+  <span class="tag">DPO</span>
+  <span>arXiv: 2604.10504 · 提交 2026-04-13</span>
+</div>
+<p class="summary">即便是专门训练过的推理模型,在模棱两可的内容审核场景中仍因 <em>决策捷径 (decision shortcuts)</em> 而易失误。CARO 受认知心理学启发,提出"类比推理链 (Chain-of-Analogy)"两阶段训练:先 RAG 引导生成类比链再 SFT,再用定制版 DPO 强化类比推理行为。</p>
+<div class="method"><strong>方法亮点:</strong> 定制 DPO 的 preference 对构造方式:正样本要求显式引用多个可验证的类比前例并给出对比结论,负样本则使用"捷径"式直接判断。与静态检索方法不同,CARO 在推理期动态生成针对当前内容的类比参考。</div>
+<div class="takeaway"><strong>关键数据:</strong> 在困难模棱两可审核 benchmark 上相对 DeepSeek-R1、QwQ、LLaMA Guard 平均 F1 提升 <strong>+24.9%</strong>。证明 DPO 不仅可以做"风格对齐",还能强化复杂的"推理范式"本身。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.12229">HintMR: Eliciting Stronger Mathematical Reasoning in Small Language Models</a></h3>
+<div class="meta">
+  <span class="tag">小模型推理</span>
+  <span class="tag">知识蒸馏</span>
+  <span class="tag">步级提示</span>
+  <span>arXiv: 2604.12229 · 提交 2026-04-14</span>
+</div>
+<p class="summary">小语言模型 (SLM) 在复杂数学推理中因能力有限常常中途出错且无法自我恢复。HintMR 提出三阶段 pipeline:(1) Hint Generation — 大模型按问题与当前推理历史条件性地生成有序步级提示;(2) Knowledge Distillation — QLoRA 把这种"生成-使用提示"的能力蒸馏进 SLM;(3) Hint-Guided Reasoning — solver 增量式整合提示以精化推理。</p>
+<div class="method"><strong>方法亮点:</strong> Hint 是条件性的(依赖累积推理历史而非一次性提供),因此相当于一个"动态步级 PRM"。与固定教师 CoT 不同,HintMR 的蒸馏对象是 <em>一种元能力</em>:生成与消费步级提示的技能。</div>
+<div class="takeaway"><strong>评测:</strong> NuminaMath / MATH-500 / AIME-2024 / AIME-2025 四个 benchmark × 四种开源 SLM 一致提升,SLM 自生提示与 LLM 提示效果相当但 token 成本显著更低。与 PRA (2604.09482, 晚间版) 形成对比 — PRA 是 test-time 过程奖励插件,HintMR 是 train-time 过程提示蒸馏。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.11188">MathAgent: Adversarial Evolution of Constraint Graphs for Mathematical Reasoning Data Synthesis</a></h3>
+<div class="meta">
+  <span class="tag">数学数据合成</span>
+  <span class="tag">Legislator-Executor</span>
+  <span class="tag">对抗进化</span>
+  <span>arXiv: 2604.11188 · 提交 2026-04-13</span>
+</div>
+<p class="summary">如何无人类先验地合成高质量数学推理训练数据?MathAgent 把数据合成建模为 <em>约束图上的无监督优化问题 + 语义实例化</em>,而非直接的文本生成。提出 <strong>Legislator-Executor</strong> 分工:Legislator 用对抗性方式演化出结构化生成蓝图(问题的约束图),Executor 把这些规范实例化为自然语言问题。</p>
+<div class="method"><strong>方法亮点:</strong> 骨架设计与语言实现解耦 — 这种分离让系统能优先构造复杂多样的逻辑结构(对抗演化驱动),再交由生成模型做文本化。这与 MathAgent (2023) 的推理时多 agent 范式不同,本文聚焦训练数据侧。</div>
+<div class="takeaway"><strong>关键数据:</strong> 仅 1K 合成样本微调的模型在 8 个数学 benchmark 上超过同规模的 LIMO、s1K 数据集,OOD 泛化更好 — 表明合成数据的"结构多样性"比"规模"更决定下游 RL 的上限。与 SandMLE (2604.04872) 是同一哲学:用合成环境/数据减少 RL 所需样本。</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>六 · 基础设施与基准 Infrastructure &amp; Benchmarks</h2>
+<div class="cat-desc">让 RL 训练可行、可验、可量化 — 两篇极具影响力的合成环境 / 基准工作</div>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.12290">Frontier-Eng: Benchmarking Self-Evolving Agents on Real-World Engineering Tasks with Generative Optimization</a></h3>
+<div class="meta">
+  <span class="tag">基准</span>
+  <span class="tag">Self-Evolving Agent</span>
+  <span class="tag">生成式优化</span>
+  <span>arXiv: 2604.12290 · 提交 2026-04-14</span>
+</div>
+<p class="summary">当前主流 agent 基准都以二元 pass/fail 为核心指标,忽略了真实工程中 <em>"在固定交互预算下迭代优化可行方案"</em> 这一核心能力。Frontier-Eng 提出 <strong>Propose → Execute → Evaluate</strong> 迭代循环,涵盖 5 大工程类别 47 个任务,所有任务锚定在工业级模拟器与验证器上,可输出连续奖励并强制硬可行性约束。</p>
+<div class="method"><strong>方法亮点:</strong> 基准评估 8 个前沿模型(含 Claude 4.6 Opus、GPT-5、Gemini-3 等)与多种搜索框架。发现:(1) Claude 4.6 Opus 在连续反馈下鲁棒性最高;(2) 多数模型出现"优化退化" — 随着预算延长,性能反而下降(意味着 agent 不知何时该停)。这与 Regime Boundaries (2604.10996, 晚间版) 发现的"分布漂移失效"共同警示:agent 部署的真正瓶颈是"何时停"而非"能否做"。</div>
+<div class="takeaway"><strong>对 RL 训练的含义:</strong> 为 agentic RL 提供了稀缺的"连续奖励 + 硬约束"训练环境。现有 agent RL 基准多为结果式,Frontier-Eng 是首批可用于"过程奖励 + 多步优化"训练的公开基准。</div>
+</article>
+
+<article class="paper">
+<h3><a href="https://arxiv.org/abs/2604.04872">SandMLE: Synthetic Sandbox for Training Machine Learning Engineering Agents</a></h3>
+<div class="meta">
+  <span class="tag">MLE agent</span>
+  <span class="tag">合成环境</span>
+  <span class="tag">on-policy RL</span>
+  <span>arXiv: 2604.04872 · 提交 2026-04-06</span>
+</div>
+<p class="summary">机器学习工程 (MLE) 任务的验证需要在大数据集上跑完整 ML pipeline,每 rollout 耗时巨大,使得轨迹级 on-policy RL 在 MLE 领域几乎不可行。SandMLE 用多 agent 框架从少量 seed 任务出发生成多样可验证的合成 MLE 环境,训练/测试数据被限制在"微规模"(50-200 样本),把平均执行时间压到 <strong>15 秒以内</strong>。</p>
+<div class="method"><strong>方法亮点:</strong> 多 agent 之间分工 — 问题生成 agent、数据集缩放 agent、验证器构造 agent、难度评估 agent 协作产出可复现的微型实验室。关键在于 <em>保持结构复杂度但限制数据规模</em>,从而让轨迹级奖励仍然反映真实 ML 工程难度,但算力开销降一个数量级。</div>
+<div class="takeaway"><strong>关键数据:</strong> 执行时间降低 <strong>>13×</strong>,首次让 MLE 领域的轨迹级 on-policy RL 成为可能。在 MLE-bench-lite 上,Qwen3-8B / 14B / 30B-A3B 相对 SFT 基线的 medal rate 相对提升 <strong>20.3%~66.9%</strong>。与 Frontier-Eng 互补:一个提供"小而真"的训练环境,一个提供"大而难"的评估环境。</div>
+</article>
+
+</section>
+
+<footer>
+<p>— 完 —</p>
+<p>LLM RL Daily · Night Edition · Compiled 2026-04-16 23:00 UTC</p>
+<p>所有论文均来自 arXiv。本栏每日由 AI 研究分析员自动整理。欢迎在 <a href="https://github.com/thulanxc/LLM-RL-Daily-Papers">GitHub</a> 上提出反馈与补遗。</p>
+</footer>
+
+</body>
+</html>

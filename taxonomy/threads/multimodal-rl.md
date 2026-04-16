@@ -13,5 +13,11 @@ Extending RL training from text-only to multimodal inputs (image, video, audio).
 - **Relax** — Omni-modal RL engine supporting text + image + audio + video. [2604.11554]
 - **MedVR** — Annotation-free medical visual reasoning via RL. [2604.08203]
 
+## Night Edition (April 16, late-night) Additions
+- **MedVR (deep-dive)** [2604.08203] — EVR (entropy-guided visual regrounding) + CCA (consensus-based credit assignment) enable *annotation-free* medical visual reasoning via agentic RL. Model-internal uncertainty triggers visual re-examination actions; rollout consensus substitutes for human step-level labels.
+- **Saliency-R1** [2604.04500] — Zero-overhead saliency map (decomposing token logits into visual-token first-order contributions). Alignment with bbox annotations as GRPO reward. CVPR 2026.
+
 ## Key Trend
-Multimodal RL is maturing from "apply text RL to vision-language models" to addressing modality-specific challenges (visual forgetting, grounding faithfulness). Relax's omni-modal support suggests the infrastructure is catching up with the algorithms.
+Multimodal RL is maturing along two complementary axes:
+1. **Infrastructure (Relax)** catching up with algorithms.
+2. **Internal-signal supervision** emerging — both MedVR (entropy + consensus) and Saliency-R1 (logit-decomposition saliency) derive training signal from *model-internal quantities*, not external human annotation. This is the multimodal analogue to Thread 8's "Agentic Self-Supervision".

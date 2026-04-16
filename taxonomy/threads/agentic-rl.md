@@ -42,3 +42,34 @@ Train LLM agents for multi-step, tool-using, environment-interacting tasks using
 Agentic RL is producing the most dramatic capability amplifications. RefineRL shows 4B→32B-equivalent performance, and GrandCode beats legendary grandmasters. The key enabler: treating complex tasks as multi-turn agent problems rather than single-shot generation.
 
 The **April 16 PM** update adds a new research dimension: **diagnostic observability**. RAGEN-2's Template Collapse framework, and Skill-SD's self-generated skills, together signal that the field is moving from "make it work" to "know why it works" — a maturity shift comparable to observability's role in distributed systems.
+
+## Night Edition (April 16, late-night) Additions
+
+### TIR Trust, Efficiency & Experience (new sub-thread)
+- **E³-TIR** [2604.09455] — Warm-up paradigm fusing three experience types (Expert Prefix / Expert Guided / Self-Exploration); +6% across 3B–8B. Middle path between Zero-RL and SFT-then-RL.
+- **ATTC (When to Trust Tools)** [2604.08281] — First framework to train *tool trust calibration*: model explicitly decides accept / reject / recompute when reasoning and tool conflict. Trust-consistent reward in GRPO.
+- **PTE — Beyond Accuracy** [2604.05404] — Hardware-aware TIR efficiency metric. Reveals KV-Cache eviction and long-tool-response as major costs. Higher PTE ↔ lower correctness — more tool calls ≠ better answers.
+
+### Self-Supervision & Memory Agents
+- **Self-Guide** [2604.03098] — Co-evolution of policy and internal reward; interleaved self-guidance and action steps serve both inference-time guidance and training-time dense supervision.
+- **MIA (Memory Intelligence Agent)** [2604.04503] — Manager-Planner-Executor architecture + alternating RL. Parametric ↔ non-parametric memory cycle enables test-time learning.
+
+### Multi-Agent Language RL
+- **LangMARL** [2604.00722] — First to implement MARL entirely in natural language: language critic, language gradient estimator, language optimizer. CTDE paradigm for LLM agents.
+
+### Engineering Agent Benchmarks
+- **Frontier-Eng** [2604.12290] — 47 real engineering tasks with continuous rewards + hard constraints. Reveals "optimization degradation" in frontier models (Claude 4.6 Opus best).
+- **SandMLE** [2604.04872] — Synthetic micro-MLE sandboxes (50–200 samples, ≤15s execution); 13× speedup enables trajectory-level on-policy RL for MLE agents for the first time.
+
+### Medical / Domain Deep Search
+- **QuarkMedSearch** [2604.12867] — SFT short→long + RLVR with strict anti-hacking reward for Chinese medical deep search.
+
+## Updated Key Trend (post-Night Edition)
+
+Agentic RL has now split into four parallel research programs:
+1. **Capability amplification** (RefineRL, GrandCode — pre-April-16)
+2. **Diagnostic observability** (RAGEN-2, Skill-SD — late edition)
+3. **Trust & efficiency** (E³-TIR, ATTC, PTE — night edition)
+4. **Environment & benchmark** (Frontier-Eng, SandMLE — night edition)
+
+The field is maturing along the exact axes that distributed systems did: build → observe → optimize → benchmark.
