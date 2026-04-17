@@ -280,6 +280,77 @@ Papers where the boundary between policy and reward becomes porous:
 
 9. **Policy and reward are co-evolving (new in Night Edition)**: Self-Guide, LangMARL, MEDS, MIA — four different architectural demonstrations that reward is no longer a static external artifact.
 
+## April 17, 2026 — New Additions (13 papers)
+
+### 24. The Probability Space as a Design Dimension (new thread)
+
+Today's most ambitious paper introduces a completely orthogonal axis: on *which* distribution should RL operate?
+
+- **PreRL / Dual Space RL** (2604.14142): RL directly on `P(y)` (pre-train edge distribution) — not `P(y|x)`. Key finding: **Negative Sample Reinforcement** outperforms Positive in this space. 14.89× transition-thought boost, 6.54× reflection boost.
+- **Shortest-Path Generalization** (2604.15306): The counterweight — within a fixed distribution, RL stabilizes but does not expand capability. Length-scaling failures are not rescued by RL or inference-time scaling.
+
+**Connection**: Together these redraw the picture — *what* distribution you RL on matters more than *how* you RL. Joins Thread 1 (Policy Optimization) and Thread 3 (RLVR) as a new governing axis.
+
+### 25. GRPO's Calibration Collapse (new sub-thread)
+
+Three independent April 17 works converge on the same failure mode: GRPO inverts the perplexity-correctness relationship.
+
+- **CAPO** (2604.12632): Logistic AUC surrogate + uncertainty-aware advantage + noise masking. Breaks the accuracy-calibration trade-off.
+- **Sycophancy Calibration Collapse** (2604.10585): Direct causal demonstration — sycophantic GRPO produces systematic calibration degradation on Qwen3-8B.
+- **SPO (MM-Doc-R1, 2604.13579)**: Challenges GRPO's shared-initial-state baseline in multi-turn. Similarity-weighted baselines dramatically reduce variance.
+
+**Key insight**: GRPO's elegance (no value model) hides a structural bias — its advantage is uncertainty-agnostic, and in multi-turn its baseline is state-agnostic. Both must be repaired.
+
+### 26. Reward Hacking Matrix Completion
+
+The Night Edition's Reward Hacking Survey (2604.13602) listed problems; today's papers supply solutions from three angles:
+
+- **Causal Decomposition RM** (2604.13833): Decoder reconstructs intent; reconstruction error regularizes RM. RewardBench 0.832 → 0.868.
+- **C2 Rubric-Augmented RM** (2604.13618): Synthesizes helpful/misleading rubric pairs from binary preferences alone; critical verifier at inference. 8B RM matches 4× larger model.
+- **CoUR** (2604.13504): Bayesian-optimized reward-function design with code-level uncertainty for RL-environment reward engineering.
+
+These extend Thread 4 sub-thread B (Reward Hacking Mitigation) into a cohesive toolbox.
+
+### 27. Decoupled Multi-Objective Policy Optimization (new in Agentic RL)
+
+- **ToolOmni / DMO-GRPO** (2604.13787): Retrieval advantage ⊥ execution advantage in a single optimization. NDCG@5 +4.5% over one-shot; SoPR 52.5%.
+
+**Pattern**: Complements Rethinking GRPO Miscalibration (2509.23870) on the gradient-interference side. Single scalar rewards are fundamentally limiting in agentic settings.
+
+### 28. Measurable Agent Behavior Diagnostics
+
+- **Exploration-Exploitation Errors Are Measurable** (2604.13151): Policy-agnostic framework; separates "didn't try" from "blindly tried" using action trajectories only.
+
+Complements RAGEN-2 (entropy collapse) and MEDS (failure-cluster memory) — three different *types* of diagnostic signal, all suitable for reward shaping.
+
+### 29. CoT Synthesis as Graph Consensus
+
+- **CRAFT** (2604.14121): Build Reasoning KG from consensus of multiple CoT candidates; topologically synthesize a high-quality trace. +10% accuracy, no ground-truth needed.
+
+Joins Graph-Based CoT Pruning (2604.05643) and ThinkTwice (2604.01591) in the "CoT-as-Graph" research program.
+
+### 30. Reward Shape Ablation for VLMs
+
+- **Reward Design for Physical Reasoning in VLMs** (2604.13993): Systematic comparison — accuracy reward is universal, rubric improves structure but not accuracy, attention-reward is domain-specific (spatial wins, symbolic loses).
+
+Provides a reward-design *coordinate system* for ongoing VLM RL work (OpenVLThinkerV2, MAPO, Faithful GRPO).
+
+### 31. Evidence-Based Domain RL
+
+- **ESC-RL** (2604.13598): Group-wise Evidence-Aware Alignment Reward + Self-Correcting Preference Learning for radiology report generation. Extends Thread 22 (RLVR Vertical Applications) with an "evidence as verifier" template applicable to any knowledge-intensive domain.
+
+## Cross-Cutting Meta-Observation (April 17)
+
+**The field is re-negotiating its foundational assumptions:**
+
+1. *Where* RL happens (PreRL: pre-train space; not just `P(y|x)`)
+2. *What* baseline is correct (SPO: per-state similarity-weighted, not shared initial-state)
+3. *Which* reward is safe (Causal Decomposition / C2 / Sycophancy-Calibration: single scalar is fragile)
+4. *When* to split the objective (ToolOmni: retrieval ⊥ execution in one GRPO)
+5. *Whether* RL expands capability (Shortest-Path: no — RL stabilizes but doesn't extend)
+
+April 17's papers are not incremental: each one challenges an assumption that underpins current GRPO-era practice.
+
 ---
 
-*Last updated: April 16, 2026 (Night Edition, 23:00 UTC)*
+*Last updated: April 17, 2026 · 13 new papers*

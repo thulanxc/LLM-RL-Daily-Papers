@@ -23,5 +23,10 @@ PPO (2017) → RLHF-PPO (2022) → DPO (2023) → GRPO (2024) → DAPO (2025) �
 - **DRTO** — Distributionally robust token optimization. [2604.08577]
 - **PIPO** — Policy improvement with retrospective verification. [2604.00860]
 
+## April 17, 2026 additions
+- **PreRL / Dual Space RL** — First RL on pre-train edge distribution `P(y)` instead of `P(y|x)`. Negative-Sample Reinforcement is 14.89× better for transition thoughts, 6.54× for reflection. [2604.14142]
+- **CAPO** — Calibration-Aware Policy Optimization. Logistic AUC surrogate + uncertainty-aware advantage. Breaks accuracy-calibration trade-off in GRPO. [2604.12632]
+- **SPO (MM-Doc-R1)** — Similarity-based Policy Optimization. Per-state similarity-weighted baselines replace GRPO's shared-initial-state baseline in multi-turn. [2604.13579]
+
 ## Key Trend
-The field is converging on the credit assignment problem — how to distribute sequence-level reward signal to individual tokens/steps. SKPO, TEPO, SPPO, and GenAC each address this differently.
+The field is converging on the credit assignment problem — how to distribute sequence-level reward signal to individual tokens/steps. SKPO, TEPO, SPPO, and GenAC each address this differently. **April 17 adds two orthogonal axes**: (1) the probability space itself (PreRL), and (2) confidence-aware advantage estimation (CAPO) and per-state similarity-weighted baselines (SPO) as alternatives to GRPO's group-mean advantage.

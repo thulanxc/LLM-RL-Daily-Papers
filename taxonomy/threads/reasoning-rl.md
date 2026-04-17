@@ -61,3 +61,18 @@ Three parallel threads now structure reasoning RL research:
 3. **Teaching across**: ReasonXL cross-language transfer, HintMR teacher-student meta-skill distillation (night edition).
 
 The field is converging on a template: **structural diversity in training data × trajectory-shape rewards × test-time efficient reasoning**.
+
+## April 17, 2026 Additions
+
+### Probability-Space Redesign
+- **PreRL / Dual Space RL** [2604.14142] — RL in `P(y)` (pre-train edge distribution). Negative-Sample Reinforcement is 14.89× better for transition thoughts. Policy Reincarnation bridges `P(y)`-RL → `P(y|x)`-RL.
+
+### CoT as Consensus Graph
+- **CRAFT** [2604.14121] — Build Reasoning Knowledge Graph from consensus across multiple CoT candidates; topological synthesis filters per-candidate errors. +10% accuracy on logic + math benchmarks.
+
+### Capability-Boundary Probe
+- **Shortest-Path Generalization** [2604.15306] — Controlled synthetic environment with orthogonal spatial-transfer / length-scaling axes. **RL stabilizes but does not expand capability**; length-scaling failures are unrescuable by inference-time scaling.
+
+## Fourth Thread Emerging (April 17)
+
+4. **Distribution choice as a design axis**: PreRL shows that switching from `P(y|x)` to `P(y)` *expands* what RL can achieve. Shortest-Path Generalization shows that within a fixed distribution, RL cannot expand capability. Together they reframe: the question is not "which RL algorithm" but "on which distribution".

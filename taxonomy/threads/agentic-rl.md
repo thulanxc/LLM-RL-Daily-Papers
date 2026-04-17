@@ -73,3 +73,19 @@ Agentic RL has now split into four parallel research programs:
 4. **Environment & benchmark** (Frontier-Eng, SandMLE — night edition)
 
 The field is maturing along the exact axes that distributed systems did: build → observe → optimize → benchmark.
+
+## April 17, 2026 Additions
+
+### Decoupled Multi-Objective Policy Optimization
+- **ToolOmni / DMO-GRPO** [2604.13787] — First to decouple retrieval vs execution advantages within a single GRPO pipeline. Prevents sub-task gradient interference. NDCG@5 +4.5%, SoPR 52.5%.
+
+### Action-Trajectory Diagnostics
+- **Exploration-Exploitation Errors Are Measurable** [2604.13151] — Policy-agnostic quantification of "didn't try" vs "blindly tried" using action sequences alone. Reveals distinct failure modes per frontier model; reasoning models improve both axes.
+
+### Multi-Turn Baseline Repair
+- **SPO (MM-Doc-R1)** [2604.13579] — Similarity-weighted per-state baselines replace GRPO's shared-initial-state baseline in multi-turn. Drop-in fix for the most widely deployed multi-turn GRPO setting.
+
+## Updated Key Trend (April 17)
+
+Four pillars are now joined by a **fifth**:
+5. **Objective decomposition**: Single-scalar rewards are the Agentic RL bottleneck. ToolOmni (retrieval ⊥ execution) + the Exploration-Exploitation-Errors framework suggest the next generation of agentic RL algorithms will treat credit assignment as multi-dimensional by default.
