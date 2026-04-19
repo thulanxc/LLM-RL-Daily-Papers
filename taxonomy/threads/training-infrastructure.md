@@ -30,3 +30,18 @@ Four orthogonal efficiency directions are now emerging:
 These are composable — applying all four could yield >10× total speedup for domains like MLE that previously seemed intractable for on-policy RL.
 
 **Night-edition meta-insight**: The PTE metric signals a paradigm shift — RL research now must include *hardware-aware* efficiency in its design loop, not just algorithmic optimality.
+
+## April 19, 2026 Additions
+
+### Agentic Serving Infrastructure
+- **Scepsy (Aggregate LLM Pipeline)** [2604.15186] — Multi-LLM agentic workflow scheduling system. Key observation: per-LLM execution time share within a workflow is relatively stable across runs, even as end-to-end latency varies. Profiles LLMs under different parallelism and builds a lightweight latency/throughput predictor for GPU allocation. **2.4× higher throughput, 27× lower latency** vs. systems that optimize each LLM independently. Directly applicable to agentic RL rollout clusters.
+
+### Agent-Driven Training Automation
+- **TREX (Tree-based Exploration for Fine-Tuning)** [2604.14116] — Meta-infrastructure: an agent system that drives the full RL/SFT training loop. Researcher + Executor agents run the multi-round experimental process as a search tree, reusing historical results and distilling insights. Accompanied by FT-Bench (10 real-world tasks). Takes "humans write the recipe" out of the training loop.
+
+### Production-Scale Pipelines
+- **MindDR (4-stage MoE pipeline)** [2604.14518] — SFT cold-start → Search-RL (GRPO/GSPO with live tools) → Report-RL (RACE-rubric LLM judge) → Preference Alignment. GSPO uses sequence-level importance ratio with length normalization for MoE. Infrastructure-level recipe for 30B-scale deep-research agents.
+
+## Fifth Efficiency Direction (April 19)
+
+5. **Agentic workflow scheduling + RL-training automation**: As agentic RL pipelines multiply (MindDR, MARS², TREX), the bottleneck shifts from single-model inference to (a) orchestrating many inference streams (Scepsy) and (b) orchestrating the training loop itself (TREX). This is the beginning of "LLMOps 2.0" — infrastructure that understands the *structure* of multi-agent RL workflows rather than treating each rollout as an opaque HTTP call.

@@ -89,3 +89,28 @@ The field is maturing along the exact axes that distributed systems did: build �
 
 Four pillars are now joined by a **fifth**:
 5. **Objective decomposition**: Single-scalar rewards are the Agentic RL bottleneck. ToolOmni (retrieval ⊥ execution) + the Exploration-Exploitation-Errors framework suggest the next generation of agentic RL algorithms will treat credit assignment as multi-dimensional by default.
+
+## April 19, 2026 Additions
+
+### Production-Scale Multi-Agent RL Pipelines
+- **MindDR (Mind DeepResearch)** [2604.14518] — First fully-disclosed 30B-scale three-agent deep research system (Planning / DeepSearch / Report) with four-stage training (SFT cold-start → Search-RL via GSPO → Report-RL via RACE rubric → Preference). GSPO elevates importance ratio from token to sequence level for MoE. Matches much larger models on BrowseComp / WideSearch / xbench-DS / DeepResearch Bench.
+- **MARS² (Multi-Agent Reinforced Tree-Search)** [2604.14564] — Extends group-relative advantage to multi-agent RL on a shared search tree. Thompson-sampling over (agent, node) pairs; tree-consistent reward shaping across parent/sibling nodes. First clean credit-assignment framework for structured multi-agent search.
+- **TREX (Agent-Driven Fine-Tuning Automation)** [2604.14116] — Dual-agent (Researcher + Executor) system automates the entire LLM fine-tuning life cycle; models multi-round experiments as a search tree. Releases FT-Bench with 10 real-world tasks. Agent ops the RL loop itself.
+
+### Step-Level Process Signals in GRPO
+- **IG-Search (Information Gain Rewards)** [2604.15148] — Information-gain between real retrieval and random-retrieval counterfactual on gold-answer log-prob becomes per-step reward. Training-free. Plugged into GRPO per-token advantage for search queries. +1.6 EM over best trajectory-level baseline.
+- **CW-GRPO (Contribution-Weighted GRPO)** [2604.14267] — LLM judge scores per-round contribution; outcome advantage is rescaled (not replaced) by contribution. Complementary to IG-Search: per-round amplitude vs. per-token distribution.
+
+### Broadening Agentic RL Domains
+- **RadAgent (3D Chest CT Tool Agent)** [2604.15231] — End-to-end RL for 3D medical image interpretation with domain toolbox. +6.0 macro-F1 over CT-Chat, +37.0% faithfulness.
+- **RaTA-Tool (DPO for Multimodal Tool Retrieval)** [2604.14951] — Open-world tool selection as retrieval (not classification), aligned via DPO on task-description → tool matching. First HuggingFace-card-based open-world multimodal tool dataset.
+- **APEX-MEM (Temporal Graph Memory Agent)** [2604.14362] — Property graph + append-only storage + multi-tool retrieval agent. 88.88% LOCOMO QA / 86.2% LongMemEval.
+
+### Agentic Infrastructure
+- **Scepsy (Aggregate LLM Pipeline)** [2604.15186] — Multi-LLM agentic workflow scheduling system. Profiles each LLM under different parallelism, builds Aggregate-LLM-Pipeline predictor for GPU allocation. 2.4× throughput / 27× latency improvement. Relevant to RL rollout clusters.
+- **IE-as-Cache (Information Extraction as Cognitive Cache)** [2604.14930] — Repurposes IE as reusable working memory for agent reasoning, combining query-driven extraction with cache-aware reasoning.
+
+## Updated Key Trend (April 19)
+
+The five pillars are now augmented by a **sixth**:
+6. **Full-stack industrialization**: RL pipelines (MindDR four-stage, MARS² tree-agents), the training loop itself (TREX), and rollout infrastructure (Scepsy) are all being standardized into deployable systems. At the same time, agentic RL is crossing modality/domain boundaries (RadAgent 3D medical, RaTA-Tool multimodal retrieval, APEX-MEM temporal memory) with increasing speed — the inner algorithmic core (GRPO + structured advantages + step-level process signals) now stabilizes enough for teams to focus on delivery.

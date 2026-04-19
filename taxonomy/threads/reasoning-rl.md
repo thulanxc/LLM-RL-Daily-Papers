@@ -76,3 +76,18 @@ The field is converging on a template: **structural diversity in training data �
 ## Fourth Thread Emerging (April 17)
 
 4. **Distribution choice as a design axis**: PreRL shows that switching from `P(y|x)` to `P(y)` *expands* what RL can achieve. Shortest-Path Generalization shows that within a fixed distribution, RL cannot expand capability. Together they reframe: the question is not "which RL algorithm" but "on which distribution".
+
+## April 19, 2026 Additions
+
+### Long-Horizon Reasoning Benchmark
+- **LongCoT** [2604.14140] — 2500-problem benchmark across chemistry, math, CS, chess, logic. Each problem has short input + verifiable answer + 10k–100k+ token solution path. Every local step is tractable for frontier models, so failures isolate *long-horizon* weakness. **GPT-5.2 9.8% / Gemini 3 Pro 6.1%** — current RLMs fail catastrophically at sustained long reasoning.
+
+### Input-Side Structure Reformulation
+- **StoryCoder** [2604.14631] — Rewrites code generation prompts as coherent narratives (task overview + constraints + test cases). +18.7% zero-shot pass@10 on HumanEval/LiveCodeBench/CodeForces. Orthogonal to RL training; composable as prompt shape during rollout.
+
+### Formal Decomposition of Unlearning
+- **LLM Unlearning as Asymmetric Two-Task Learning** [2604.14808] — Retention as primary + forgetting as auxiliary rather than symmetric negation. Weighted gradient objective; related to multi-objective RL.
+
+## Fifth Thread Emerging (April 19)
+
+5. **Horizon as the next frontier**: LongCoT establishes a clear ceiling — sustained multi-step reasoning over 10k–100k tokens is where current RLMs collapse. Combined with April 17's "RL stabilizes but does not expand capability," this predicts the next wave of research: either scale sampling massively (parallel thinking), retool credit assignment for long horizons (TC-GRPO / tree-structured advantages), or redesign the probability space itself (PreRL-style). The days when MATH-500 was a meaningful ceiling are ending.

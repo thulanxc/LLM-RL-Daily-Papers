@@ -351,6 +351,83 @@ Provides a reward-design *coordinate system* for ongoing VLM RL work (OpenVLThin
 
 April 17's papers are not incremental: each one challenges an assumption that underpins current GRPO-era practice.
 
+## New Threads (April 19, 2026)
+
+### 32. Training-Free Process Signals Inside GRPO
+
+- **IG-Search** (2604.15148): Information-gain of gold-answer log-prob between real vs. random-document retrieval acts as per-step reward — computed entirely from existing policy, plugged into GRPO per-token advantage for search queries. No PRM training needed.
+- **CW-GRPO** (2604.14267): LLM judge emits per-round contribution scores; outcome advantages are *rescaled* (not replaced). Preserves unbiasedness while amplifying informative rounds.
+
+Together they define two archetypes of the "free process reward" pattern: *log-prob-based* (reuses policy) vs. *judge-based* (reuses a judge).
+
+### 33. SFT ↔ RL Unification
+
+- **GFT** (2604.14258): SFT reinterpreted as PG with extremely sparse implicit reward and unstable IPW. Group Advantage Learning + Dynamic Coefficient Rectification close the gap; resulting policies transition more smoothly into RL.
+
+Joins "GRPO is secretly DPO" (2510.00977) and TPO (2604.06159) in the convergence toward a single group-advantage optimization framework.
+
+### 34. Optimal-Transport Regularization for LLM RL
+
+- **VGF** (2604.14265): Casts behavior-regularized RL (offline RL + LLM fine-tuning) as optimal transport from reference to value-optimal distribution, solved by discrete gradient flow. Replaces KL β-tuning with a "transport budget" that is also adjustable at test time.
+
+A structural alternative to KL-PPO-GRPO; composable with reward-surface-engineering (Thread 5) once stabilized.
+
+### 35. Tree-Structured Multi-Agent Group Advantage
+
+- **MARS²** (2604.14564): Extends group-relative advantage from flat groups to a tree-structured group over a shared multi-agent MCTS tree. Thompson-sampling over (agent, node) pairs; tree-consistent reward shaping.
+
+First clean credit-assignment recipe for multi-agent RL on structured search spaces.
+
+### 36. Temporally Consistent Credit Assignment
+
+- **TC-GRPO (RAD-2)** (2604.15308): Exploits temporal coherence of adjacent rollout steps to reduce advantage variance. Nominally for autonomous driving but generalizable to long-horizon agentic RL where consecutive steps have correlated outcomes.
+
+### 37. Open-Ended RLVR via Relative Information Gain
+
+- **TCER** (2604.11522): Fixes triviality collapse in confidence-based unsupervised rewards for open-ended writing via specialist–generalist relative info gain.
+
+Proof that verifiable-reward-style unsupervised RL can extend beyond math/code when properly regularized against triviality.
+
+### 38. Long-Horizon Reasoning Benchmark
+
+- **LongCoT** (2604.14140): 2500 problems with 10k–100k+ token verifiable-answer solution paths. GPT-5.2 9.8%, Gemini 3 Pro 6.1%. Establishes the next-generation reasoning frontier.
+
+### 39. Long-Form Verification Signals
+
+- **IUQ** (2604.15109): Interrogator-driven atomic-claim decomposition for long-form uncertainty quantification. Claim-level signal suitable as RL reward.
+- **Cross-Query Contradictions** (2604.14525): Set-level consistency metrics (SetCons, Contradiction Density, Revision Cost) for multi-query LLM reasoning; solver-augmented repair.
+
+New axes of verifier design for long-form and multi-query settings.
+
+### 40. Production-Scale Multi-Agent RL Pipelines
+
+- **MindDR** (2604.14518): 30B three-agent deep-research system. Four-stage SFT → Search-RL (GSPO) → Report-RL (RACE rubric) → Preference.
+- **MARS²** (2604.14564): Multi-agent RL over shared search tree for code generation.
+- **TREX** (2604.14116): Agent-driven automation of the entire LLM fine-tuning loop + FT-Bench.
+
+### 41. Agentic RL Crossing Modality Boundaries
+
+- **RadAgent** (2604.15231): 3D medical image tool-using RL agent.
+- **RaTA-Tool** (2604.14951): DPO for open-world multimodal tool retrieval.
+- **APEX-MEM** (2604.14362): Temporal graph + multi-tool retrieval agent for conversational memory.
+
+### 42. Agentic Infrastructure & Serving
+
+- **Scepsy** (2604.15186): Aggregate LLM Pipeline scheduling; 2.4× throughput / 27× latency.
+- **IE-as-Cache** (2604.14930): Information extraction as reusable cognitive cache for agent reasoning.
+
+## Cross-Cutting Meta-Observation (April 19)
+
+April 19 sharpens the picture that April 17 opened. Where April 17 said "re-negotiate foundational assumptions," April 19 fills in concrete answers along three axes:
+
+1. **Process supervision becomes cheap**: IG-Search (policy log-prob) and CW-GRPO (rescaled LLM judge) show that PRMs are no longer the only path to step-level signals. Combined with IUQ and Cross-Query Contradictions for long-form, the marginal cost of dense supervision is dropping quickly.
+
+2. **The SFT/DPO/GRPO/OT boundary is dissolving**: GFT explains SFT as PG; VGF replaces KL with OT; together they continue the unification that GRPO↔DPO started. The category "RL algorithm" is being replaced by "choice of group structure + regularization geometry + advantage rescaling."
+
+3. **Industrialization reaches the top of the stack**: MindDR (MoE × RL recipe), MARS² (multi-agent × tree × RL), TREX (agents run the fine-tuning loop), and Scepsy (workflow-level serving). April 19 is the day "agentic RL in production" stopped being a slogan and became a set of replicable recipes.
+
+**The operative question now is:** *given near-free process signals and unified optimization primitives, which productionable agentic-RL recipe will dominate at 30B / 100B scale first?*
+
 ---
 
-*Last updated: April 17, 2026 · 13 new papers*
+*Last updated: April 19, 2026 · 20 new papers · running total 120+ papers tracked*

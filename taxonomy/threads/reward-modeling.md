@@ -93,3 +93,21 @@ The Night Edition's Reward Hacking Survey laid out the problem space; April 17 p
 
 A **fifth movement** is now visible:
 5. **Reward Surface Engineering**: When a single scalar reward fails (as shown by the Reward Hacking Survey and sycophancy experiments), the answer is not merely a better RM — it is to *decompose* the reward surface along causal (Causal RM), semantic (C2 Rubric), confidence (CAPO), and task (ToolOmni DMO-GRPO) axes. Future RM pipelines will likely be multi-signal by default.
+
+## April 19, 2026 — Training-Free & Uncertainty-Based Process Signals
+
+### Training-Free Process Rewards
+- **IG-Search (Information Gain Rewards)** [2604.15148] — Process reward computed entirely from existing policy log-probs: real vs. random-document counterfactual difference on gold-answer probability. No separately trained PRM. Per-token advantage modulation inside GRPO for search queries.
+- **CW-GRPO (Contribution Weights)** [2604.14267] — LLM judge-based per-round contribution scores rescale outcome advantages without replacing them. Preserves group-relative unbiasedness.
+
+### Long-Form Verifier Signals
+- **IUQ (Interrogative Uncertainty Quantification)** [2604.15109] — Interrogator LLM generates tailored short questions for each factual claim in long-form output; decomposes long-form into atomic knowledge units for independent verification. Inter-sample consistency + intra-sample faithfulness as separable signals. Directly usable as claim-level reward.
+- **Cross-Query Contradictions** [2604.14525] — Set-level consistency metrics (SetCons, Contradiction Density, Revision Cost) for multi-query reasoning. Solver-augmented commitment extraction + counterexample-guided repair. 0.56 → 0.94 SetCons without accuracy drop. New axis for RL verification.
+
+### Unsupervised Rewards Beyond Math/Code
+- **TCER (Triviality Corrected Endogenous Reward)** [2604.11522] — Fixes triviality collapse in confidence-based unsupervised rewards for open-ended writing; uses specialist vs. generalist relative information gain + probability-dependent correction.
+
+## Updated Key Trend (post-April-19)
+
+A **sixth movement**:
+6. **Training-Free Process Signals**: Rather than building more PRMs (the April-16-PM thread) or detecting hacking (Night Edition), the April 19 papers demonstrate that existing policy / judge / verifier outputs can be re-purposed into per-step signals *without additional training*. IG-Search and CW-GRPO show two archetypes (log-prob-based vs. judge-based), IUQ extends the idea to long-form claim verification, and TCER proves unsupervised rewards can transcend verifiable domains when properly corrected. The cost of process supervision is dropping rapidly.

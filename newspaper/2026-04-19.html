@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM RL 每日研究摘要 · 2026-04-19</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #333;
+    --ink-mute: #666;
+    --paper: #f6f1e7;
+    --paper-soft: #fbf7ee;
+    --accent: #8b0000;
+    --accent-soft: #b94a3d;
+    --border: #3a3a3a;
+    --rule: #9c9486;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, "Times New Roman", serif;
+    line-height: 1.7;
+    font-size: 17px;
+  }
+  .sheet {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 48px 56px 96px;
+    background: var(--paper-soft);
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    box-shadow: 0 0 40px rgba(0,0,0,0.05);
+  }
+  .masthead {
+    text-align: center;
+    border-bottom: 4px double var(--border);
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+  }
+  .masthead .banner {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-variant: small-caps; letter-spacing: .08em;
+    font-size: 13px; color: var(--ink-mute);
+    padding-bottom: 6px; border-bottom: 1px solid var(--rule);
+  }
+  .masthead h1 {
+    font-family: "Playfair Display", "Songti SC", "STSong", "Times New Roman", serif;
+    font-size: 54px; line-height: 1.1;
+    margin: 16px 0 10px;
+    letter-spacing: 0.02em;
+  }
+  .masthead .subtitle {
+    font-style: italic; color: var(--ink-soft);
+    font-size: 18px; margin: 4px 0 8px;
+  }
+  .masthead .dateline {
+    font-variant: small-caps; letter-spacing: .18em;
+    font-size: 12px; color: var(--ink-mute);
+  }
+  .editorial {
+    background: #fffdf6;
+    border-left: 4px solid var(--accent);
+    padding: 22px 28px;
+    margin: 28px 0 40px;
+    font-size: 16px;
+  }
+  .editorial h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    font-variant: small-caps;
+  }
+  .editorial p { margin: 8px 0; }
+  section.category {
+    margin-top: 44px;
+    border-top: 2px solid var(--border);
+    padding-top: 20px;
+  }
+  section.category > h2 {
+    font-size: 26px;
+    margin: 0 0 6px;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  section.category > .cat-sub {
+    color: var(--ink-mute);
+    font-style: italic;
+    margin-bottom: 22px;
+    font-size: 15px;
+  }
+  article.paper {
+    padding: 20px 0 24px;
+    border-bottom: 1px dashed var(--rule);
+    column-count: 1;
+  }
+  article.paper:last-child { border-bottom: none; }
+  article.paper h3 {
+    font-size: 22px;
+    margin: 0 0 6px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  article.paper h3 .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    background: var(--accent);
+    color: #fff;
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    vertical-align: middle;
+    margin-right: 8px;
+    border-radius: 3px;
+  }
+  article.paper .meta {
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  article.paper .meta a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-style: normal;
+  }
+  article.paper .meta a:hover { text-decoration: underline; }
+  article.paper p { margin: 8px 0; }
+  article.paper .highlights {
+    background: #fffaf0;
+    border: 1px solid #e7dcc4;
+    padding: 10px 16px;
+    margin-top: 10px;
+    font-size: 15px;
+  }
+  article.paper .highlights strong { color: var(--accent); }
+  article.paper .takeaway {
+    font-size: 15px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent-soft);
+    padding: 4px 14px;
+    margin-top: 10px;
+    background: #fdf6e8;
+  }
+  footer.colophon {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 3px double var(--border);
+    font-size: 13px;
+    color: var(--ink-mute);
+    text-align: center;
+    font-variant: small-caps;
+    letter-spacing: 0.18em;
+  }
+  .toc {
+    background: #fbf4e1;
+    border: 1px solid #d8c99e;
+    padding: 16px 22px;
+    margin: 16px 0 30px;
+    font-size: 15px;
+    column-count: 2;
+    column-gap: 32px;
+  }
+  .toc h3 {
+    column-span: all;
+    margin: 0 0 10px;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    font-variant: small-caps;
+    color: var(--accent);
+  }
+  .toc ul { margin: 0; padding-left: 18px; }
+  .toc li { margin: 4px 0; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  code { background: #efe7d2; padding: 1px 4px; border-radius: 2px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="masthead">
+    <div class="banner">
+      <span>第 五 期 · Vol. V</span>
+      <span>LLM RL Daily · 星期日 · Sunday Edition</span>
+      <span>订阅量 · 研究者专用</span>
+    </div>
+    <h1>LLM 强化学习每日要闻</h1>
+    <div class="subtitle">The LLM Reinforcement Learning Daily · 大语言模型强化学习研究日报</div>
+    <div class="dateline">2026 年 4 月 19 日 · 星期日 · Ⅳ. ⅩⅨ. ⅯⅯⅩⅩⅥ</div>
+  </header>
+
+  <section class="editorial">
+    <h2>编者按 · Editorial</h2>
+    <p>今日（2026-04-19）主题：<strong>Credit Assignment 继续主导 GRPO 家族的进化</strong>。本期汇集了过去 48 小时内（arxiv 2604.14XXX–2604.15XXX 区段）涌现的 <strong>20 篇</strong> 全新论文，它们以三条清晰的研究主线交错前进：</p>
+    <p>① <em>搜索与工具的过程级奖励</em> 继续深化：Kuaishou 团队的 <strong>IG-Search (2604.15148)</strong> 用"信息增益"把 outcome log-prob 变成免训练的 step-level reward，直接嵌进 GRPO 的 per-token advantage；Fudan/Shanghai AI Lab 的 <strong>CW-GRPO (2604.14267)</strong> 则另辟蹊径——不改奖励只用 LLM 法官打出的"轮级贡献分"去重缩放 outcome advantage，把过程监督做成"权重"而非"目标"。</p>
+    <p>② <em>SFT 与 RL 的统一</em> 出现重要进展：Zhejiang 的 <strong>GFT (2604.14258)</strong> 把 SFT 解析为"极稀疏隐式奖励的策略梯度"，用 Group Advantage + Dynamic Coefficient Rectification 缓解单路径依赖、熵塌缩和梯度爆炸；而 UC Berkeley/UT Austin 的 <strong>VGF (2604.14265)</strong> 则用 Optimal Transport + Discrete Gradient Flow 替代 KL 正则，给 LLM fine-tuning 提供一条摆脱参数化策略和 KL 超参的新范式。</p>
+    <p>③ <em>Agentic RL 实战化</em> 迈入工业级：Li Auto 的 <strong>MindDR (2604.14518)</strong> 用 Planning/DeepSearch/Report 三代理 + 四阶段训练（SFT cold-start → Search-RL → Report-RL → Preference）在 30B 规模上追平更大模型；Tsinghua 的 <strong>MARS² (2604.14564)</strong> 首次把 group-relative advantage 扩展到 multi-agent 共享搜索树上；Shanghai AI Lab 的 <strong>TREX (2604.14116)</strong> 甚至让 agent 自动化整个 LLM fine-tuning 生命周期，并发布 FT-Bench。</p>
+    <p>同时令人瞩目的是：<strong>LongCoT (2604.14140)</strong> 以 2500 题 benchmark 暴露出前沿模型在 10k–100k tokens 推理上仅 <10% 的准确率，成为 RLM 的新天花板；<strong>Scepsy (2604.15186)</strong> 把 agentic workflow 的调度问题转为 Aggregate LLM Pipeline 建模，提供 2.4× 吞吐提升——RL 时代的基础设施正在同步升级。</p>
+    <p>总体看，今天的研究焦点已从"哪个算法更好"进一步转移到"如何把<strong>过程/过渡/子目标</strong>信号接入现有 outcome-only pipeline 而不破坏稳定性"——IG-Search 的 information-gain、CW-GRPO 的 contribution weighting、GFT 的 group advantage、MARS² 的 tree-group relative advantage 都是同一理念的不同投影。</p>
+  </section>
+
+  <div class="toc">
+    <h3>目录 · Table of Contents</h3>
+    <ul>
+      <li><a href="#policy">一、策略优化与 GRPO 变体 (6)</a></li>
+      <li><a href="#agentic">二、Agentic RL 与工具使用 (6)</a></li>
+      <li><a href="#reward">三、奖励建模与验证器 (3)</a></li>
+      <li><a href="#reasoning">四、推理 RL 与基准 (3)</a></li>
+      <li><a href="#infra">五、多模态对齐与基础设施 (2)</a></li>
+    </ul>
+  </div>
+
+  <section id="policy" class="category">
+    <h2>一、策略优化与 GRPO 变体</h2>
+    <p class="cat-sub">Policy Optimization & GRPO Variants — 今日最密集的研究主线</p>
+
+    <article class="paper">
+      <h3><span class="tag">头版</span>IG-Search：搜索增强推理的 Step-Level 信息增益奖励</h3>
+      <div class="meta">Zihan Liang, Yufei Ma, Ben Chen, et al. (快手) · <a href="https://arxiv.org/abs/2604.15148">arxiv 2604.15148</a></div>
+      <p>搜索-边思考（search-during-think）范式长期困于 trajectory-level 奖励——模型只能通过 final-answer 对错来更新所有检索动作，这使得"什么样的检索真正有效"几乎无法区分。IG-Search 提出了一个出人意料简洁的解法：<strong>信息增益 (Information Gain, IG)</strong>，即用 policy 在 gold-answer 上的 log-probability 在真实检索后 vs. 随机检索反事实基线之间的差，作为每一步检索的"过程奖励"。</p>
+      <p>方法层面两点关键：(1) <strong>免训练</strong>——IG 完全由现有 policy log-prob 推出，无需额外训练 Process Reward Model；(2) <strong>per-token advantage modulation</strong>——将 IG 直接馈入 GRPO advantage，作用于检索-query tokens，形成"谁提出的 query 带来更多信息增益，谁就获得更大 token-level 正向优势"的精细信号。为避免原始 log-prob 差分的重尾高方差问题，作者对 IG 做了 z-score + clamp。</p>
+      <div class="highlights"><strong>实验：</strong> 7 个 single-hop / multi-hop QA benchmark 上，Qwen2.5-3B 平均 EM 达 0.430，比最强的 trajectory-level 基线 MR-Search 高 1.6 分，比 step-level 的 GiGPO 高 0.9 分；多跳场景提升更显著。</div>
+      <div class="takeaway"><strong>🎯 关键洞察：</strong>当 outcome log-prob 的反事实差能充分表达"某一步是否真正推动了推理"时，PRM 可以被完全"省略"——这是 Process-Reward 思想的"免训练化"范例，与昨日 PROGRS 的 outcome-conditioned centering 形成平行路线。</div>
+    </article>
+
+    <article class="paper">
+      <h3>CW-GRPO：用"贡献权重"把过程监督做成 Advantage 的乘数</h3>
+      <div class="meta">Junzhe Wang, Zhiheng Xi, Yajie Yang, Shihan Dou, Tao Gui, Qi Zhang (Fudan / Shanghai AI Lab) · <a href="https://arxiv.org/abs/2604.14267">arxiv 2604.14267</a></div>
+      <p>与 IG-Search 的 log-prob 路线互补，CW-GRPO 走的是<em>判别式</em>路线：让 LLM 法官在每一轮检索后给出"检索有用性 + 推理正确性"两项评分，合成 per-round <strong>Contribution Score</strong>，再用该分数去<em>重缩放</em>而非替换 outcome advantage。这样既保留了 GRPO 原有的 group-relative 无偏性，又把"信息丰富的轮"放大、"冗余轮"抑制。</p>
+      <p>关键设计是一个 monotonic rescaling function，保证加权后 advantage 的符号与大小仍然合理，不会因为一次负面评分就把整条轨迹推向错误方向。</p>
+      <div class="highlights"><strong>实验：</strong> Qwen3-1.7B / 8B 在 Natural Questions、TriviaQA、HotpotQA、PopQA、2WikiMultiHopQA 等知识密集任务上，对比标准 GRPO 分别 +6.3% / +5.0%。</div>
+      <div class="takeaway"><strong>🔑 对比：</strong>IG-Search 与 CW-GRPO 代表了"Process Reward 去哪里去"的两条路径——前者改 advantage 的 <em>per-token 分布</em>，后者改 advantage 的 <em>per-round 幅度</em>。二者可正交组合。</div>
+    </article>
+
+    <article class="paper">
+      <h3>GFT：把 SFT 重新诠释为"极稀疏隐式奖励的 PG"，并用 Group Advantage 修复</h3>
+      <div class="meta">Wangjie Gan, Miao Pan, Linbo Xi, Wenqi Zhang, Jintao Chen, Jianwei Yin, Xuhong Zhang (Zhejiang) · <a href="https://arxiv.org/abs/2604.14258">arxiv 2604.14258</a></div>
+      <p>Group Fine-Tuning (GFT) 从理论上给 SFT 做了一次精致的"再诊断"：SFT 可被视为<strong>极稀疏隐式奖励下的策略梯度优化，带着极不稳定的 inverse-probability weighting</strong>——这正是 SFT 导致 single-path dependency、entropy collapse 和 gradient explosion 的根源。GFT 开出两剂药：</p>
+      <ul>
+        <li><strong>Group Advantage Learning</strong>：为每条参考回答构造一组多样 responses，用 group-relative normalized advantage 替代传统的 -log p 目标，使 SFT 拥有对比式监督。</li>
+        <li><strong>Dynamic Coefficient Rectification</strong>：根据当前 importance ratio 自适应截断，解决 IPW 爆炸。</li>
+      </ul>
+      <p>结果是一个"SFT 本质上就是一种 on-policy RL"的统一视角。更重要的是，GFT 训出的 policy 在后续 RL 阶段<em>更顺滑</em>——这对现行 "SFT cold-start → RL" 两阶段 pipeline 有直接价值。</p>
+      <div class="takeaway"><strong>🧩 连接：</strong>GFT 与 10-00977 的 "GRPO is secretly DPO" 形成互补——SFT/DPO/GRPO 正被统一成同一个 policy-gradient 家族的不同实例。</div>
+    </article>
+
+    <article class="paper">
+      <h3>VGF：用 Optimal Transport + Gradient Flow 替代 KL-Regularized RL</h3>
+      <div class="meta">Haoran Xu, Kaiwen Hu, Somayeh Sojoudi, Amy Zhang · <a href="https://arxiv.org/abs/2604.14265">arxiv 2604.14265</a></div>
+      <p>Value Gradient Flow 给 behavior-regularized RL 提出了一个颠覆性的新视角：把"从参考分布（offline RL 里的数据集 / LLM RL 里的 base model）出发，到 value-optimal policy 分布"的映射本身建模为 <strong>Optimal Transport</strong> 问题，用离散梯度流求解——particles 由 value gradient 引导。这套方法的两大优势：</p>
+      <ul>
+        <li>不再显式参数化 policy（避免了 reparameterized PG 在大生成模型上难以扩展的问题）；</li>
+        <li>通过"transport budget"隐式施加正则，取代 KL 系数调参；budget 可在 test time 灵活调整，实现 adaptive inference scaling。</li>
+      </ul>
+      <p>实验在 D4RL offline RL benchmark 与 LLM RL（Qwen2-7B 对齐任务）上均取得 SOTA。</p>
+      <div class="takeaway"><strong>🌊 意义：</strong>这是对"KL 正则—PPO—GRPO"主线的一次结构性挑战，把 LLM RL 里长期棘手的 β 超参调优问题转成"运输预算"这一更可解释的量。</div>
+    </article>
+
+    <article class="paper">
+      <h3>RAD-2：Temporally Consistent GRPO for Generator-Discriminator Planning</h3>
+      <div class="meta">Hao Gao, Shaoyu Chen, Yifan Zhu, Yuehao Song, Wenyu Liu, Qian Zhang, Xinggang Wang · <a href="https://arxiv.org/abs/2604.15308">arxiv 2604.15308</a></div>
+      <p>虽然主战场是自动驾驶，RAD-2 贡献了一个值得 LLM RL 社区关注的通用算法——<strong>Temporally Consistent GRPO (TC-GRPO)</strong>。核心观察：传统 GRPO 在长轨迹任务下做 credit assignment 时会把所有 step 同等对待，但当邻接 step 具有天然的<em>时间连贯性</em>（上下步的结果应该相近）时，可以利用这种结构在 group baseline 中引入时序平滑项，显著降低 advantage estimate 方差。</p>
+      <p>此外作者提出 On-policy Generator Optimization，把 closed-loop reward 信号转化为 longitudinal 学习目标，使 diffusion-based generator 能在反馈环中持续改进。在 NAVSIM 规划基准上，碰撞率下降 56%。</p>
+      <div class="takeaway"><strong>🚀 可迁移性：</strong>TC-GRPO 的思想对 long-horizon reasoning / agentic RL 场景（多步工具调用中相邻步骤结果相关）同样适用，值得迁移实验。</div>
+    </article>
+
+    <article class="paper">
+      <h3>TCER：开放生成任务的"平凡性修正"内生奖励</h3>
+      <div class="meta">Peking / Alibaba / Lanzhou University · <a href="https://arxiv.org/abs/2604.11522">arxiv 2604.11522</a></div>
+      <p>Triviality Corrected Endogenous Reward (TCER) 把最近数学推理领域的 "unsupervised confidence-based reward"（如 ERUL）尝试搬到 open-ended writing 任务。作者发现直接套用会触发 <strong>Triviality Bias</strong>——policy 向高概率平凡输出塌缩，失去多样性与内容密度。</p>
+      <p>解法：奖励不再基于绝对 confidence，而是 specialist policy 与 generalist reference policy 的<strong>相对信息增益</strong>，并加上 probability-dependent correction 避免过高 prior 的 trivial completions 被反复奖励。在多个写作评测和不同模型架构上，无需外部标注即取得稳定提升。</p>
+      <div class="takeaway"><strong>📝 意义：</strong>把 RLVR 思想从可验证域（数学/代码）迁移到不可验证域（open-ended 写作）的关键一步——用"相对信息增益"取代"正确性"作为奖励基础。</div>
+    </article>
+  </section>
+
+  <section id="agentic" class="category">
+    <h2>二、Agentic RL 与工具使用</h2>
+    <p class="cat-sub">Agentic RL & Tool-Use — 从 research prototype 走向工业级 pipeline</p>
+
+    <article class="paper">
+      <h3><span class="tag">工业级</span>MindDR：三代理 × 四阶段训练的 30B 深度研究 Agent</h3>
+      <div class="meta">MindDR Team · Li Auto Inc. · <a href="https://arxiv.org/abs/2604.14518">arxiv 2604.14518</a></div>
+      <p>Mind DeepResearch (MindDR) 证明了 ~30B 参数量也能做出与更大规模模型抗衡的 deep-research agent，其秘诀是<strong>架构与训练的精细配合</strong>：</p>
+      <ul>
+        <li><strong>三代理架构</strong>：Planning Agent（拆解任务与分发）、DeepSearch Agent（长程多工具检索）、Report Agent（综合与成稿）。</li>
+        <li><strong>四阶段 pipeline</strong>：SFT cold-start → Search-RL → Report-RL → Preference Alignment。Search-RL 采用 GRPO/GSPO 配合真实 tool execution；GSPO 将 importance ratio 从 token 级提升到 sequence 级并加入长度归一化，这对 MoE 架构的长链推理至关重要。Report-RL 则使用 RACE rubric 的 LLM-as-Judge 多维奖励。</li>
+      </ul>
+      <div class="highlights"><strong>成绩：</strong> BrowseComp-ZH 45.7%, BrowseComp 42.8%, WideSearch 46.5%, xbench-DS 75.0%, DeepResearch Bench 52.5，同量级开源系统中全面领先。</div>
+      <div class="takeaway"><strong>🏭 实战意义：</strong>这是 2026 年第一个完整公开 "多代理 RL + MoE 训练" 配方的 30B 级技术报告，对产业部署有直接参考价值。</div>
+    </article>
+
+    <article class="paper">
+      <h3>MARS²：共享搜索树上的 Multi-Agent Tree-Level Group-Relative Advantage</h3>
+      <div class="meta">Pengfei Li, Shijie Wang, Fangyuan Li, et al. (Tsinghua C³I / MARTI framework) · <a href="https://arxiv.org/abs/2604.14564">arxiv 2604.14564</a></div>
+      <p>MARS² 的野心是把 single-agent MCTS 的成功范式推广到<strong>多个独立优化的 agent 协作于同一棵搜索树</strong>。核心算法创新有两层：</p>
+      <ul>
+        <li><strong>Thompson-sampling</strong> 选择 (agent, node) 对进行扩展，将 agent–node 配对视为多臂老虎机问题。</li>
+        <li><strong>Tree-consistent reward shaping</strong>：利用树上 parent/sibling 关系做奖励平滑；<strong>tree-level group-relative advantage</strong>：对每个 agent 的更新不用 trajectory-level 而是 tree-level 的 group baseline，大幅稳定多 agent 的联合学习。</li>
+      </ul>
+      <p>实验在 LiveCodeBench v6（01/2025–05/2025，为避免数据污染而选）上验证，多模型组合下显著超越单 agent MCTS 和 flat multi-agent RL 基线。代码已开源于 MARTI-v2。</p>
+      <div class="takeaway"><strong>🌳 核心贡献：</strong>group-relative advantage 从 "flat group" 扩展到 "tree-structured group"——给 multi-agent RL 在结构化搜索中一个干净的credit assignment 框架。</div>
+    </article>
+
+    <article class="paper">
+      <h3>TREX：把 LLM Fine-Tuning 全流程交给 Agent 自动化</h3>
+      <div class="meta">Zerun Ma, Guoqiang Wang, et al. (Shanghai AI Lab / Fudan) · <a href="https://arxiv.org/abs/2604.14116">arxiv 2604.14116</a></div>
+      <p>TREX 把 LLM 训练生命周期——需求分析、文献/数据调研、策略制定、数据菜谱、训练/评测——交给一个双 agent 系统（Researcher + Executor），并把多轮实验建模为<strong>搜索树</strong>，让系统能规划探索路径、复用历史结果、从迭代中蒸馏 high-level insights。</p>
+      <p>同时提出 <strong>FT-Bench</strong>：10 个源自真实场景的自动化 fine-tuning 任务，覆盖从基础能力优化到复杂领域适配。</p>
+      <div class="takeaway"><strong>🤖 元层次：</strong>继 Agent 时代的 "写代码"（SWE-agent）、"做研究"（DeepResearch）之后，"调模型本身"也成为 agent 可执行的长程任务——RL 训练循环正在被 agent 吞并。</div>
+    </article>
+
+    <article class="paper">
+      <h3>RadAgent：3D 胸部 CT 诊断的 Tool-Using RL Agent</h3>
+      <div class="meta"><a href="https://arxiv.org/abs/2604.15231">arxiv 2604.15231</a></div>
+      <p>RadAgent 把 3D CT 分析分解为"规划下一步诊断动作 → 从工具箱选工具 → 用工具输出更新 memory → 精炼当前发现"的多步循环，每一步都用 RL 训练。工具箱包括 lesion segmentation、radiology lexicon lookup、CT 3D viewer 等领域工具。</p>
+      <div class="highlights"><strong>成绩：</strong> Chest CT 报告生成：macro-F1 比 CT-Chat 高 +6.0（相对 36.4%），micro-F1 +5.4（相对 19.6%），同时 faithfulness +37.0%——后者是 3D VLM baseline 完全欠缺的能力。</div>
+      <div class="takeaway"><strong>🏥 领域意义：</strong>医疗 RL agent 从"病历文本生成"进入"3D 体素 + 工具调用"的新阶段，step-level 可追溯性成为临床可用的关键。</div>
+    </article>
+
+    <article class="paper">
+      <h3>RaTA-Tool：DPO 加持的开放世界多模态工具检索</h3>
+      <div class="meta"><a href="https://arxiv.org/abs/2604.14951">arxiv 2604.14951</a></div>
+      <p>传统 tool selection 把"查询→工具"当作分类任务，遇到未见工具就失败。RaTA-Tool 反其道：MLLM 先把多模态查询转为结构化 task description，再通过语义匹配在工具库中检索；加上一个 <strong>DPO</strong> 阶段对齐 task description 与工具选择——用偏好对数据优化 description 的"工具可辨识度"。</p>
+      <p>配套发布了首个开放世界多模态工具使用数据集，基于 HuggingFace model cards 构建。</p>
+      <div class="takeaway"><strong>🔧 关键：</strong>DPO 在这里被创新性地用来对齐"中间表示"（task description），而不是最终行为——这是 preference optimization 在 tool-use 栈里的新用法。</div>
+    </article>
+
+    <article class="paper">
+      <h3>APEX-MEM：Property Graph + 多工具检索 Agent 的对话长期记忆</h3>
+      <div class="meta">Pratyay Banerjee, Masud Moshtaghi, Shivashankar Subramanian, Amita Misra, Ankit Chadha (Amazon AGI) · <a href="https://arxiv.org/abs/2604.14362">arxiv 2604.14362</a></div>
+      <p>对话记忆系统三要素：(1) 领域无关本体的 property graph，结构化存储"时间锚定事件"；(2) append-only 存储保留完整时间演变；(3) 多工具 retrieval agent 在查询时解决信息冲突与演化。</p>
+      <div class="highlights"><strong>成绩：</strong> LOCOMO QA 88.88%、LongMemEval 86.2%，大幅领先现有 memory baseline。</div>
+      <div class="takeaway"><strong>🧠 RL 角度：</strong>为 agent memory benchmark 提供了一个新的强基线，后续 RL 训练长期记忆 agent 时可作为 reward verifier 或初始化。</div>
+    </article>
+  </section>
+
+  <section id="reward" class="category">
+    <h2>三、奖励建模与验证器</h2>
+    <p class="cat-sub">Reward Modeling & Verifiers — 信号更精细、更可扩展</p>
+
+    <article class="paper">
+      <h3>IUQ：面向长文生成的"询问式"不确定性量化</h3>
+      <div class="meta">Haozhi Fan, Jinhao Duan, Kaidi Xu · <a href="https://arxiv.org/abs/2604.15109">arxiv 2604.15109</a></div>
+      <p>Interrogative Uncertainty Quantification (IUQ) 把"长文生成的事实性不确定性"拆解成两维：<strong>inter-sample consistency</strong>（多次采样的一致性）和 <strong>intra-sample faithfulness</strong>（答案对上下文的忠实度）。创新在于用一个 interrogator LLM 为每个事实声明生成定制化的短问题——把长文分解为原子知识单元后独立核查，避开了"长文里任意子句互相影响"的干扰。</p>
+      <div class="takeaway"><strong>🎯 对 RL 的用法：</strong>IUQ 可直接作为 claim-level reward 用于长文 RL 训练，与昨日 CURE 的 token-masked GRPO 形成互补。</div>
+    </article>
+
+    <article class="paper">
+      <h3>Cross-Query Contradictions：多查询 LLM 推理一致性基准与 Solver-Aug 修复</h3>
+      <div class="meta">Rohit Kumar Salla, et al. · <a href="https://arxiv.org/abs/2604.14525">arxiv 2604.14525</a></div>
+      <p>LLM 在相关的多个查询上经常给出互相矛盾的答案。本文提出：</p>
+      <ul>
+        <li>基准：390 个 multi-query reasoning 实例，带 entailment/contradiction/unknown 标签，附带 set-level 指标（Case Satisfiability Rate、Contradiction Density、Revision Cost）。</li>
+        <li>方法：solver-augmented 框架——先抽取命题承诺，形式化验证全局可满足性，反例引导修复。</li>
+      </ul>
+      <div class="highlights"><strong>结果：</strong> SetCons 从 0.56 → 0.94，同时保持单查询精度不下降。</div>
+      <div class="takeaway"><strong>📐 连接：</strong>为 RL 训练提供了"跨查询一致性"这一新的可验证奖励维度——真实世界 agent 常被同一用户以不同 phrasing 追问，这种 reward 比单题正确率更贴近实用。</div>
+    </article>
+
+    <article class="paper">
+      <h3>IE-as-Cache：把 Information Extraction 转为 Agentic Reasoning 的认知缓存</h3>
+      <div class="meta">Hang Lv, Sheng Liang, Hongchao Gu, Wei Guo, Defu Lian, Yong Liu, Hao Wang, Enhong Chen (USTC / Huawei) · <a href="https://arxiv.org/abs/2604.14930">arxiv 2604.14930</a></div>
+      <p>主张：IE 不应是终端任务，而应是 agent 推理的<em>可复用工作记忆</em>。IE-as-Cache 框架把 query-driven extraction 与 cache-aware reasoning 结合，动态维护紧凑中间信息、过滤噪声——agent 在后续步骤可"回望" cache 中的结构化 fact 而非再次消费原始文档。</p>
+      <div class="takeaway"><strong>💾 对 RL 的意义：</strong>为长程 agentic RL 提供了一种可学习的外部存储结构，可能缓解 context 膨胀与信息丢失。</div>
+    </article>
+  </section>
+
+  <section id="reasoning" class="category">
+    <h2>四、推理 RL 与基准</h2>
+    <p class="cat-sub">Reasoning RL & Benchmarks — 新的天花板与新的输入形式</p>
+
+    <article class="paper">
+      <h3><span class="tag">基准</span>LongCoT：让前沿模型跌落至 <10% 准确率的长程 CoT 基准</h3>
+      <div class="meta">Sumeet Ramesh Motwani, et al. · <a href="https://arxiv.org/abs/2604.14140">arxiv 2604.14140</a></div>
+      <p>LongCoT 直击一个长期被忽视的问题：现有 benchmark（GSM8K、MATH 等）只测单步或短链推理——而 reasoning 模型的真正瓶颈是<strong>长程维持</strong>。该基准的设计原则极其精心：</p>
+      <ul>
+        <li>2500 题覆盖 chemistry、math、CS、chess、logic 五域；</li>
+        <li>每题都是"短输入 + 可验证最终答案 + 10k~100k+ reasoning tokens 的解路径"；</li>
+        <li>每个 <em>local step</em> 对前沿模型都单独可解，所以失败反映的纯粹是长程推理能力缺陷。</li>
+      </ul>
+      <div class="highlights"><strong>惊人结果：</strong> GPT-5.2 仅 9.8%，Gemini 3 Pro 仅 6.1%——当代 RLM 在超长程推理上几乎全线崩溃。</div>
+      <div class="takeaway"><strong>🎯 对 RL 社区的冲击：</strong>这为 RLVR 时代定下一个清晰的靶子——长程 CoT 是下一代 reasoning RL 必须攻克的高地。可以预见大量 curriculum RL、credit-assignment 新方法将围绕此基准展开。</div>
+    </article>
+
+    <article class="paper">
+      <h3>StoryCoder：叙事重构 —— 一种可与 Code RL 正交叠加的 prompting 结构</h3>
+      <div class="meta">Geonhui Jang, et al. · <a href="https://arxiv.org/abs/2604.14631">arxiv 2604.14631</a></div>
+      <p>把 code generation 题目重写为"任务概述 + 约束 + 示例测试用例"的连贯自然语言叙事（按算法与体裁选择），显著提升代码模型的结构化推理。原理依据认知科学：人类在组织成连贯 mental model 时推理更高效。</p>
+      <div class="highlights"><strong>成绩：</strong> 11 个模型在 HumanEval / LiveCodeBench / CodeForces 上平均 +18.7% zero-shot pass@10。</div>
+      <div class="takeaway"><strong>🧪 对 RL 的意义：</strong>StoryCoder 提供的输入侧变换可与 outcome-verified code RL 组合——若 RL 训练时就在叙事化 prompt 上训，可能把推理归纳进 policy 本身。</div>
+    </article>
+
+    <article class="paper">
+      <h3>LLM Unlearning as Asymmetric Two-Task Learning</h3>
+      <div class="meta"><a href="https://arxiv.org/abs/2604.14808">arxiv 2604.14808</a></div>
+      <p>重新诠释 LLM unlearning：不是对称的"遗忘 = 负向学习"，而是一个<strong>非对称双任务</strong>——retention 是主目标，forgetting 是辅助。基于此，文章提出新的加权梯度目标，在忘掉目标数据与保留通用能力之间取得更好权衡。</p>
+      <div class="takeaway"><strong>⚖️ RL 视角：</strong>与 TAR / SimNPO 等 preference-based unlearning 工作形成对比——展示了 "unlearning 作为多目标 RL" 的自然诠释。</div>
+    </article>
+  </section>
+
+  <section id="infra" class="category">
+    <h2>五、多模态对齐与基础设施</h2>
+    <p class="cat-sub">Multimodal Alignment & Infrastructure — RL 训练与服务的系统侧</p>
+
+    <article class="paper">
+      <h3>Step-level Denoising-time Diffusion Alignment with Multiple Objectives</h3>
+      <div class="meta"><a href="https://arxiv.org/abs/2604.14379">arxiv 2604.14379</a></div>
+      <p>Diffusion 模型对齐一直局限于"单一 reward + KL 正则"——但真实人类偏好是多元的（美学、文本一致性、safety 等）。本文把问题形式化为<strong>step-level multi-objective RL</strong>：</p>
+      <ul>
+        <li>每个 denoising step 都暴露多个 reward 信号；</li>
+        <li>用带 Pareto 权重的 step-level advantage 更新 noise predictor。</li>
+      </ul>
+      <p>避免了之前工作中只在最终样本计算 reward 导致的 credit attribution 问题。</p>
+      <div class="takeaway"><strong>🎨 意义：</strong>Multi-objective alignment 开始从 LLM 文本域迁移到 diffusion 图像域，step-level 思想正在跨模态流动。</div>
+    </article>
+
+    <article class="paper">
+      <h3>Scepsy：Aggregate LLM Pipeline 驱动的 Agentic Workflow 服务系统</h3>
+      <div class="meta">Marcel Wagenländer, et al. · <a href="https://arxiv.org/abs/2604.15186">arxiv 2604.15186</a></div>
+      <p>当 agentic workflow 调度多个 LLM 时，端到端延迟难以预测——但关键观察是：<em>每个 LLM 在整个 workflow 中的执行时间占比是相对稳定的</em>。Scepsy 基于此 profile 各 LLM 在不同并行度下的 latency/throughput，构造 <strong>Aggregate LLM Pipeline</strong>——一个轻量级 per-workflow GPU 分配预测器，用于跨多 GPU 集群调度。</p>
+      <div class="highlights"><strong>成绩：</strong> 比独立优化各 LLM 的系统，最高 2.4× 吞吐、27× 延迟下降。</div>
+      <div class="takeaway"><strong>🏗️ 基础设施：</strong>agentic RL 训练的数据生成阶段（rollout）高度依赖高吞吐 inference；Scepsy 的调度框架可直接用于 RL-rollout 集群。</div>
+    </article>
+  </section>
+
+  <footer class="colophon">
+    编辑 · Kawasaki-666 · LLM-RL-Daily-Papers · 2026 / 04 / 19 · 下期预告：继续跟踪 GRPO family 的 credit-assignment 进化与 Agentic RL 的工业级落地
+  </footer>
+</div>
+</body>
+</html>
