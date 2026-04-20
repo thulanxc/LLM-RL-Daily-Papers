@@ -114,3 +114,21 @@ Four pillars are now joined by a **fifth**:
 
 The five pillars are now augmented by a **sixth**:
 6. **Full-stack industrialization**: RL pipelines (MindDR four-stage, MARS² tree-agents), the training loop itself (TREX), and rollout infrastructure (Scepsy) are all being standardized into deployable systems. At the same time, agentic RL is crossing modality/domain boundaries (RadAgent 3D medical, RaTA-Tool multimodal retrieval, APEX-MEM temporal memory) with increasing speed — the inner algorithmic core (GRPO + structured advantages + step-level process signals) now stabilizes enough for teams to focus on delivery.
+
+## April 20, 2026 Additions
+
+### Runtime-Alignment for Agents (new sub-thread)
+- **PolicyBank** [2604.15505] — Memory mechanism that iteratively refines natural-language *policy* understanding via corrective feedback in pre-deployment testing; treats policy as an evolving object, not ground truth. Closes 82% of the human-oracle gap on policy-gap scenarios where existing agent memory achieves near-zero success. First practical recipe for runtime alignment.
+
+### Agent Safety via Reasoning-Based Guards
+- **WebAgentGuard** [2604.12284] — GRPO-trained Guard model detects prompt-injection attacks on web agents by *reasoning* about actions rather than pattern-matching. Extends the 4-17 "reasoning judge" thread into agent defense.
+
+### Agent Industrial-Workflow Diagnostics
+- **Agentic Hardware Verification** [2604.15657] — First token-budget "accounting" study of LLM-agent hardware verification. Six-category token tracking; taxonomy of coverage holes (methodology-bound ceilings vs reasoning frontiers). Enhanced domain-specialized agents reach 95-99% coverage with 4-13× fewer tokens. Mechanistic explanation for Frontier-Eng's "optimization degradation".
+
+### Agent-as-Behavioral-Simulator (crossing into applications)
+- **MUSE** [2604.13828] — Multi-domain Chinese user simulation via IPSE + Role-Reversal SFT + Rubric-Guided Multi-Turn RL. First systematic Chinese simulator for dialogue AI training.
+- **PGHS** [2604.15190] — Meituan merchant diagnosis via policy-mining layer unifying LLM reasoning + ML fitting. 8.80% group error, 45.8%/40.9% over strongest single-paradigm baselines.
+
+### Updated Pillar
+7. **Runtime alignment**: Alignment becomes a continuous in-deployment process. PolicyBank + WebAgentGuard + Grift (reward-hacking detector) together make the "trained and shipped" model no longer the end state — safety must be refreshed via ongoing feedback, reasoning judges, and model-internal probes.

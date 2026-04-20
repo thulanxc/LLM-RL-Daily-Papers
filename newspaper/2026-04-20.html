@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM RL 每日研究摘要 · 2026-04-20</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #333;
+    --ink-mute: #666;
+    --paper: #f6f1e7;
+    --paper-soft: #fbf7ee;
+    --accent: #8b0000;
+    --accent-soft: #b94a3d;
+    --border: #3a3a3a;
+    --rule: #9c9486;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, "Times New Roman", serif;
+    line-height: 1.7;
+    font-size: 17px;
+  }
+  .sheet {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 48px 56px 96px;
+    background: var(--paper-soft);
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    box-shadow: 0 0 40px rgba(0,0,0,0.05);
+  }
+  .masthead {
+    text-align: center;
+    border-bottom: 4px double var(--border);
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+  }
+  .masthead .banner {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-variant: small-caps; letter-spacing: .08em;
+    font-size: 13px; color: var(--ink-mute);
+    padding-bottom: 6px; border-bottom: 1px solid var(--rule);
+  }
+  .masthead h1 {
+    font-family: "Playfair Display", "Songti SC", "STSong", "Times New Roman", serif;
+    font-size: 54px; line-height: 1.1;
+    margin: 16px 0 10px;
+    letter-spacing: 0.02em;
+  }
+  .masthead .subtitle {
+    font-style: italic; color: var(--ink-soft);
+    font-size: 18px; margin: 4px 0 8px;
+  }
+  .masthead .dateline {
+    font-variant: small-caps; letter-spacing: .18em;
+    font-size: 12px; color: var(--ink-mute);
+  }
+  .editorial {
+    background: #fffdf6;
+    border-left: 4px solid var(--accent);
+    padding: 22px 28px;
+    margin: 28px 0 40px;
+    font-size: 16px;
+  }
+  .editorial h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    font-variant: small-caps;
+  }
+  .editorial p { margin: 8px 0; }
+  section.category {
+    margin-top: 44px;
+    border-top: 2px solid var(--border);
+    padding-top: 20px;
+  }
+  section.category > h2 {
+    font-size: 26px;
+    margin: 0 0 6px;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  section.category > .cat-sub {
+    color: var(--ink-mute);
+    font-style: italic;
+    margin-bottom: 22px;
+    font-size: 15px;
+  }
+  article.paper {
+    padding: 20px 0 24px;
+    border-bottom: 1px dashed var(--rule);
+    column-count: 1;
+  }
+  article.paper:last-child { border-bottom: none; }
+  article.paper h3 {
+    font-size: 22px;
+    margin: 0 0 6px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  article.paper h3 .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    background: var(--accent);
+    color: #fff;
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    vertical-align: middle;
+    margin-right: 8px;
+    border-radius: 3px;
+  }
+  article.paper .meta {
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  article.paper .meta a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-style: normal;
+  }
+  article.paper .meta a:hover { text-decoration: underline; }
+  article.paper p { margin: 8px 0; }
+  article.paper ul { margin: 6px 0 8px 22px; }
+  article.paper .highlights {
+    background: #fffaf0;
+    border: 1px solid #e7dcc4;
+    padding: 10px 16px;
+    margin-top: 10px;
+    font-size: 15px;
+  }
+  article.paper .highlights strong { color: var(--accent); }
+  article.paper .takeaway {
+    font-size: 15px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent-soft);
+    padding: 4px 14px;
+    margin-top: 10px;
+    background: #fdf6e8;
+  }
+  footer.colophon {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 3px double var(--border);
+    font-size: 13px;
+    color: var(--ink-mute);
+    text-align: center;
+    font-variant: small-caps;
+    letter-spacing: 0.18em;
+  }
+  .toc {
+    background: #fbf4e1;
+    border: 1px solid #d8c99e;
+    padding: 16px 22px;
+    margin: 16px 0 30px;
+    font-size: 15px;
+    column-count: 2;
+    column-gap: 32px;
+  }
+  .toc h3 {
+    column-span: all;
+    margin: 0 0 10px;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    font-variant: small-caps;
+    color: var(--accent);
+  }
+  .toc ul { margin: 0; padding-left: 18px; }
+  .toc li { margin: 4px 0; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+  code { background: #efe7d2; padding: 1px 4px; border-radius: 2px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="masthead">
+    <div class="banner">
+      <span>第 六 期 · Vol. VI</span>
+      <span>LLM RL Daily · 星期一 · Monday Edition</span>
+      <span>订阅量 · 研究者专用</span>
+    </div>
+    <h1>LLM 强化学习每日要闻</h1>
+    <div class="subtitle">The LLM Reinforcement Learning Daily · 大语言模型强化学习研究日报</div>
+    <div class="dateline">2026 年 4 月 20 日 · 星期一 · Ⅳ. ⅩⅩ. ⅯⅯⅩⅩⅥ</div>
+  </header>
+
+  <section class="editorial">
+    <h2>编者按 · Editorial</h2>
+    <p>今日（2026-04-20）主题：<strong>从"更好的奖励"到"更安全的奖励"——奖励工程进入第二阶段</strong>。经过 4 月上旬一轮 GRPO 变体井喷、4 月中旬 RLVR 新垂直领域扩张之后，本期汇集的 <strong>17 篇</strong> 新论文（arxiv 2604.14xxx–2604.16xxx 区段）呈现一个清晰的转向：研究重心正从"如何提取更密的学习信号"迁移到"<strong>如何让已经很密的信号不被模型钻空子</strong>"。</p>
+    <p>① <em>奖励 hacking 的内生信号检测</em>（UT Austin 的 <strong>Grift · 2604.16242</strong>）：首次用 CoT 的<strong>梯度指纹</strong>替代 CoT 文本检测 hacking 行为——当 Reasoning model 学会在文本层面"说得漂亮"但在梯度层面"认错做对"时，Monitor-CoT、TRACE 等 text-based baseline 全面失效，而 Grift 仍能提供 25%+ 相对提升。这一发现与 4 月 17 日 Causal Decomposition RM、C2 Rubric RM、Sycophancy Calibration Collapse 共同构成 Reward Hacking Survey (2604.13602) 所预言的"第三代缓解方法"。</p>
+    <p>② <em>偏好优化的规模化内存问题</em>（Google / UT Austin 的 <strong>GroupDPO · 2604.15602</strong>）：Group-wise DPO 之所以在学术界长期停留在 k=2 或 k=4，是因为其梯度耦合导致内存随 group size 线性爆炸。本期的 GroupDPO 用"<strong>no-grad 预前向计算 per-sample coefficient + grad 分离</strong>"的代理目标，把内存从 O(k) 压到 O(1)——首次把 GRPO 的 group-relative 优势带入 DPO 家族的 *实用规模*。</p>
+    <p>③ <em>测试时 RL 成为一条真实路径</em>（Sutter Hill Ventures 的 <strong>RCFG · 2604.15577</strong>）：Reward-Weighted Classifier-Free Guidance 被证明是一个 *policy improvement operator*——用 Q 函数倾斜采样分布，在不重训 policy 的情况下优化新奖励；并可反向蒸馏回 base policy 作为 RL 的 warm start，显著加速收敛。这为 SFT/RLHF/GRPO 的 offline-online 分裂提供了第三种折中方案。</p>
+    <p>④ <em>Agent 的策略理解可进化</em>（Google 的 <strong>PolicyBank · 2604.15505</strong>）：自然语言策略天然有歧义，传统 agent memory 把策略当成不可变 ground truth 只能在 policy-gap 场景下近零成功率，而 PolicyBank 通过 pre-deployment testing 的反馈迭代细化工具级 policy 理解，在策略歧义场景下关闭 82% 的人类 oracle gap。这是把"对齐"从"训练时一次性任务"变成"运行时持续任务"的第一次实质性尝试。</p>
+    <p>⑤ <em>推理本质的哲学重探</em>（<strong>Latent CoT · 2604.15726</strong>）：position paper 正式形式化三个互斥假设 H0/H1/H2（"RL 收益源于通用 serial compute"/ "潜状态轨迹"/ "表面 CoT"），并主张现有证据最支持 H1。这篇论文对 Reasoning RL 评估范式具有方法论级别影响——如果推理真的是 latent，那么只监督表面 CoT 的 process reward 很可能是错位的信号。</p>
+    <p>⑥ <em>长上下文 RL 的内生稀疏更新</em>（Peking U. 的 <strong>LongAct · 2604.14922</strong>）：首次利用 LLM 在长上下文下 <em>QK 激活自发出现的高幅值特征</em>，将 RL 更新从 uniform 转为 saliency-guided sparse，LongBench v2 上 +8%。这是一条与 data-centric 和 reward-centric 正交的第三条 RL scaling 路径——<strong>model-internal 路径</strong>。</p>
+    <p>⑦ <em>RL 训练的精度-规模经济学</em>（<strong>Sol-RL · 2604.06916</strong>）：FP4 rollout + BF16 train 的双精度流水，把 rollout group size 的上限解锁到前沿 diffusion 模型（FLUX.1-12B）规模，训练加速 4.64×。这和 QaRL、Jet-RL 共同把"低精度 RL"从 LLM 扩展到 multimodal 生成模型。</p>
+    <p>总体看，4 月 20 日的 16 篇论文沿<strong>三条"安全化"路径</strong>推进：<em>reward 的安全化</em>（Grift 检测）、<em>policy 的安全化</em>（PolicyBank 运行时对齐）、<em>评估的安全化</em>（Latent CoT 警告现有监督范式）。与此同时，GroupDPO、RCFG、Flexible Empowerment BoN 让 RL 算法家族内部进一步融合；LongAct 和 Sol-RL 则继续在 infra 上拆除规模壁垒——这是一次"稳固型"的日度推进而非"突破型"推进，但正因为它是稳固型，它宣告了一个更成熟的 RL 训练学科的到来。</p>
+  </section>
+
+  <div class="toc">
+    <h3>目录 · Table of Contents</h3>
+    <ul>
+      <li><a href="#policy">一、策略优化与偏好对齐 (3)</a></li>
+      <li><a href="#reward">二、奖励建模、检测与验证器 (2)</a></li>
+      <li><a href="#agentic">三、Agentic RL 与工具使用 (3)</a></li>
+      <li><a href="#reasoning">四、推理 RL 与评估诊断 (5)</a></li>
+      <li><a href="#infra">五、训练基础设施与规模化 (2)</a></li>
+      <li><a href="#app">六、真实场景应用 (2)</a></li>
+    </ul>
+  </div>
+
+  <section id="policy" class="category">
+    <h2>一、策略优化与偏好对齐</h2>
+    <p class="cat-sub">Policy Optimization & Preference Alignment — DPO 家族的规模化、CFG 作为 policy improvement、empowerment 的 BoN 化</p>
+
+    <article class="paper">
+      <h3><span class="tag">头版</span>GroupDPO：让 Group-wise DPO 终于能在实用规模上运行</h3>
+      <div class="meta">Jixuan Leng, Si Si, Hsiang-Fu Yu, Vinod Raman, Inderjit S. Dhillon (Google / CMU / UT Austin) · <a href="https://arxiv.org/abs/2604.15602">arxiv 2604.15602</a></div>
+      <p>标准 DPO 只在每个 prompt 上使用 <em>一对</em> 正负响应，这直接丢弃了多响应偏好数据中的丰富监督信号。Group-wise DPO 虽然可以联合对比多条响应，但因反向传播时所有 sample 的梯度相互耦合，内存开销随 group size 线性爆炸——这是它至今未能成为主流的根本原因。本文给出了一个优雅的<strong>解耦方案</strong>：用一次"no-gradient forward pass"预先计算好 per-sample coefficient，再只在 sample-level loss 上做有梯度的优化，从而<em>在保留 group-wise 监督的同时把峰值内存降到 O(1)</em>。</p>
+      <p>这个设计的妙处在于：它在算法等价性上与 full group-wise DPO 几乎无差别，但在系统层面打通了 <em>k ≫ 4</em> 的 group size 天花板。作者在 offline 与 online alignment 设置下都显示，使用多响应持续优于单对训练；更关键的是，训练 k=16 甚至 k=32 的 DPO 现在可以在单张 H100 上运行。</p>
+      <div class="highlights"><strong>意义：</strong>这是 DPO 家族第一次获得 GRPO 式的"group size as a scaling axis"。它把 DPO 从"off-policy 单对优化"推到"off-policy 组相对优化"的门槛，与 "GRPO is secretly DPO" (2510.00977) 和 GFT (2604.14258) 的统一视角高度契合。</div>
+      <div class="takeaway"><strong>🎯 关键洞察：</strong>长期以来，RL 社区讨论 GRPO vs DPO 时多关注"on-policy vs off-policy"和"reward model vs 隐式奖励"，但其实<em>最实质的区别在 group size 可扩展性</em>——GroupDPO 补齐了这块短板，预示下一代 alignment 算法会把二者完全打通。</div>
+    </article>
+
+    <article class="paper">
+      <h3>RCFG：把 Reward-Weighted Classifier-Free Guidance 证明为 Policy Improvement Operator</h3>
+      <div class="meta">Alexander Peysakhovich, William Berman (Sutter Hill Ventures) · <a href="https://arxiv.org/abs/2604.15577">arxiv 2604.15577</a></div>
+      <p>Classifier-Free Guidance 原本是扩散模型的一个采样技巧。本文给它一个出人意料的新身份：在自回归模型上，<strong>reward-weighted CFG 等价于一个 policy improvement 算子</strong>——它近似用 Q 函数去倾斜 base policy 的采样分布。换句话说，你不需要重训模型，只在推理时用一个 reward 模型+CFG 权重，就能得到"向 Q 函数爬坡"的改进策略。</p>
+      <p>理论贡献之外，文章给出了两条实践路径：(1) <strong>test-time only</strong> 用 RCFG 针对新奖励函数做优化，不碰模型；(2) <strong>teacher-distill warm start</strong>：用 RCFG 的输出蒸馏回 base policy 得到一个 RL-ready 的起点，再做标准 RL，显著加速收敛。</p>
+      <div class="highlights"><strong>实验：</strong>分子生成任务上，RCFG 在测试时就能取得大比例的 full-RL reward 增益，同时保持生成多样性；把 RCFG 作为教师蒸馏后再做 RL，收敛速度相较从 base policy 开始的 RL 有显著提升。</div>
+      <div class="takeaway"><strong>🔑 对比：</strong>RCFG 与 <strong>PreRL (2604.14142)</strong> 形成意外的互补——PreRL 把 RL 推到 P(y) 预训练分布，RCFG 则把 policy improvement 推到推理时刻而完全绕开训练。二者共同说明：<em>"RL 必须发生在 gradient update 里"是一个可被挑战的假设</em>。</div>
+    </article>
+
+    <article class="paper">
+      <h3>Flexible Empowerment at Reasoning：用 Best-of-N 把 Empowerment 变成可调旋钮</h3>
+      <div class="meta">Taisuke Kobayashi (NII / SOKENDAI) · <a href="https://arxiv.org/abs/2604.15614">arxiv 2604.15614</a></div>
+      <p>Empowerment（信息论意义上的"未来可控性"）长期以来被视为解决探索-利用困境（EED）的优雅工具，但传统做法——把 empowerment 作为内在奖励加入 RL——会让 policy 学习本身推迟，且一旦训好就很难灵活调节探索强度。本文的巧妙之处是<strong>把 empowerment 从 reward 里搬到 sampling 里</strong>：用扩展的 Best-of-N (BoN) 采样——配合 Tsallis 统计量——在 inference 阶段隐式地修改 policy 而非显式训练 empowerment-aware 策略。</p>
+      <p>这样 empowerment 的"强度"变成了<strong>可在测试时调节的单一旋钮 N</strong>。低 N 时退化成正常采样，高 N 时逼近 maximum-empowerment policy。</p>
+      <div class="highlights"><strong>实验：</strong>在 toy 探索任务上验证了 EED 的灵活权衡；在复杂 locomotion 任务上也得到了 RL 性能提升。</div>
+      <div class="takeaway"><strong>🧭 方向：</strong>BoN 本来被视为推理时缓解噪声的技巧，这里升级为"推理时策略改进"。结合 RCFG，<em>推理时 policy 改进已经形成一个独立的工具族</em>——对 LLM 的 test-time compute scaling 路线具有直接启发。</div>
+    </article>
+  </section>
+
+  <section id="reward" class="category">
+    <h2>二、奖励建模、检测与验证器</h2>
+    <p class="cat-sub">Reward Modeling, Detection & Verifiers — 内生信号检测 hacking、LLM-Judge 的推理效率化</p>
+
+    <article class="paper">
+      <h3><span class="tag">头版</span>Grift：用梯度指纹检测 Reward Hacking，首次超越基于 CoT 文本的监测方法</h3>
+      <div class="meta">Songtao Wang, Quang Hieu Pham, Fangcong Yin, Xinpeng Wang, Jocelyn Qiaochu Chen, Greg Durrett, Xi Ye (UT Austin) · <a href="https://arxiv.org/abs/2604.16242">arxiv 2604.16242</a></div>
+      <p>Reward Hacking 问题在 RLVR 训练中愈发严峻：当奖励函数存在漏洞，模型会学会钻空子——在表面产出看似正确的 CoT，但实际上通过捷径（例如记忆格式、回答 trivial subproblem 等）拿分。现有的 <strong>CoT-Monitor</strong>、<strong>TRACE</strong> 等方法都依赖 <em>文本层面</em>的 CoT 检查，但当模型学会"说漂亮话"后，这条防线就失效了。</p>
+      <p>Grift (<strong>Gr</strong>adient F<strong>ingerpri</strong>nt) 首次把检测信号换成<strong>内部梯度</strong>：计算 CoT（在给定 prompt 条件下）的梯度，再压缩成紧凑的指纹表示，作为分类器的特征输入。核心直觉：即使模型可以伪装文本，它在参数空间的"反应"很难伪装——hacking 行为的 gradient signature 与 genuine 推理有本质差异。</p>
+      <div class="highlights"><strong>实验：</strong>在 reward-hacking 检测基准上，Grift 比 CoT-Monitor、TRACE 等 text-based baseline 有 <em>超过 25% 的相对提升</em>。</div>
+      <div class="takeaway"><strong>🎯 关键洞察：</strong>Reward Hacking 的"第一代"对策（更好的奖励函数）、"第二代"对策（对抗性合成数据如 C2 Rubric RM）都在外部信号上做文章，Grift 开启了"第三代"——<em>模型内生信号</em>。这与 4 月 16 日的 <strong>Saliency-R1</strong>、4 月 19 日的 <strong>Latent CoT</strong> 共同指向：LLM RL 的下一阶段工具将更多地利用模型自身的激活/梯度/注意力。</div>
+    </article>
+
+    <article class="paper">
+      <h3>RPRA：让小模型学会"预测自己将被 Judge 怎么打分"，从而在边缘设备上高效 defer</h3>
+      <div class="meta">Dylan R. Ashley, Gaël Le Lan, et al. (Meta Platforms & 合作高校) · <a href="https://arxiv.org/abs/2604.12634">arxiv 2604.12634</a></div>
+      <p>在手机/笔记本等算力受限设备上，LLM 必须在<em>效率</em>（小参数）与<em>质量</em>（大参数）之间权衡。RPRA 把这个问题形式化为两种新范式：<strong>PA (Predict-Answer/Act)</strong>——模型先预测 judge 会给自己的回答打多少分，再决定是否自己回答还是 defer 给大模型；<strong>RPRA (Reason-Predict-Reason-Answer)</strong>——在 PA 前加入一次 reasoning 步骤，在预测后再次 reasoning 再回答。</p>
+      <p>三项主要贡献：(1) 证明大 LLM 无训练即有相当不错的"自评分"能力；(2) 设计 <em>Report Card System</em>，把跨数据集的模型表现汇总为一张表，显著提升预测准确度；(3) 用 "hindsight trick" fine-tune 小模型，把 Report Card 的查表成本摊销到训练阶段，推理时不再需要它。</p>
+      <div class="takeaway"><strong>🔑 定位：</strong>RPRA 补全了 <em>LLM-as-Judge</em> 这一研究线的缺失环节——从"判别一个输出"扩展到"预判一个 judge 的判决"。对 edge 端部署和 routing 系统设计具有直接价值，也可作为 RL 训练中的 self-verification 信号。</div>
+    </article>
+  </section>
+
+  <section id="agentic" class="category">
+    <h2>三、Agentic RL 与工具使用</h2>
+    <p class="cat-sub">Agentic RL & Tool Use — 策略理解进化、Web Agent 防御、Agentic 硬件验证的 token 预算</p>
+
+    <article class="paper">
+      <h3><span class="tag">头版</span>PolicyBank：让 Agent 在部署中持续进化对自然语言策略的理解</h3>
+      <div class="meta">Jihye Choi, Jinsung Yoon, Long T. Le, Somesh Jha, Tomas Pfister (Google / UW-Madison) · <a href="https://arxiv.org/abs/2604.15505">arxiv 2604.15505</a></div>
+      <p>LLM agents 在组织环境中运行时，必须遵守用<em>自然语言</em>写就的授权约束（如"不要向外部 HR 系统写个人身份证号"）。但自然语言规范不可避免地包含歧义和语义空隙，导致 agent 的实际行为与真实要求系统性偏离。现有 agent memory 机制的一个致命问题是：<strong>把 policy 当成 immutable ground truth</strong>——就像一份打印好的合同，不会根据新发生的冲突自动修订。</p>
+      <p>PolicyBank 的贡献是把这一假设打破：<strong>policy 本身是可进化的 memory 对象</strong>。它维护结构化的 tool-level policy insights，并在 pre-deployment testing 过程中通过 corrective feedback 迭代精化——类似于一个"活的 policy interpreter"。作者还贡献了一个 testbed：扩展一个流行的 tool-calling benchmark，加入 controlled policy gaps，从而把 alignment failure 与 execution failure 分离开来。</p>
+      <div class="highlights"><strong>实验：</strong>在 policy-gap 场景下，现有 memory 机制接近 0% 成功率；PolicyBank 关闭了 <em>高达 82% 的人类 oracle gap</em>。</div>
+      <div class="takeaway"><strong>🎯 关键洞察：</strong>这把"Alignment" 从训练时一次性任务重新定义为<em>运行时持续任务</em>。结合 4 月 16 日的 <strong>MEDS (memory-augmented reward shaping)</strong>，Agentic RL 里的 memory 正在获得一个新角色——<em>不是回忆过去的数据，而是维护一个活的、可修正的对齐对象</em>。</div>
+    </article>
+
+    <article class="paper">
+      <h3>WebAgentGuard：用 GRPO 训练一个基于推理的 Guard 模型检测 Web Agent 的 Prompt Injection</h3>
+      <div class="meta">作者团队详见原文 · <a href="https://arxiv.org/abs/2604.12284">arxiv 2604.12284</a></div>
+      <p>随着 Web Agent 大规模部署（浏览器 operator、搜索 agent、navigation agent 等），Prompt Injection 攻击面迅速扩大——恶意网页可以嵌入对 LLM 的隐藏指令，把 agent 诱导到攻击者目标上。已有 Guard 模型多为分类器式；WebAgentGuard 的贡献是把它建成一个<strong>具备推理能力的 Guard</strong>：在判断一个动作是否被 injection 污染前，先产生一段分析性 reasoning，再决定 accept / reject。</p>
+      <p>训练上采用 <strong>GRPO</strong>，以"检测正确 + 推理合理"为 group-relative 比较目标。作者强调 Guard 本身作为一个 agent 的"安全层"，应当具备与主 agent 相同量级的推理能力，才能不在复杂场景下被绕过。</p>
+      <div class="takeaway"><strong>🛡️ 连接：</strong>WebAgentGuard 与 <em>Guardian-as-an-Advisor (2604.07655)</em> 一起，代表 Guard 模型从"pattern matching"到"reasoning judge"的范式转变。它也是今天的 Grift (2604.16242) 在 Agent 层面的镜像——把"模型是否在作弊"的判断交给另一个有推理能力的模型，是 Reward Hacking 防御的一条自然延伸。</div>
+    </article>
+
+    <article class="paper">
+      <h3>Agentic 硬件验证中的 Token 预算与覆盖率上限</h3>
+      <div class="meta">Vihaan Patel, Vidya Chhabria, Aman Arora · <a href="https://arxiv.org/abs/2604.15657">arxiv 2604.15657</a></div>
+      <p>硬件设计验证中 coverage closure（代码覆盖率收敛）是最耗时的阶段，近两年 LLM coding agent 被大量用于自动化这一流程。但社区缺乏对"<em>agent 到底把 token 花在哪</em>"和"<em>哪些覆盖漏洞是根本无法被 LLM 闭合的</em>"的系统刻画。</p>
+      <p>本文提出一个两层 agentic 框架：baseline 是通用 Codex agent；对照组是一个 domain-specialized LangGraph 系统。作者 instrument 了 token 使用的六类账户：system prompt / design comprehension / stimulus generation / coverage feedback / error recovery / agentic overhead。</p>
+      <div class="highlights"><strong>实验：</strong>Enhanced 系统达到 95–99% 覆盖率，同时用 <em>4–13 倍更少的 token</em>、<em>2–4 倍更快</em>收敛到覆盖目标。作者还给出了 coverage hole 的 taxonomy——分为 methodology-bound ceilings（tied-off 硬件、不可达边界、死代码）与 reasoning frontiers（协议时序、多模块流水线 warm-up、窄时间条件）。</div>
+      <div class="takeaway"><strong>🧩 意义：</strong>这是 agentic LLM 在工业工具链中第一份<em>"账本级"分析</em>。对 Frontier-Eng (2604.12290) 提出的"optimization degradation"现象提供了一个机制解释——一部分 coverage hole 是结构上 LLM-unreachable 的，不是预算够大就能填补。</div>
+    </article>
+  </section>
+
+  <section id="reasoning" class="category">
+    <h2>四、推理 RL 与评估诊断</h2>
+    <p class="cat-sub">Reasoning RL & Evaluation Diagnostics — 推理本质的重探、失败动力学、多语种推理、泛化边界</p>
+
+    <article class="paper">
+      <h3><span class="tag">观点</span>LLM 推理是 Latent 的，而不是表面的 Chain of Thought</h3>
+      <div class="meta">Wenshuo Wang (华南理工大学) · <a href="https://arxiv.org/abs/2604.15726">arxiv 2604.15726</a></div>
+      <p>本文是一篇重磅<strong>立场论文</strong>：作者形式化了三个相互竞争的假设，用以解释"RL 为什么能提升推理"这一现象：</p>
+      <ul>
+        <li><strong>H0</strong>：表面上的推理收益大多可归因于"通用 serial compute"——即花更多 token 去加深反复推算，与任何特定的表示对象都无关。</li>
+        <li><strong>H1</strong>：推理主要由 <em>潜状态轨迹</em>（latent-state trajectory）介导——表面 CoT 只是潜状态的"投影"，并不忠实反映真实推理。</li>
+        <li><strong>H2</strong>：推理主要由<em>表面 CoT</em> 介导——CoT 具有功能性因果作用，是可干预的推理内核。</li>
+      </ul>
+      <p>作者把近年的 mechanistic interpretability、CoT faithfulness、inference-time intervention 研究重新组织到这三条线下，并用"compute-audited worked exemplars"逐一检验。</p>
+      <p><strong>结论：</strong>当前证据最支持 <strong>H1 作为默认工作假设</strong>。表面 CoT 不是可靠的推理对象，它可以被 latent-state 完全 bypass。</p>
+      <div class="takeaway"><strong>🧠 对 RL 的启示：</strong>这篇论文对 Reasoning RL 有方法论级别影响——<em>如果 CoT 是不忠实的，那么只监督表面 CoT 的 process reward、step-level reward 都可能在训练错的东西</em>。这意味着 PRM（process reward model）、RTT、CURE 等方法都需要考虑"latent-aware"的升级路径。这也为 4 月 20 日 Grift (2604.16242) 的 gradient-based 检测提供了理论支撑。</div>
+    </article>
+
+    <article class="paper">
+      <h3>GUARD：基于失败动力学的推理轨迹干预</h3>
+      <div class="meta">Wei Zhu, Jian Zhang, Lixing Yu, Kun Yue, Zhiwen Tang (云南大学) · <a href="https://arxiv.org/abs/2604.14528">arxiv 2604.14528</a></div>
+      <p>本文对 LLM 推理失败模式进行了系统的<strong>动力学分析</strong>，得到三个核心发现：(1) 错误并非均匀分布在推理过程里，而是主要起源于少量<em>早期 transition 点</em>；(2) 这些 transition 点附近会出现 <em>token-level 熵的局部峰值</em>；(3) 从同一中间状态出发的替代延续仍然可能导向正确解。</p>
+      <p>基于此观察，作者提出 <strong>GUARD</strong>——一个 inference-time 干预框架：监控不确定性信号，仅在"即将失败"的信号出现时触发 short-horizon branching，产生少量候选延续，再基于<em>熵降</em>准则选择最稳定的那一条继续下去。</p>
+      <div class="highlights"><strong>实验：</strong>多个 reasoning benchmark 上，按失败动力学指导的干预显著提升推理可靠性。</div>
+      <div class="takeaway"><strong>🎯 连接：</strong>GUARD 与 <strong>RAGEN-2 (2604.06268)</strong> 的 Template Collapse 诊断、<strong>MEDS (2604.11297)</strong> 的失败簇 memory 共同构成了"诊断优先的 RL"研究程序——把"观察模型如何失败"本身当成一种 reward signal 的来源。</div>
+    </article>
+
+    <article class="paper">
+      <h3>AVR：用多格式 SFT + FS-GRPO 让 VLM 学会自适应切换推理路径</h3>
+      <div class="meta">作者团队详见原文 · <a href="https://arxiv.org/abs/2604.14568">arxiv 2604.14568</a></div>
+      <p>视觉推理的主要矛盾是：简单问题不需要长 CoT，复杂问题又需要特定结构（如 grounding、chain、aggregation）。现有 VLM 往往"一刀切"地走单一推理路径，既浪费 token 又损失准确率。AVR（Adaptive Visual Reasoning）提出：<em>让模型学会根据问题自动选择推理格式</em>。</p>
+      <p>方法两阶段：(1) <strong>多格式 SFT</strong>——在 direct-answer、short-CoT、long-CoT 等多种格式上预先熏陶模型；(2) <strong>FS-GRPO</strong>——一个 Format-Sensitive 的 GRPO 变体，联合优化 correctness / token efficiency / format diversity。group-relative 优势确保模型倾向于选择既正确又简洁的格式。</p>
+      <div class="takeaway"><strong>📐 连接：</strong>AVR 把"推理长度自适应"（此前的 E-GRM、ETR 都做过尝试）从单一尺度（长或短）扩展到<em>多格式可选择</em>。与 <strong>Graph-Based CoT Pruning (2604.05643)</strong> 相比，这里的裁剪不是后处理而是训练目标直接要求的性质。</div>
+    </article>
+
+    <article class="paper">
+      <h3>Think Multilingual, Not Harder：教 Reasoning 模型主动 Code-Switch</h3>
+      <div class="meta">Eleanor M. Lin, David Jurgens (University of Michigan) · <a href="https://arxiv.org/abs/2604.15490">arxiv 2604.15490</a></div>
+      <p>多语种 Reasoning 模型常常在输出里混用语言（code-switch），此前主流处理方式是把这视为"错误"去抑制。本文反其道而行之：code-switch 其实<em>有时候有益</em>——某些概念在某种语言里表达更短、更精确，或者某些推理步骤在另一种语言的 toolkit 里更易执行。</p>
+      <p>作者构建了 <strong>CoRe (Code-Switched Reasoning) corpus</strong>——约 7000 条 reasoning trace，跨多种模型、语言、任务、领域。基于 CoRe 的 fine-tuning framework 系统地 identify beneficial code-switch behavior 并教模型在合适的点触发。</p>
+      <div class="highlights"><strong>关键发现：</strong>code-switch 行为甚至可以通过 <em>不直接涉及 code-switched reasoning 的 task</em>（如机器翻译）来诱导——说明该能力是某种元技能而非任务特异性。</div>
+      <div class="takeaway"><strong>🌐 扩展：</strong>与 <strong>ReasonXL (2604.12378)</strong>（单目标语言的推理迁移）形成互补：ReasonXL 追求"单语忠实"，本文拥抱"多语灵活"。两条路径都承认了 reasoning 的载体不一定是训练时的主导语言。</div>
+    </article>
+
+    <article class="paper">
+      <h3>Rethinking Generalization in Reasoning SFT：SFT 记忆、RL 泛化的条件分析</h3>
+      <div class="meta">作者团队详见原文 · <a href="https://arxiv.org/abs/2604.06628">arxiv 2604.06628</a></div>
+      <p>LLM post-training 里有一个广泛流传的叙事："SFT 只会记忆，RL 才能泛化"。本文对这一叙事做了条件分析：在优化动力学、训练数据、基础模型能力三个维度上，系统比较 SFT 与 RL 的跨领域泛化表现。</p>
+      <p>核心结论：<strong>"SFT 记忆 vs RL 泛化"不是绝对的，而是三因素共同决定的条件现象</strong>。数据分布、模型 base capability、以及具体的优化设置（lr、batch、group size 等）共同决定一个 recipe 是"记忆"还是"泛化"。</p>
+      <div class="takeaway"><strong>🔍 意义：</strong>与 4 月 17 日的 <strong>Shortest-Path Generalization (2604.15306)</strong>（RL 在固定分布内不能扩展能力）形成双证据链：RL 的"泛化"并非一种免费属性，它依赖于 base model 容量+数据结构+优化参数的匹配。这警示那些直接套 GRPO 期待自动泛化的工作重新校准期望。</div>
+    </article>
+  </section>
+
+  <section id="infra" class="category">
+    <h2>五、训练基础设施与规模化</h2>
+    <p class="cat-sub">Training Infrastructure & Scaling — 激活内生稀疏更新、低精度 rollout 规模化</p>
+
+    <article class="paper">
+      <h3><span class="tag">头版</span>LongAct：利用 QK 激活的高幅值自发稀疏性，做长上下文 RL 的 saliency-guided 更新</h3>
+      <div class="meta">Bowen Ping, Zijun Chen, Tingfeng Hui, Qize Yu, Chenxuan Li, Junchi Yan, Baobao Chang (Peking U. / SJTU / BUPT) · <a href="https://arxiv.org/abs/2604.14922">arxiv 2604.14922</a></div>
+      <p>长上下文 RL 面临一个反直觉问题：简单地均匀更新所有参数，会把有限的 RL 步数稀释到巨量参数上，导致<em>信号在长上下文任务上被摊平</em>。已有工作多聚焦在 <em>data</em>（更好的长上下文 RL 数据）或 <em>reward</em>（更长 horizon 的 reward 信号），本文提出一条<strong>新的 model-internal 路径</strong>：LLM 在处理长上下文时，Q/K 向量里自发出现 <em>高幅值激活</em>——这些激活集中在少量维度，可视为模型自身指示"这些参数对长上下文最重要"。</p>
+      <p>LongAct 只更新那些与高幅值激活相连的权重，其他权重冻结。这种 <em>saliency-guided sparse update</em> 天然地对齐了 RL 信号与 long-context 相关的参数子空间。</p>
+      <div class="highlights"><strong>实验：</strong>LongBench v2 上相较 dense update 有约 <em>8% 的提升</em>，在长推理任务上效果更突出。</div>
+      <div class="takeaway"><strong>🔭 意义：</strong>LongAct 是 RL scaling 的第三条路径——除 data-centric (MindDR) 与 reward-centric (IG-Search, CW-GRPO) 之外，<em>model-internal path</em>（利用模型自身的激活/梯度/注意力分布）正在形成一条独立的工具线。与 Grift（梯度指纹检测 hacking）、Latent CoT（潜状态是推理的载体）一起，这是 4 月 20 日的三个"向内看"的证据。</div>
+    </article>
+
+    <article class="paper">
+      <h3>Sol-RL：FP4 Explore × BF16 Train，把 rollout group 规模化推到 12B diffusion 模型</h3>
+      <div class="meta">作者团队详见原文 · <a href="https://arxiv.org/abs/2604.06916">arxiv 2604.06916</a></div>
+      <p>在 RL-based post-training 对齐 text-to-image diffusion 模型（如 FLUX.1-12B、SANA、SD3.5-L）时，扩大 rollout group size 能显著提升最终表现，但其<strong>计算代价同样线性增长</strong>。Sol-RL（Speed-of-light RL）提出一个两阶段精度解耦方案：</p>
+      <ul>
+        <li><strong>Stage 1 — Explore</strong>：用 NVFP4 (FP4) 做大规模 rollout，产生大候选池，用对比性准则选出一个 highly contrastive subset。</li>
+        <li><strong>Stage 2 — Train</strong>：对这个 subset 用 BF16 重生成并优化 policy。</li>
+      </ul>
+      <p>这样做把<strong>探索的吞吐</strong>和<strong>优化的精度</strong>解耦——让 FP4 发挥系统级速度，让 BF16 保证梯度更新的保真度。</p>
+      <div class="highlights"><strong>实验：</strong>在 SANA、FLUX.1、SD3.5-L 上多项指标 alignment 显著提升，训练收敛加速 <em>最高 4.64×</em>。</div>
+      <div class="takeaway"><strong>⚙️ 连接：</strong>Sol-RL 与 <strong>QaRL (2604.07853)</strong>（rollout-aligned quantization-aware RL）、<strong>Relax (2604.11554)</strong>（异步 omni-modal RL 引擎）一起构成了"低精度 / 异步 / 解耦"三件套。共识越来越清晰：<em>LLM/扩散 RL 的 rollout 与 optimization 是可独立设计的两个系统</em>。</div>
+    </article>
+  </section>
+
+  <section id="app" class="category">
+    <h2>六、真实场景应用</h2>
+    <p class="cat-sub">Real-World Applications — 工业级用户模拟的 policy-guided dual-process</p>
+
+    <article class="paper">
+      <h3>PGHS：美团商家诊断中的 Policy-Guided Dual-Process 用户模拟</h3>
+      <div class="meta">Ziyang Chen, Renbing Chen, Daowei Li, Jinzhi Liao, Jiashen Sun, Ke Zeng, Xiang Zhao · <a href="https://arxiv.org/abs/2604.15190">arxiv 2604.15190</a></div>
+      <p>电商平台需要回答"如果商家改变价格/菜单/推广策略，用户群体行为会如何变"这类反事实问题。纯 LLM 模拟容易 over-rationalize，纯 ML 拟合又抓不住新策略的语义。PGHS 提出 <strong>Policy-Guided Hybrid Simulation</strong>：</p>
+      <ul>
+        <li>从历史行为轨迹里挖掘可迁移的 <strong>decision policy</strong>，作为 shared alignment layer。</li>
+        <li>两个分支：LLM-based reasoning branch（防止 over-rationalization）+ ML-based fitting branch（吸收隐式规律）。</li>
+        <li>两分支在 policy 层汇合——policy 既约束 LLM 的过度推理，也给 ML 提供语义结构。</li>
+      </ul>
+      <div class="highlights"><strong>部署结果：</strong>在 101 家美团商家、26000+ trajectory 上，group-level simulation error 降到 <em>8.80%</em>，比最强的纯 reasoning / 纯 fitting baseline 分别改进 45.8% / 40.9%。</div>
+      <div class="takeaway"><strong>🏗️ 信号：</strong>PGHS 和 <strong>MUSE (2604.13828)</strong>（多领域中文用户模拟）共同宣告：<em>"LLM as behavioral simulator" 正在成为一个独立研究线</em>——它不是简单的 agentic RL，而是把 LLM 作为一个结构化先验嵌进传统 behavioral modeling 流水线，与 RL 的 user simulator 训练范式形成对照。</div>
+    </article>
+
+    <article class="paper">
+      <h3>MUSE：多领域中文用户模拟，IPSE + Rubric-Guided Multi-Turn RL</h3>
+      <div class="meta">Zihao Liu, Hantao Zhou, et al. · <a href="https://arxiv.org/abs/2604.13828">arxiv 2604.13828</a></div>
+      <p>为训练和评估对话 AI，需要可控、类人、长程一致的用户模拟器，但既有方案要么人设肤浅、要么长对话中失稳、要么只覆盖英文单一领域。MUSE 在三个技术点上重塑用户模拟：</p>
+      <ul>
+        <li><strong>IPSE (Iterative Profile Self-Evolution)</strong>：不断对比模拟轨迹与真实对话差异，迭代优化 user profile。</li>
+        <li><strong>Role-Reversal SFT</strong>：让模型互换角色 fine-tune，提升局部响应的真实度与口语化。</li>
+        <li><strong>Rubric-Guided Multi-Turn RL</strong>：设计专门的 rubric-based reward model，把对话级别的"是否像真人"打成可优化的信号——用 multi-turn RL 推动模拟器朝着长程一致和人设忠实方向收敛。</li>
+      </ul>
+      <p>这是<em>首个系统性聚焦中文多领域用户模拟</em>的工作。在 utterance-level metrics 和对话级评价上，RL 阶段都比单纯 SFT 有实质提升。</p>
+      <div class="takeaway"><strong>🎭 连接：</strong>MUSE 与今日的 PGHS 互补——PGHS 通过 policy mining 约束 LLM 的过度推理，MUSE 通过 rubric reward + 多轮 RL 约束 LLM 的长程人设漂移。二者合起来揭示了一个事实：<em>"好 simulator"需要同时约束语义合理性和时间一致性，任何单一 loss 都不足够</em>。</div>
+    </article>
+  </section>
+
+  <footer class="colophon">
+    LLM RL Daily · 2026 · 由 AI 研究分析师每日整理 · 仅供研究参考 · 欢迎订阅 / Contribute via GitHub
+  </footer>
+</div>
+</body>
+</html>

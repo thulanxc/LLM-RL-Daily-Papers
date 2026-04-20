@@ -19,6 +19,13 @@ Scalar RM (2022) → Process RM (2023) → Generative RM (2024-25) → Efficient
 - **SignCert-PO** — Certified advantage sign robustness. [2604.02986]
 - **Robust Optimization** — Max-min over r-correlated proxy rewards. [2604.12086]
 - **DRTO** — Distributionally robust token optimization. [2604.08577]
+- **Causal Decomposition RM** — Decoder-reconstruction regularization; RewardBench 0.868. [2604.13833]
+- **C2 Rubric RM** — Adversarial rubric pairs from binary preferences only. [2604.13618]
+- **Reward Hacking Survey** — 4-level taxonomy, documents DPO Reward Collapse. [2604.13602]
+- **Grift** *(2026-04-20)* — Gradient fingerprints of CoT detect hacking when CoT-text methods fail. +25% over text-based monitors. [2604.16242]
+
+### Judge-Prediction / Efficient Judging
+- **RPRA** *(2026-04-20)* — Small models pre-predict LLM-judge score; hindsight-trick fine-tuning absorbs Report-Card cost. [2604.12634]
 
 ### Specialized Reward Models
 - **Plan-RewardBench** — Trajectory-level reward benchmark for agentic systems. [2604.08178]

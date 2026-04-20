@@ -428,6 +428,101 @@ April 19 sharpens the picture that April 17 opened. Where April 17 said "re-nego
 
 **The operative question now is:** *given near-free process signals and unified optimization primitives, which productionable agentic-RL recipe will dominate at 30B / 100B scale first?*
 
+## New Threads (April 20, 2026)
+
+### 43. Model-Internal Signals as RL Tools (new governing axis)
+
+April 20 crystallizes a new axis that complements data-centric and reward-centric RL: **use what the model already has inside it**.
+
+- **Grift (2604.16242)**: gradient fingerprints of the CoT (conditioned on prompt) detect reward hacking where text-based CoT monitoring fails. +25% relative improvement over CoT-Monitor / TRACE.
+- **LongAct (2604.14922)**: long-context QK activations spontaneously develop high-magnitude features; restricting RL updates to weights connected to these features gives +8% on LongBench v2.
+- **Latent CoT (2604.15726)**: position paper arguing that reasoning is *latent-state trajectory formation* (H1), not surface CoT (H2) or mere serial compute (H0). Implies surface-CoT-supervised PRMs may be training the wrong object.
+
+**Connection**: Together with Night-Edition's Saliency-R1 (saliency-map reward) and MedVR's EVR (entropy-guided regrounding), this points to a systematic trend — **LLM RL's next wave of tools will lean on model-internal activations, gradients, and latent states** rather than only on curated external signals.
+
+### 44. Group-Size Convergence: DPO ↔ GRPO (new in Preference Optimization)
+
+- **GroupDPO (2604.15602)**: no-gradient precomputation of per-sample coefficients decouples group backward pass, enabling k ≫ 4 DPO on one H100. First practical-scale group-wise DPO.
+
+**Connection**: With "GRPO is secretly DPO" (2510.00977), GFT (2604.14258), TPO (2604.06159) and now GroupDPO, the SFT / DPO / GRPO families are fully converging on a unified "group-advantage optimization" primitive. The lasting distinctions among them are collapsing to (i) group structure, (ii) regularization geometry, (iii) advantage rescaling.
+
+### 45. Test-Time Policy Improvement (new thread)
+
+Papers where policy improvement happens purely at inference:
+
+- **RCFG (2604.15577)**: Reward-weighted classifier-free guidance is provably a policy-improvement operator; can also be distilled back into base policy as RL warm start.
+- **Flexible Empowerment BoN (2604.15614)**: Empowerment moved from reward term to BoN sampler; N becomes a test-time exploration-exploitation knob.
+
+**Connection**: Joins PreRL (2604.14142) — which RL's pre-train space — to redefine *when* RL happens. The "RL must be a gradient update" assumption is breaking down on two sides at once: *outward* (RL on P(y)) and *inward* (RL via sampling).
+
+### 46. Runtime Alignment: Evolving Policy Understanding (new in Agentic RL)
+
+- **PolicyBank (2604.15505)**: agents iteratively refine *natural-language policy* understanding via corrective feedback in pre-deployment testing. Closes 82% of policy-gap oracle vs. near-zero for immutable-memory baselines.
+
+**Key insight**: Alignment graduates from a one-shot training-time task to a runtime, continuously-refined object. Parallels how APM observability matured from training-time QA to deployment-time SRE.
+
+### 47. Reward Hacking 3rd-Gen Defense (model-internal)
+
+After 1st-gen (better reward shaping), 2nd-gen (adversarial reward synthesis — C2 Rubric RM, Causal Decomposition RM), the 3rd generation moves defense into the model:
+
+- **Grift (2604.16242)**: gradient fingerprints.
+- **Latent CoT (2604.15726)**: theoretical basis for why surface CoT defenses have a ceiling — the object being defended is not the true locus of reasoning.
+
+### 48. Industrial LLM-as-Simulator (new applied thread)
+
+- **MUSE (2604.13828)**: multi-domain Chinese user simulator with IPSE + Rubric-Guided Multi-Turn RL.
+- **PGHS (2604.15190)**: Meituan merchant diagnosis via policy-mining + dual (reasoning + fitting) LLM branches. 8.80% group error, 45.8%/40.9% over strongest baselines.
+
+**Pattern**: "LLM as user / behavioral simulator" becomes a distinct applied research program. Key recipe: *policy-mining layer aligns LLM reasoning with ML fitting*.
+
+### 49. Failure-Dynamics-Aware Intervention (new in Reasoning Diagnostics)
+
+- **GUARD (2604.14528)**: identifies that errors concentrate at early transition points with local entropy spikes; intervenes with short-horizon branching + entropy-reduction selection.
+- **AVR / FS-GRPO (2604.14568)**: jointly optimizes correctness + token efficiency + format diversity for adaptive reasoning paths.
+
+Together with RAGEN-2 (Template Collapse), MEDS (failure clusters), and Dissecting Bug Triggers (2604.08906), this forms a quickly-maturing "diagnose-then-repair" methodology for reasoning models.
+
+### 50. Generalization Boundaries of RL vs. SFT (new cross-cutting)
+
+- **Rethinking Generalization in Reasoning SFT (2604.06628)**: the widely-repeated "SFT memorizes, RL generalizes" claim is conditional — depends on optimization dynamics, data, and model capacity.
+- **Shortest-Path Generalization (2604.15306, April 17)**: RL stabilizes but does not extend capability.
+
+**Stark message**: RL's generalization bonus is not automatic. Recipes that assume it free may over-promise.
+
+### 51. Efficient LLM-Judge Prediction (new sub-thread in Judging)
+
+- **RPRA (2604.12634)**: small models pre-predict how an LLM-judge would score their responses, enabling efficient routing / defer to bigger models. Report Card + hindsight-trick fine-tuning.
+
+Parallels Grift at the judge level — *predicting the judge* is becoming a trainable capability on both the verifier side (RPRA) and the checker side (WebAgentGuard reasoning guard).
+
+### 52. Low-Precision RL for Multimodal Generation (extension of Infra thread)
+
+- **Sol-RL (2604.06916)**: FP4 rollout × BF16 train on 12B diffusion (FLUX.1). 4.64× training speedup; decouples exploration throughput from optimization fidelity.
+
+Complements QaRL (2604.07853) and Jet-RL on the quantized-RL line; extends the "rollout / optimization decouple" principle (also at the core of Relax 2604.11554) to diffusion foundation models.
+
+### 53. Multilingual Reasoning as Beneficial Behavior (new in Reasoning RL)
+
+- **Think Multilingual (2604.15490)**: CoRe corpus + fine-tuning framework. Code-switching is *beneficial* (not noise) when used at the right points; meta-skill inducible even from unrelated tasks (e.g. MT).
+
+Completes the ReasonXL (2604.12378) ↔ Think Multilingual pair: monolingual-faithful vs multilingual-flexible recipes.
+
+## Cross-Cutting Meta-Observation (April 20)
+
+**Theme of the day**: *Reward engineering enters Phase 2 — from more signal to safer signal.*
+
+1. **Three "look inward" papers in one day**: Grift (gradient), LongAct (activation), Latent CoT (latent state). The message is convergent — external reward engineering has reached diminishing returns; model-internal signals are the next frontier.
+
+2. **Algorithm families are consolidating, not differentiating**: GroupDPO brings DPO into group-size scaling; RCFG and BoN-empowerment relocate RL to test-time; GFT unified SFT with PG. The count of distinct "RL algorithms" is effectively shrinking.
+
+3. **Alignment is becoming a runtime discipline**: PolicyBank's living policy interpreter + WebAgentGuard's reasoning-based guard + Grift's hacking detector together make deployment-time alignment a first-class research target.
+
+4. **Reasoning's foundations are under revision**: Latent CoT forces the PRM / step-level reward community to justify what exactly it is supervising. Combined with Rethinking Generalization and Shortest-Path Generalization, the "train longer / better / with denser signal" defaults now need to be re-motivated.
+
+5. **Infrastructure continues to absorb scale pressure**: Sol-RL extends low-precision RL to multimodal; LongAct extends RL scaling to long contexts via internal sparsity. Both are compatible with every method above.
+
+**The operative question now is:** *given that external reward is plateauing and model-internal signals are ascending, which alignment-at-runtime recipe will first survive a public reward-hacking adversary?*
+
 ---
 
-*Last updated: April 19, 2026 · 20 new papers · running total 120+ papers tracked*
+*Last updated: April 20, 2026 · 17 new papers · running total 140+ papers tracked*
