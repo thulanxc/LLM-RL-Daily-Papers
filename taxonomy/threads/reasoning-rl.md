@@ -91,3 +91,15 @@ The field is converging on a template: **structural diversity in training data �
 ## Fifth Thread Emerging (April 19)
 
 5. **Horizon as the next frontier**: LongCoT establishes a clear ceiling — sustained multi-step reasoning over 10k–100k tokens is where current RLMs collapse. Combined with April 17's "RL stabilizes but does not expand capability," this predicts the next wave of research: either scale sampling massively (parallel thinking), retool credit assignment for long horizons (TC-GRPO / tree-structured advantages), or redesign the probability space itself (PreRL-style). The days when MATH-500 was a meaningful ceiling are ending.
+
+## Morning Edition (April 21) — 推理 RL 新增
+
+- **QuantumQA** [2604.18176] — Verification-aware RLVR for scientific (quantum) reasoning. Hybrid verification: deterministic solver + semantic auditor. 8B matches proprietary-scale models, demonstrating parameter-efficient RLVR path for STEM domains.
+- **KnowRL** [2604.12627] — Formalizes "hint design" as Constrained Subset Search over atomic knowledge points. Provides minimal-sufficient guidance to avoid zero-gradient collapse on hard problems in RLVR, outperforming Hint-GRPO and standard RLVR baselines.
+- **Semantic Equivalence Self-Play** [2604.17010] — Uses Liquid Haskell formal proofs as the equivalence verifier and executable counterexamples as the inequivalence verifier; self-play between generator and evaluator under a difficulty-aware curriculum. Releases OpInstruct-HSx (~28k validated programs), +13.3pp EquiBench.
+- **AtManRL** [2604.16158] — Differentiable attention saliency turned into a *faithful-CoT reward*: mask tokens in CoT → measure answer-accuracy drop → reward tokens that are causally used. Jointly optimized with outcome reward inside GRPO; tested on Llama-3.2-3B for GSM8K & MMLU.
+
+### Connections
+- AtManRL ↔ Latent CoT (2604.15726): AtManRL is a concrete algorithmic answer to Latent CoT's position — measures and rewards *actual* use of CoT tokens.
+- KnowRL ↔ Rethinking Generalization (2604.06628): KnowRL operationalizes curriculum-driven RL in the regime where RL alone cannot extend capability.
+- QuantumQA ↔ MedVR / OOM-RL: joins the thread of "RL with domain-specific executable verifiers" (physics simulator / medical rubric / market loss).

@@ -19,3 +19,14 @@ RLHF (2022) → Constitutional AI (2022) → DPO (2023) → Multi-Objective (202
 
 ## Key Trend
 Alignment is shifting from "one model fits all" to personalization. PALM, VRF, and PerMix-RLVR all address how to serve diverse user preferences without training separate models. The portfolio approach (PALM) and factorized rewards (VRF) are complementary strategies.
+
+## Morning Edition (April 21) — 对齐理论与个性化新增
+
+- **Demystifying Online Alignment** [2604.17207] — Enoch H. Kang shows that the O(log T) KL-regularized regret bounds for online RLHF / online DPO conflate learning cost with exploration randomness. Under a *decision-centric regret* (only evaluate the top-ranked response at inference), standard greedy online alignment achieves **constant O(1) cumulative regret**. First formal explanation for why these simple algorithms empirically work.
+- **HorizonBench** [2604.17283] — 4,245 evaluation items from 360 simulated users with 6-month dialogues (avg ~163K tokens). Data generator uses a structured mental-state graph where typed life-event edges drive preference changes. Identifies "belief-update failure" as a targetable deficit in modern LLMs — testbed for long-context personalization, memory-augmented architectures, theory-of-mind reasoning.
+- **Rejection Criterion for Proxy Alignment** [2604.16146] — Principled rejection criterion for BoN / rejection-sampling test-time alignment; characterizes the alignment-efficiency Pareto frontier analytically and outperforms fixed-threshold BoN.
+
+### Connections
+- Demystifying ↔ Shortest-Path Generalization (April 17): both theoretical works constraining the explanatory scope of RL/alignment methods.
+- HorizonBench ↔ APEX-MEM / MIA: HorizonBench supplies the evaluation axis that memory-augmented agents urgently need.
+- Rejection Criterion ↔ Flexible Empowerment BoN (2604.15614) ↔ RCFG (2604.15577): three ways test-time RL is being formalized beyond hand-tuned BoN.

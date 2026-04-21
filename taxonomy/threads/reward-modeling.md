@@ -118,3 +118,12 @@ A **fifth movement** is now visible:
 
 A **sixth movement**:
 6. **Training-Free Process Signals**: Rather than building more PRMs (the April-16-PM thread) or detecting hacking (Night Edition), the April 19 papers demonstrate that existing policy / judge / verifier outputs can be re-purposed into per-step signals *without additional training*. IG-Search and CW-GRPO show two archetypes (log-prob-based vs. judge-based), IUQ extends the idea to long-form claim verification, and TCER proves unsupervised rewards can transcend verifiable domains when properly corrected. The cost of process supervision is dropping rapidly.
+
+## Morning Edition (April 21) — 奖励建模新增
+
+- **AgentV-RL** [2604.16004] — Turns the reward model itself into a *multi-turn, tool-augmented agent* with a Forward-Agent (premises→conclusion) and Backward-Agent (conclusion→premise check). Two-stage pipeline: rejection-sampling SFT → RL. 4B Agentic Verifier beats SOTA ORMs by **25.2%**, establishing "verifier-as-agent" as a new paradigm.
+- **AtManRL** [2604.16158] — Introduces *attention-saliency reward*: differentiable attention mask quantifies how much each CoT token contributes to the final answer; this is fed into GRPO as an auxiliary reward alongside the outcome reward. Provides a tractable path to enforce faithful chain-of-thought.
+
+### Connections
+- AgentV-RL ↔ GenAC (2604.10701): both revive "learned critics" but via different structural choices — GenAC makes the critic a CoT reasoner; AgentV-RL makes it a tool-using agent team.
+- AtManRL ↔ CPMI (2604.10660): two orthogonal forms of fine-grained reward — CPMI uses mutual information across rollouts; AtManRL uses attention perturbation within a rollout.

@@ -526,3 +526,88 @@ Completes the ReasonXL (2604.12378) ↔ Think Multilingual pair: monolingual-fai
 ---
 
 *Last updated: April 20, 2026 · 17 new papers · running total 140+ papers tracked*
+
+## April 21, 2026 — Morning Edition Additions (17 new papers)
+
+### 54. Verifier-as-Agent: Reward Model Restructured (new in Reward Modeling)
+
+- **AgentV-RL (2604.16004)**: reward model becomes a multi-turn, tool-using agent team (Forward + Backward). Two-stage pipeline (rejection SFT → RL). 4B surpasses SOTA ORM by 25.2%.
+
+**Connection**: Extends Thread 4 and night-edition ATTC — verification is no longer a single-step scalar, nor even a chain-of-thought; it is a *full agent with tools and backtracking*. Combined with GenAC (2604.10701) and C2 (2604.13618), the RM is being restructured at every architectural level (generative / multi-agent / rubric-augmented).
+
+### 55. Faithful CoT as an Optimization Target (new cross-thread bridge)
+
+- **AtManRL (2604.16158)**: differentiable attention saliency reward → GRPO with joint correctness + faithfulness loss.
+
+**Key insight**: The Latent CoT thesis (2604.15726) said surface CoT is not the true reasoning trajectory. AtManRL gives the first concrete *optimization-level* way to pull surface CoT back toward causal CoT — measurable via attention perturbation. This is the fourth "look-inward" signal (after gradient fingerprints, QK activations, latent states).
+
+### 56. Agent-Data-Environment Triangle (new meta-thread)
+
+A unified picture is emerging — agentic RL training has three co-evolving components:
+
+- **Agent** policy → standard RL optimization
+- **Data** (task distribution) → **CoEvolve (2604.15840)** uses rollout-failure signals to drive task synthesis (+18.14% on Qwen3-30B-A3B)
+- **Environment** (MDP structure) → **ClawEnvKit (2604.18543)** auto-generates 1,040 envs at 1/13,800 human cost
+
+**Observation**: With CoEvolve automating data and ClawEnvKit automating environments, the last manually-specified component in agentic RL training is the *reward model* — and AgentV-RL turns that into a trained agent too. The entire stack is becoming self-bootstrapping.
+
+### 57. Resource-Aware RL (depth, parameters, rejection)
+
+Three papers in the 2026-04-21 batch treat *resource allocation* itself as what RL optimizes:
+
+- **AutoSearch (2604.17337)**: RL reward = reaching minimal-sufficient search depth for agentic RAG.
+- **Selective Parameter Optimization (2604.17051)**: gradient-sensitivity-guided subset selection for RLHF post-training.
+- **Rejection Criterion (2604.16146)**: principled BoN rejection producing the alignment-efficiency Pareto frontier.
+
+**Connection**: Joins LongAct (QK-activation path), PTE (tool-call cost), Sol-RL (FP4 rollout) as a growing family of "RL on the resource dimension" work.
+
+### 58. RL Theory Catching Up (new in Theory)
+
+- **Demystifying Online Alignment (2604.17207)**: under *decision-centric regret*, online greedy RLHF / DPO achieves **O(1) constant cumulative regret** — the first theory that explains empirical effectiveness instead of under-predicting it.
+- **Entropy Control Analysis (2604.09676)**: unified convergence + exploration framework across entropy bonus, KL, clipped, adaptive schedules; regime-specific prescriptive guidance.
+
+**Observation**: After a year of empirical advances, the theory side is reorganizing. Two separate papers on the same day argue that the *measurement frameworks* (regret, entropy control) — not the algorithms — are what needed fixing.
+
+### 59. Beyond-Text Agent Interfaces (new path inside Agentic RL)
+
+- **LAnR (2604.17866)**: retrieval queries are now dense vectors from `[PRED]` hidden states; encode/retrieve/generate all happen inside one LLM's latent space.
+
+**Connection**: With **Latent CoT** (reasoning in latent) + LAnR (retrieval in latent), the direction is clear — surface-text-as-interface is giving way to latent-state-as-interface across multiple agent components.
+
+### 60. Formal Verification × Self-Play (new in RLVR)
+
+- **Semantic Equivalence Self-Play (2604.17010)**: Liquid Haskell refinement types + execution counterexamples as dual verifiers; generator-evaluator self-play + RL. +13.3pp EquiBench.
+
+**Connection**: Joins OOM-RL (market signal), MedVR (medical rubric), QuantumQA (physics solver) — but pushes *furthest* in formal strictness. First work to use full refinement-type proof systems as the RL verifier.
+
+### 61. Long-Horizon Personalization Benchmark (new in Alignment)
+
+- **HorizonBench (2604.17283)**: 163K-token, 6-month dialogue per user × 360 users, structured mental-state graph + typed life-event edges. Identifies "belief-update failure" as a targetable model deficit.
+
+**Connection**: The evaluation companion to APEX-MEM / MIA (memory-augmented agents) and to any personalized-RLHF system. Transforms "evolving preferences" from a vague concern into a measurable failure mode.
+
+### 62. Multi-Agent Coordination: Small-LLM Priors Suffice (new in MARL)
+
+- **LLM Graph Priors for MARL (2604.17191)**: 1.5B LLM is sufficient to produce coordination-graph priors that lift classic MARL baselines; LLMs augment (not replace) MARL machinery.
+
+**Counterpoint** to MARS² (full LLM agents) and LangMARL (language-space MARL): sometimes the LLM is best used as a prior-generator, not as the agent. Three-way split of "LLM-as-agent / LLM-as-critic / LLM-as-prior" is stabilizing as a taxonomy within MARL.
+
+### 63. π-Play Self-Distillation (new in Multi-Agent)
+
+- **π-Play (2604.14054)**: privileged-teacher → student distillation in self-play loop → dense supervision for sparse-reward multi-agent tasks, no external data needed.
+
+**Connection**: Sibling to Skill-SD (late edition) and MIA (night edition) — the self-supervision thread now has its multi-agent instance.
+
+## Cross-Cutting Meta-Observation (April 21)
+
+**Theme of the day**: *Everything in the RL stack is becoming an agent — including the data synthesizer, the environment generator, the reward model, and the search planner.*
+
+1. **Agentification of the training stack**: CoEvolve (data as agent), ClawEnvKit (environment as agent), AgentV-RL (reward model as agent), AutoSearch (search depth as RL decision), LAnR (retrieval inside the policy). The non-agent components are shrinking.
+
+2. **Resource dimension becomes a first-class RL variable**: depth (AutoSearch), parameters (Selective Parameter Optimization), rejection trials (Rejection Criterion), KV/tool calls (PTE), activations (LongAct), precision (Sol-RL). A unified "RL on resources" thread is forming.
+
+3. **Theory is re-framing rather than re-deriving**: Demystifying Online Alignment changes the *metric*; Entropy Control Analysis unifies the *diagnostic*. The algorithm count stabilizes; the measurement language is finally getting rigorous.
+
+4. **Latent-state everything**: Latent CoT + LAnR + AtManRL + Grift + LongAct — five papers across two weeks that converge on "the useful signal is model-internal, not token-surface". The "look-inward" trend is now a full research program.
+
+5. **Formal + RL**: Semantic Equivalence Self-Play, QuantumQA, OOM-RL, MedVR — four examples where *domain formal structure* (proof systems / physics / markets / rubrics) is wired directly into the RL loop as the verifier. The "which signal" question is being answered by "whatever domain already has a formal signal".

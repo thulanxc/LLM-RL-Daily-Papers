@@ -132,3 +132,20 @@ The five pillars are now augmented by a **sixth**:
 
 ### Updated Pillar
 7. **Runtime alignment**: Alignment becomes a continuous in-deployment process. PolicyBank + WebAgentGuard + Grift (reward-hacking detector) together make the "trained and shipped" model no longer the end state — safety must be refreshed via ongoing feedback, reasoning judges, and model-internal probes.
+
+## Morning Edition (April 21) — Agentic RL 新增
+
+- **CoEvolve** [2604.15840] — Closes the agent-data loop: rollout failure patterns (forgetting + uncertainty signals) drive LLM-based task synthesis; synthesized tasks are validated via environment interaction and added to the training distribution. **+19.43%** / **+15.58%** / **+18.14%** gains on Qwen2.5-7B / Qwen3-4B / Qwen3-30B-A3B (AppWorld & BFCL).
+- **AutoSearch** [2604.17337] — Defines "minimal-sufficient search depth" (jointly determined by question complexity and agent capability) and uses it as the RL reward signal for agentic RAG: rewards reaching this depth, penalizes over-searching. Reduces search-step count while maintaining accuracy on multi-hop QA.
+- **ClawEnvKit** [2604.18543] — End-to-end automatic environment generator (parser / generator / validator) for claw-like agents. Auto-ClawEval delivers 1,040 environments across 24 categories at **1/13,800** the cost of human construction. Harness engineering yields up to +15.7pp over bare ReAct.
+- **π-Play** [2604.14054] — Data-free multi-agent self-play via privileged self-distillation: a teacher observing both agents' internal states distills dense supervision to a student that sees only the visible interaction. Works on both cooperative and competitive tasks.
+- **LAnR** [2604.17866] — Latent Abstraction for Retrieval: replaces text-based search queries with dense vectors generated from `[PRED]` hidden states; encode / retrieve / generate are all performed within the LLM's own latent space. Removes an entire external component from the agent loop.
+- **MT-GRPO** [2604.02869] — First multi-turn GRPO (combined with GTPO) on real customer-service tool-calling tasks, with *Iterative Reward Calibration* progressively refining intermediate rewards across training rounds.
+
+### Connections
+- CoEvolve ↔ RAGEN-2 (2604.06268): RAGEN-2 diagnosed "Template Collapse" via mutual information; CoEvolve operationalizes the fix via failure-pattern-driven data synthesis.
+- ClawEnvKit ↔ CoEvolve: orthogonal automation — one generates tasks, the other generates environments. Combined → end-to-end automated agentic-RL training factory.
+- AutoSearch ↔ GUARD (2604.14528): GUARD controls branching at failure points; AutoSearch controls *depth*. Both are instances of "RL-trained resource allocation."
+- LAnR ↔ Latent CoT (2604.15726): both push the "surface text → latent state" migration — LAnR extends it to retrieval.
+- MT-GRPO ↔ CW-GRPO (2604.14267): two ways to make GRPO multi-turn — MT-GRPO iteratively calibrates reward; CW-GRPO rescales advantages with per-round LLM-judge contributions.
+- π-Play ↔ MARS² (2604.14564): two multi-agent RL paradigms — MARS² shares search tree; π-Play shares privileged knowledge via distillation.

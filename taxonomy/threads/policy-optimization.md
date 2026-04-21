@@ -43,3 +43,13 @@ PPO (2017) → RLHF-PPO (2022) → DPO (2023) → GRPO (2024) → DAPO (2025) �
 
 ## Key Trend (updated April 20)
 The credit-assignment thread has fragmented into four orthogonal design axes: (1) **probability space** (PreRL `P(y)` vs. standard `P(y|x)`); (2) **advantage structure** (CAPO calibration-aware, SPO per-state similarity, TC-GRPO temporal-consistent, MARS² tree-structured group, GroupDPO k≫4 DPO); (3) **process signal injection** (IG-Search per-token log-prob IG inside GRPO vs. CW-GRPO per-round contribution rescaling — training-free signal vs. judge-based signal); (4) **regularization geometry** (VGF Optimal-Transport replacing KL). Meanwhile **GFT** demonstrates the SFT↔RL boundary is fully soluble: SFT is a degenerate PG special case. **April 20's GroupDPO + RCFG + Flexible Empowerment BoN add a fifth axis — *when* policy improvement happens (train-time gradient vs. test-time sampling vs. test-time guidance)**. Combined, SFT / DPO / GRPO / OT / RCFG now appear as instances of a single group-advantage + budget-regularized optimization framework indexed by (group size, regularization geometry, advantage rescaling, probability space, update locus).
+
+## Morning Edition (April 21) — 策略优化新增
+
+- **MT-GRPO** [2604.02869] — First multi-turn GRPO with *iterative reward calibration* applied to real customer-service tool-calling agents, addressing long-horizon credit assignment in sparse-reward settings.
+- **AtManRL** [2604.16158] — GRPO extension augmenting the outcome advantage with an attention-saliency reward component, enabling joint optimization of accuracy and CoT faithfulness.
+- **Selective Parameter Optimization** [2604.17051] — Gradient-sensitivity-guided selective RLHF post-training: updates only task-relevant parameters, matching full-parameter tuning at fraction of compute.
+
+### Connections
+- MT-GRPO ↔ CW-GRPO (2604.14267): parallel ways to extend GRPO to multi-turn — temporal calibration vs per-round contribution rescaling.
+- Selective Parameter Optimization ↔ LongAct (2604.14922): the "RL on a restricted sub-parameter set" motif — LongAct constrains via self-emergent QK activations; this paper constrains via gradient sensitivity.

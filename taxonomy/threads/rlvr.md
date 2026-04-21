@@ -32,3 +32,14 @@ Instead of learning a reward model from human preferences, use verifiable signal
 RLVR is expanding beyond math/code to general reasoning (SUPERNOVA), negotiation, multimodal tasks, medical deep search (QuarkMedSearch), multilingual reasoning (ReasonXL), content moderation (CARO via DPO), knowledge editing, and argumentation. The "imperfect verifier" result lowers the barrier for new domains. 
 
 **Night-edition pattern**: Every new RLVR domain is adopting the same recipe template — *SFT (short-to-long or style-shift) → RLVR with domain-specific anti-hacking reward*. This is becoming the de facto playbook for vertical-domain RL.
+
+## Morning Edition (April 21) — RLVR 新增
+
+- **QuantumQA / VRM** [2604.18176] — Extends RLVR to scientific reasoning via *Verification-aware Reward Model* that adaptively fuses deterministic solver signals with multidimensional semantic evaluation. 8B model competitive with proprietary-scale systems.
+- **KnowRL** [2604.12627] — Tackles RLVR zero-gradient collapse on hard problems via Constrained Subset Search over atomic knowledge points — provides just-enough guidance while preserving exploration.
+- **Semantic Equivalence Self-Play** [2604.17010] — RLVR with *formal proof* as verifier: Liquid Haskell for equivalence, execution counterexamples for inequivalence. +13.3pp on EquiBench.
+- **AtManRL** [2604.16158] — Adds a *faithfulness-based* verifiable signal (attention saliency) alongside outcome correctness to push CoT toward genuine causal use.
+
+### Connections
+- QuantumQA ↔ OOM-RL (market signal) ↔ MedVR (medical rubric): domain-specific executable verifiers continue to expand the RLVR applicability frontier.
+- AtManRL introduces a new axis: verifiability-of-reasoning-*process*, not just answer.

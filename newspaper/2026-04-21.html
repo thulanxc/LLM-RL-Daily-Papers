@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>LLM RL 每日简报 · 2026-04-21</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --rule: #2a2a2a;
+    --accent: #7a1e1e;
+    --paper: #f7f2e8;
+    --card: #ffffff;
+    --tag: #efe7d6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, "Times New Roman", serif;
+    margin: 0;
+    padding: 40px 20px 80px;
+    line-height: 1.75;
+  }
+  .container { max-width: 1040px; margin: 0 auto; }
+  header.masthead {
+    text-align: center;
+    border-top: 4px double var(--rule);
+    border-bottom: 4px double var(--rule);
+    padding: 18px 8px;
+    margin-bottom: 28px;
+  }
+  header.masthead h1 {
+    font-family: "Playfair Display", "Didot", Georgia, serif;
+    font-size: 3.0em;
+    margin: 0;
+    letter-spacing: 2px;
+    font-weight: 900;
+  }
+  header.masthead .tagline {
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  header.masthead .meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: var(--muted);
+    margin-top: 14px;
+    padding: 6px 12px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .editorial {
+    background: var(--card);
+    border-left: 6px solid var(--accent);
+    padding: 20px 28px;
+    margin-bottom: 36px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+  }
+  .editorial h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    margin-top: 0;
+    font-size: 1.5em;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+  .editorial p { margin: 10px 0; font-size: 1.02em; }
+  section.category {
+    margin-top: 48px;
+  }
+  section.category > h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.9em;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 6px;
+    margin-bottom: 22px;
+    letter-spacing: 1px;
+  }
+  article.paper {
+    background: var(--card);
+    border: 1px solid #ddd;
+    padding: 22px 26px;
+    margin-bottom: 24px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.04);
+  }
+  article.paper h3 {
+    font-size: 1.28em;
+    margin: 0 0 4px 0;
+    color: var(--ink);
+  }
+  article.paper h3 a { color: var(--accent); text-decoration: none; }
+  article.paper h3 a:hover { text-decoration: underline; }
+  article.paper .authors {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 2px;
+  }
+  article.paper .meta-line {
+    font-size: 0.86em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  article.paper .tag {
+    display: inline-block;
+    background: var(--tag);
+    padding: 1px 8px;
+    margin-right: 6px;
+    font-size: 0.8em;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+  article.paper .summary { margin: 10px 0; }
+  article.paper .takeaways {
+    background: #faf6ec;
+    border-left: 3px solid var(--accent);
+    padding: 10px 16px;
+    margin-top: 12px;
+    font-size: 0.97em;
+  }
+  article.paper .takeaways ul { margin: 4px 0; padding-left: 22px; }
+  article.paper .takeaways li { margin: 4px 0; }
+  article.paper .method {
+    font-size: 0.95em;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f5f0e0;
+    border-radius: 3px;
+  }
+  footer {
+    margin-top: 60px;
+    padding-top: 16px;
+    border-top: 2px solid var(--rule);
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9em;
+    font-style: italic;
+  }
+  code {
+    font-family: "Fira Code", "JetBrains Mono", Consolas, monospace;
+    background: #eee4cc;
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-size: 0.92em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="masthead">
+  <div style="font-size:0.85em; letter-spacing:3px; color:var(--muted);">第六期 · VOL.VI</div>
+  <h1>LLM RL 每日简报</h1>
+  <div class="tagline">The Daily Ledger of Reinforcement Learning for Large Language Models</div>
+  <div class="meta">
+    <span>2026 年 4 月 21 日 · 星期二</span>
+    <span>17 篇新入库论文</span>
+    <span>晨间版 · Morning Edition</span>
+  </div>
+</header>
+
+<div class="editorial">
+  <h2>编者按 · Editor's Desk</h2>
+  <p>
+    <strong>今日主题：验证从「事后裁判」走向「过程共演」。</strong>
+    本期 17 篇新论文呈现三条交织的主线：
+    (1) <strong>验证 / 奖励建模的结构化重构</strong>——<em>AgentV-RL</em>（2604.16004）将奖励模型变成一个具备前向/后向双智能体、调用工具、多轮推理的「审计系统」，4B 即超越最强 ORM 25.2%；<em>QuantumQA</em>（2604.18176）把物理求解器的确定性信号与语义评审做自适应融合，让 8B 模型在量子推理上媲美闭源大模型；<em>AtManRL</em>（2604.16158）通过可微注意力显著性直接把「CoT 是否真正参与预测」量化为可优化的奖励项。
+  </p>
+  <p>
+    (2) <strong>智能体训练从静态走向「环境—数据—策略」共演化</strong>——<em>CoEvolve</em>（2604.15840）用 rollout 失败模式反向驱动任务合成，在 Qwen3-30B-A3B 上取得 +18.14% 绝对提升；<em>AutoSearch</em>（2604.17337）提出「最小充分搜索深度」作为奖励，在保持精度的同时大幅压缩 agentic RAG 的冗余搜索；<em>ClawEnvKit</em>（2604.18543）把环境生成本身自动化——1,040 个训练环境以人工方案 1/13,800 的成本覆盖 24 类任务；<em>MindDR</em> 同期方向中 <em>π-Play</em>（2604.14054）给出了无外部数据的多智能体自对弈路线。
+  </p>
+  <p>
+    (3) <strong>探索与对齐的理论回潮</strong>——<em>Demystifying Online Alignment</em>（2604.17207）证明贪心在线 RLHF / DPO 在「决策中心」遗憾度量下达到常数 O(1) 遗憾，为经验上的「超预期效果」给出第一份正式解释；<em>Entropy Control Analysis</em>（2604.09676）则把现有熵控策略（entropy bonus、clipped entropy、KL-reg、自适应调度）统一在一张收敛—探索界定的图上；<em>KnowRL</em>（2604.12627）把「提示即最小充分集」转化为约束子集搜索，缓解硬题零梯度坍塌。
+  </p>
+  <p>
+    另外值得关注：<em>HorizonBench</em>（2604.17283）把个性化对齐问题推到 163K-token 长上下文、6 个月对话史的「信念更新失败」诊断；<em>LAnR</em>（2604.17866）完全抛弃显式检索查询，在 LLM 潜空间内一气呵成编码/检索/生成；<em>Semantic Equivalence Self-Play</em>（2604.17010）把 Liquid Haskell 形式化验证当作 RL 环境的验证器；<em>LLM Graph Priors for MARL</em>（2604.17191）证明 1.5B 模型已足以为多智能体 RL 生成有效的协调图先验；<em>MT-GRPO</em>（2604.02869）则是第一套落到真实客服场景的多轮工具调用 GRPO 训练栈。
+  </p>
+  <p>
+    一句话：<strong>奖励、验证、探索、数据四件事，正在同时从「外挂的子模块」被吸收进「模型与环境的共演化轨道」。</strong>
+  </p>
+</div>
+
+
+<section class="category">
+  <h2>一、奖励建模与验证 · Reward Modeling &amp; Verification</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16004">AgentV-RL: Scaling Reward Modeling with Agentic Verifier</a></h3>
+    <div class="authors">作者团队：Agentic Verifier 研究组（完整名单见 arXiv 原文）</div>
+    <div class="meta-line">arXiv: 2604.16004 · <span class="tag">Reward Modeling</span><span class="tag">Agentic</span><span class="tag">Tool-Use</span></div>
+    <div class="summary">
+      <strong>核心贡献：</strong>将奖励模型从「单轮打分器」改造为多轮、工具增强的「审计系统」。Agentic Verifier 由两个互补的智能体组成——<em>Forward Agent</em> 从前提逐步推到结论；<em>Backward Agent</em> 反过来用结论去核对每一条前提。两者在多轮内交替调用工具并做内部推理。
+      <strong>训练管线：</strong>一个端到端的合成数据引擎自动生成「验证轨迹」；两阶段训练：先 rejection sampling SFT，再做 RL（探索式交互训练）。
+      <strong>结果：</strong>4B 规模的 Agentic Verifier 在多个基准上超越 SOTA ORM 25.2%，证明「把 verifier 做成 agent」比「做大单步打分器」更有效。
+    </div>
+    <div class="method"><strong>方法要点：</strong>Forward/Backward Agent 分工 + 工具使用（计算器、Python、检索等） + RL 自主决定何时调用何种工具验证。</div>
+    <div class="takeaways">
+      <strong>启示：</strong>
+      <ul>
+        <li>本期范式转折点之一：奖励模型不再是冻结的判别器，而是一个「会思考、会用工具、会反查」的智能体。</li>
+        <li>4B 超 SOTA ORM，说明「结构」比「参数量」更关键——这和 AgentV-RL 前后呼应的一批 Generative Critic 工作（GenAC, 2604.10701）方向一致。</li>
+        <li>对 Pipeline 影响：RLHF 中 RM 也许需要被重写为 RM-Agent，带来的是 verifier rollout 成本上升，但 reward 质量更稳。</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16158">AtManRL: Towards Faithful Reasoning via Differentiable Attention Saliency</a></h3>
+    <div class="authors">Max Henning Höth, Kristian Kersting, Björn Deiseroth, Letitia Parcalabescu</div>
+    <div class="meta-line">arXiv: 2604.16158 · <span class="tag">Reasoning RL</span><span class="tag">GRPO</span><span class="tag">Faithful CoT</span></div>
+    <div class="summary">
+      <strong>问题：</strong>CoT 是否真的参与了最终答案的产生？还是仅仅是「事后合理化」？AtManRL 用可微注意力遮罩（learnable additive attention mask）直接量化——如果屏蔽掉 CoT 中某 token 不会损害答案，则该 token 是「无关装饰」；损害越大，则该 token 越「因果重要」。
+      <strong>方法：</strong>将这个 mask 扰动下的答案准确率下降，作为 token 的 <em>saliency 奖励</em>，与结果奖励加权合成，在 GRPO 框架里联合优化。这样模型被直接激励生成「真实用到」的 CoT。
+      <strong>实验：</strong>在 Llama-3.2-3B-Instruct 上，于 GSM8K 与 MMLU 验证 faithful CoT 与准确率可同时提升。
+    </div>
+    <div class="method"><strong>方法要点：</strong>Differentiable Attention Mask + Saliency Reward + GRPO 结果奖励融合。核心公式：<code>r_total = r_outcome + λ · Δaccuracy(mask)</code>。</div>
+    <div class="takeaways">
+      <strong>启示：</strong>
+      <ul>
+        <li>「Latent CoT」位置论文（昨日 2604.15726）警告 surface CoT 不可信；AtManRL 给出了一条用可微显著性把「表面 CoT」拉回「因果 CoT」的具体算法路径。</li>
+        <li>对 PRM 的补充：PRM 打的是步骤正确性；AtManRL 打的是步骤是否真的被使用——正交且互补。</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16146">On the Rejection Criterion for Proxy-Based Test-Time Alignment</a></h3>
+    <div class="meta-line">arXiv: 2604.16146 · <span class="tag">RLHF</span><span class="tag">Test-Time</span><span class="tag">Alignment</span></div>
+    <div class="summary">
+      <strong>核心贡献：</strong>分析代理奖励模型（proxy RM）指导的推理期对齐（rejection sampling / best-of-N）中，「什么时候拒绝重采」这一关键决策。作者给出一个在对齐收益与计算开销间取得最优折衷的<em>原则化拒绝准则</em>，并在理论上分析其 alignment-efficiency Pareto 前沿。
+      <strong>结果：</strong>相比固定阈值的 BoN，按此准则动态调整可以在相同算力下拿到更好的对齐质量，或在相同对齐水平下显著减小采样次数。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>与本月早先 <em>Flexible Empowerment BoN</em>（2604.15614，已收录）系列一脉相承——<strong>BoN 正在从「工程 trick」走向「可分析的推理期 RL 算子」</strong>。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>二、推理 RL 与可验证奖励 · Reasoning RL &amp; RLVR</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.18176">QuantumQA: Enhancing Scientific Reasoning via Physics-Consistent Dataset and Verification-Aware RL</a></h3>
+    <div class="meta-line">arXiv: 2604.18176 · <span class="tag">RLVR</span><span class="tag">Scientific Reasoning</span><span class="tag">Verifiable Rewards</span></div>
+    <div class="summary">
+      <strong>问题设定：</strong>LLM 在一般推理上很强，但在需要严格物理约束的量子力学等领域可靠性不足。论文提出 <em>QuantumQA</em>：一个任务自适应构建的大规模数据集，并配以混合验证协议——确定性求解器（物理模拟 / 精确解算）+ 语义审查器双通道。
+      <strong>训练方法：</strong>Verification-aware Reward Model（VRM）使用自适应奖励融合机制，动态整合来自科学执行套件的确定性信号和多维语义评估。RLVR 在此融合奖励下进行策略训练。
+      <strong>结果：</strong>8B 优化后模型在量子推理任务上与闭源大模型性能相当，验证了「在 RL 内嵌可验证的规则化反馈」是一条对纯扩规模的高参数效率替代路径。
+    </div>
+    <div class="method"><strong>方法要点：</strong>混合验证协议 = 确定性求解器验证 + 语义审查；VRM 做自适应融合 (<code>r = α·r_det + (1-α)·r_sem</code>, α 动态)；RLVR 训练。</div>
+    <div class="takeaways">
+      <strong>启示：</strong>这是 RLVR 向 STEM 严谨领域扩展的关键一步——不同于数学题的「答案唯一可验」，量子物理需要「解法约束 + 语义合理」双通道，为后续 STEM-RLVR 工作提供了模板。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.12627">KnowRL: Boosting LLM Reasoning via RL with Minimal-Sufficient Knowledge Guidance</a></h3>
+    <div class="meta-line">arXiv: 2604.12627 · <span class="tag">RLVR</span><span class="tag">Curriculum</span><span class="tag">Reasoning RL</span></div>
+    <div class="summary">
+      <strong>核心问题：</strong>RLVR 在难题上常因稀疏奖励出现梯度为零的「全错轨迹坍塌」。已有「提示式 RL」（Hint-GRPO）试图通过给 partial hint 缓解，但手工设计提示又不可扩展。
+      <strong>方法：</strong>KnowRL 将「提示设计」定式化为<em>最小充分知识子集（minimal-sufficient KP subset）</em>问题——把知识点原子化，再用 Constrained Subset Search (CSS) 选出：足够引导学习 &amp; 不过度透题、保留探索空间。
+      <strong>结果：</strong>在多跳 QA 与数学推理上超越 Hint-GRPO 与标准 RLVR，尤其在硬题上缓解零梯度坍塌。
+    </div>
+    <div class="method"><strong>方法要点：</strong>KP 原子化 → CSS 子集选择 → 将子集作为提示并入 GRPO 的 rollout 初始上下文。</div>
+    <div class="takeaways">
+      <strong>启示：</strong>承接本周「RL 只能稳定不能扩能」的讨论（2604.06628）——KnowRL 提供了明确的工程路径：以子集搜索+课程学习替代纯「提高难度」的做法。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17010">Improving LLM Code Reasoning via Semantic Equivalence Self-Play with Formal Verification</a></h3>
+    <div class="authors">Antonio Valerio Miceli Barone, Poon Tsz Nok（爱丁堡大学）</div>
+    <div class="meta-line">arXiv: 2604.17010 · <span class="tag">Code RL</span><span class="tag">Self-Play</span><span class="tag">Formal Verification</span></div>
+    <div class="summary">
+      <strong>核心思路：</strong>把 <em>Liquid Haskell</em> 形式化证明作为「等价性验证器」，把执行式反例作为「非等价性验证器」，从而让 generator（生成变换后程序）与 evaluator（判断是否语义等价）在自对弈中对抗训练。RL 顶层：把 generator 视作 RL agent，鼓励其规避常见语义错误类。
+      <strong>资产：</strong>发布 <em>OpInstruct-HSx</em>——约 28k 条经过验证的合成 Haskell 程序。
+      <strong>结果：</strong>在 EquiBench 上最高 +13.3pp 准确率提升；在 PySecDB 上也有一致增益，显示出跨语言的泛化。
+    </div>
+    <div class="method"><strong>方法要点：</strong>Liquid Haskell refinement type + 执行式反例 → 验证信号；难度自适应课程；Self-Play 提供无限数据。</div>
+    <div class="takeaways">
+      <strong>启示：</strong>把「编译器/证明器」当作训练时 verifier 的趋势在延续（对照 MedVR, OOM-RL）——本作是少有把 <em>全自动形式化证明器</em> 直接用作 RL 验证的尝试。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.02869">MT-GRPO: Multi-Turn RL for Tool-Calling Agents with Iterative Reward Calibration</a></h3>
+    <div class="meta-line">arXiv: 2604.02869 · <span class="tag">Tool-Use RL</span><span class="tag">GRPO</span><span class="tag">Multi-Turn</span></div>
+    <div class="summary">
+      <strong>核心贡献：</strong>首次将 MT-GRPO（Multi-Turn Group Relative Policy Optimization）与 GTPO 组合，在真实客服任务场景上训练多轮工具调用 agent。核心创新在于 <em>Iterative Reward Calibration</em>——在训练轮次间逐步精化中间奖励。
+      <strong>结果：</strong>相比单轮 GRPO，多轮基准显著提升，长水平信用分配问题得到有效缓解。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>真实业务的 tool-calling RL 数据稀疏、奖励稀疏、horizon 长，MT-GRPO 给出第一个可工程化的多轮 GRPO 方案。与 2604.14267 (CW-GRPO) 一起构成「把 GRPO 真正推到多轮」的两条并行路线（一个做「轮级 contribution」，一个做「迭代校准」）。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>三、Agentic RL 与环境共演化 · Agentic RL &amp; Co-Evolution</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.15840">CoEvolve: Training LLM Agents via Agent-Data Mutual Evolution</a></h3>
+    <div class="authors">来自 AMAP · Alibaba Group</div>
+    <div class="meta-line">arXiv: 2604.15840 · <span class="tag">Agentic RL</span><span class="tag">Self-Evolving</span><span class="tag">Data Synthesis</span></div>
+    <div class="summary">
+      <strong>问题：</strong>LLM agent 的 RL 训练通常在静态数据分布上进行，无法跟上 agent 能力演进，复杂环境交互覆盖率差。
+      <strong>方法：</strong>CoEvolve 建立一个闭环——从 rollout 轨迹中抽出<em>遗忘信号</em>与<em>不确定性信号</em>，识别易出错的交互模式；以这些模式反向驱动 LLM-based 任务合成；合成任务通过环境交互验证后并入训练数据分布。agent 与 data 同步演化。
+      <strong>结果：</strong>在 AppWorld 与 BFCL 上，Qwen2.5-7B/Qwen3-4B/Qwen3-30B-A3B 分别取得 +19.43% / +15.58% / +18.14% 绝对增益。
+    </div>
+    <div class="method"><strong>方法要点：</strong>rollout → 失败模式抽取（遗忘 + 不确定性） → 任务合成 → 环境验证 → 数据分布更新 → RL 训练 → rollout（回到起点）。</div>
+    <div class="takeaways">
+      <strong>启示：</strong>继 RAGEN-2（Template Collapse 诊断）和本作，我们正在进入一个「<strong>静态数据 + 静态 verifier + 静态环境 + RL 优化</strong>」假设彻底瓦解的阶段——<em>训练循环本身被 RL 化</em>。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17337">AutoSearch: Adaptive Search Depth for Efficient Agentic RAG via RL</a></h3>
+    <div class="authors">Jingbo Sun, Wenyue Chong, Songjun Tu 等（CAS / Meituan）</div>
+    <div class="meta-line">arXiv: 2604.17337 · <span class="tag">Agentic RAG</span><span class="tag">Efficiency</span><span class="tag">RL</span></div>
+    <div class="summary">
+      <strong>问题：</strong>Agentic RAG 常有冗余搜索步，带来显著的计算与延迟代价。作者定义「最小充分搜索深度」——由问题复杂度与 agent 能力共同决定的精度—效率拐点。
+      <strong>方法：</strong>在 RL 中每一步用「自生成中间答案」衡量是否已达到最小充分深度；超过则惩罚、未达则奖励。
+      <strong>结果：</strong>多跳 QA 基准上显著减少搜索步数，同时精度持平。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>和 GUARD（2604.14528）的「entropy-guided short-horizon branching」形成互补——GUARD 在分支维度控成本，AutoSearch 在深度维度控成本。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.18543">ClawEnvKit: Automatic Environment Generation for Claw-Like Agents</a></h3>
+    <div class="meta-line">arXiv: 2604.18543 · <span class="tag">Agent Infra</span><span class="tag">Env Gen</span><span class="tag">Benchmark</span></div>
+    <div class="summary">
+      <strong>动机：</strong>训练和评测 claw-like agent（具备「抓取-放置」一类低层动作原语）所需的环境长期依赖人工构建，不可扩展。
+      <strong>系统：</strong>ClawEnvKit 是一个从自然语言描述自动生成环境的管线，由 parser / generator / validator 三部分构成，显式强制可行性、多样性与结构一致性。
+      <strong>产物：</strong>Auto-ClawEval——24 类共 1,040 个环境，与人工构建环境相当/更好，却只花了 <strong>1/13,800</strong> 的成本。在 4 个模型族 × 8 种 agent 框架下，harness 工程化带来最高 +15.7pp 的性能提升。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>和 CoEvolve 的「数据生成」正交——CoEvolve 生成任务，ClawEnvKit 生成<em>环境</em>。两者组合指向一个全自动的 agentic RL 训练工厂。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.14054">π-Play: Multi-Agent Self-Play via Privileged Self-Distillation without External Data</a></h3>
+    <div class="meta-line">arXiv: 2604.14054 · <span class="tag">Multi-Agent</span><span class="tag">Self-Play</span><span class="tag">Distillation</span></div>
+    <div class="summary">
+      <strong>思路：</strong>π-Play 在多智能体自对弈中引入「特权教师」——教师观察双方内部状态，学生仅能观察可见交互；教师向学生蒸馏提供对稀疏奖励 / 合作—对抗任务的密集监督。
+      <strong>结果：</strong>无需外部数据，即可在多智能体基准上超越标准 self-play RL 基线，探索出一条「能力自增长 + 零数据依赖」的路线。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>对照 MARS²（2604.14564）的共享树搜索多智能体，π-Play 用蒸馏做 credit assignment，是两条思路的分化。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17866">LAnR: Latent Abstraction for Retrieval-Augmented Generation</a></h3>
+    <div class="authors">Ha Lan N.T, Minh-Anh Nguyen, Dung D. Le</div>
+    <div class="meta-line">arXiv: 2604.17866 · <span class="tag">Agentic RAG</span><span class="tag">Latent Reasoning</span></div>
+    <div class="summary">
+      <strong>核心贡献：</strong>现有 RAG 依赖在每一跳生成自然语言查询，并强行保持 retriever 与 generator 的架构分离。LAnR 把编码、检索、生成全部合并到一个 LLM 的<em>潜空间</em>中——不再生成文本查询，而是从 <code>[PRED]</code> token 的隐状态直接产出密集检索向量，去匹配同构编码的文档向量。
+      <strong>意义：</strong>这等于把「查询生成」从 agent loop 里彻底去掉，retriever 与 generator 变成潜空间的两个模式。对任何搜索型 RL agent（SearchR1, WebAgent 等）都是一次底层重写。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>呼应昨日的 Latent CoT（2604.15726）——<strong>reasoning 与 retrieval 都在向 latent-state 迁移</strong>，surface text 作为中间媒介的历史作用正在消解。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>四、对齐理论与 RLHF · Alignment Theory &amp; RLHF</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17207">Demystifying the Unreasonable Effectiveness of Online Alignment Methods</a></h3>
+    <div class="authors">Enoch Hyunwook Kang（University of Washington）</div>
+    <div class="meta-line">arXiv: 2604.17207 · <span class="tag">RLHF Theory</span><span class="tag">Online DPO</span></div>
+    <div class="summary">
+      <strong>问题：</strong>纯贪心更新的迭代式对齐方法（online RLHF / online DPO）在实践中效果显著，但现有的 O(log T) KL-正则化 regret 界显得对经验效果过于悲观。
+      <strong>观点：</strong>作者指出问题出在 <em>regret 度量本身</em>——KL-正则化 regret 把「统计学习成本」与「为了探索而软化采样策略的随机性成本」混在了一起。
+      <strong>结论：</strong>改用传统的「零温度 regret」（只评估推理时 top-ranked response），作者证明标准的贪心 online 对齐方法（包括 online RLHF 与 online DPO）取得 <strong>常数 O(1) 累计 regret</strong>——为「为什么这些简单算法效果这么好」给出第一份理论解释。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>类似 STaR / DPO 等「贪心自举」方法在理论界长期被认为不如 policy gradient 稳健；这份工作首次在「决策中心」意义下给出与实践一致的理论 endorsement。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17283">HorizonBench: Long-Horizon Personalization with Evolving Preferences</a></h3>
+    <div class="authors">Shuyue Stella Li, Bhargavi Paranjape, Kerem Oktar 等（UW / Meta / OpenAI / Stanford）</div>
+    <div class="meta-line">arXiv: 2604.17283 · <span class="tag">Personalization</span><span class="tag">Long Context</span><span class="tag">Benchmark</span></div>
+    <div class="summary">
+      <strong>问题：</strong>真实用户的偏好会随「生活事件」而改变——一个既定偏好在几个月后可能被推翻。评估 LLM 对这类<em>动态信念更新</em>的理解需要长上下文、多事件的对话数据。
+      <strong>基准构造：</strong>HorizonBench 包含 4,245 个评测项，取自 360 位模拟用户的 6 个月对话史（平均约 163K token）。数据生成器在结构化心智状态图上演化——生活事件通过类型化依赖边触发偏好改变。
+      <strong>结果：</strong>跨模型族的评估把「信念更新失败」识别为一个可定位、可针对性优化的缺陷；同时为长上下文建模、记忆增强架构、心智理论推理提供联合测试床。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>和最近的 <em>APEX-MEM / MIA</em> 等记忆增强 agent 工作配对——HorizonBench 给出评测侧的标杆，使得「个性化 RLHF」不再只有 Arena-Bench 式静态偏好。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16146">On the Rejection Criterion for Proxy-Based Test-Time Alignment</a></h3>
+    <div class="meta-line">arXiv: 2604.16146 · <span class="tag">Test-Time Alignment</span><span class="tag">BoN</span></div>
+    <div class="summary">
+      <strong>贡献：</strong>为 proxy RM 驱动的推理期对齐给出原则化的拒绝准则，显式刻画「拒绝试次 vs 对齐增益」的 Pareto 前沿。相较固定阈值的朴素 BoN，在 RLHF 基准上取得更优的对齐—效率边界。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>与 Flexible Empowerment BoN（2604.15614）、RCFG（2604.15577）一起，推动推理期 RL 从 heuristic 工程走向理论化。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>五、探索与理论 · Exploration &amp; Theory</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.09676">A Comparative Theoretical Analysis of Entropy Control Methods in RL for Reasoning LLMs</a></h3>
+    <div class="meta-line">arXiv: 2604.09676 · <span class="tag">Theory</span><span class="tag">GRPO</span><span class="tag">Entropy</span></div>
+    <div class="summary">
+      <strong>贡献：</strong>本文把熵 bonus、KL 正则、clipped entropy、自适应熵调度四类方法放在统一理论框架下比较，给出了各方法规避「策略熵快速坍塌」的收敛界与探索界。进一步，依据任务域（sparse reward / dense reward / curriculum）给出选择指导。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>在 Policy Split / AsymGRPO 等具体算法陆续出现的当下，这篇理论综述把各条路线画到同一张图上，对「<strong>到底要用哪种熵控？</strong>」提供了处方式答案。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17051">Efficient Task Adaptation in Large Language Models via Selective Parameter Optimization</a></h3>
+    <div class="meta-line">arXiv: 2604.17051 · <span class="tag">Parameter Efficiency</span><span class="tag">RLHF Infra</span></div>
+    <div class="summary">
+      <strong>贡献：</strong>用梯度敏感度分析识别并只更新与目标任务最相关的少量参数子集，在 RL / RLHF 后训练过程中显著减少算力消耗，同时保持或超越全参数微调的性能。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>和 LongAct 「激活通道 RL」（2604.14922）呼应——<strong>把 RL 的更新限制在模型内部真正参与决策的子空间</strong>，是本月一条清晰的效率提升主线。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>六、多智能体与多模态 · Multi-Agent &amp; Beyond</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17191">Do LLM-derived Graph Priors Improve Multi-Agent Coordination?</a></h3>
+    <div class="authors">Nikunj Gupta, Rajgopal Kannan, Viktor Prasanna</div>
+    <div class="meta-line">arXiv: 2604.17191 · <span class="tag">MARL</span><span class="tag">LLM Prior</span></div>
+    <div class="summary">
+      <strong>问题：</strong>LLM 能否基于智能体观测的自然语言描述，生成「协调图先验」供 MARL 使用？作者把这类先验通过图卷积层嵌入 GNN-based MARL 流程。
+      <strong>结果：</strong>在 Multi-Agent Particle Environment 四个合作场景下，对比从独立学习到 SOTA 图 MARL 的 baseline，LLM 先验显著提升了协调与动态环境适应性——而且仅需 <strong>1.5B 参数规模</strong>的 LLM 即可生成有效先验。
+    </div>
+    <div class="takeaways">
+      <strong>启示：</strong>为「LLM 辅助的传统 MARL」提供首份定量证据。对「是否要超大模型做 prior」给出否定答案——小模型足以。</div>
+  </article>
+</section>
+
+<footer>
+  <div>— 本期完 · END OF EDITION —</div>
+  <div>下一期 · 2026-04-22（晨间）</div>
+</footer>
+
+</div>
+</body>
+</html>
