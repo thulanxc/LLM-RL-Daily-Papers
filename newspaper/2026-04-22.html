@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>LLM RL 每日简报 · 2026-04-22</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --rule: #2a2a2a;
+    --accent: #7a1e1e;
+    --paper: #f7f2e8;
+    --card: #ffffff;
+    --tag: #efe7d6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, "Times New Roman", serif;
+    margin: 0;
+    padding: 40px 20px 80px;
+    line-height: 1.75;
+  }
+  .container { max-width: 1040px; margin: 0 auto; }
+  header.masthead {
+    text-align: center;
+    border-top: 4px double var(--rule);
+    border-bottom: 4px double var(--rule);
+    padding: 18px 8px;
+    margin-bottom: 28px;
+  }
+  header.masthead h1 {
+    font-family: "Playfair Display", "Didot", Georgia, serif;
+    font-size: 3.0em;
+    margin: 0;
+    letter-spacing: 2px;
+    font-weight: 900;
+  }
+  header.masthead .tagline {
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  header.masthead .meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: var(--muted);
+    margin-top: 14px;
+    padding: 6px 12px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .editorial {
+    background: var(--card);
+    border-left: 6px solid var(--accent);
+    padding: 20px 28px;
+    margin-bottom: 36px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+  }
+  .editorial h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    margin-top: 0;
+    font-size: 1.5em;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+  .editorial p { margin: 10px 0; font-size: 1.02em; }
+  section.category {
+    margin-top: 48px;
+  }
+  section.category > h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.9em;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 6px;
+    margin-bottom: 22px;
+    letter-spacing: 1px;
+  }
+  article.paper {
+    background: var(--card);
+    border: 1px solid #ddd;
+    padding: 22px 26px;
+    margin-bottom: 24px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.04);
+  }
+  article.paper h3 {
+    font-size: 1.28em;
+    margin: 0 0 4px 0;
+    color: var(--ink);
+  }
+  article.paper h3 a { color: var(--accent); text-decoration: none; }
+  article.paper h3 a:hover { text-decoration: underline; }
+  article.paper .authors {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 2px;
+  }
+  article.paper .meta-line {
+    font-size: 0.86em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  article.paper .tag {
+    display: inline-block;
+    background: var(--tag);
+    padding: 1px 8px;
+    margin-right: 6px;
+    font-size: 0.8em;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+  article.paper .summary { margin: 10px 0; }
+  article.paper .takeaways {
+    background: #faf6ec;
+    border-left: 3px solid var(--accent);
+    padding: 10px 16px;
+    margin-top: 12px;
+    font-size: 0.97em;
+  }
+  article.paper .takeaways ul { margin: 4px 0; padding-left: 22px; }
+  article.paper .takeaways li { margin: 4px 0; }
+  article.paper .method {
+    font-size: 0.95em;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f5f0e0;
+    border-radius: 3px;
+  }
+  footer {
+    margin-top: 60px;
+    padding-top: 16px;
+    border-top: 2px solid var(--rule);
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9em;
+    font-style: italic;
+  }
+  code {
+    font-family: "Fira Code", "JetBrains Mono", Consolas, monospace;
+    background: #eee4cc;
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-size: 0.92em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="masthead">
+  <div style="font-size:0.85em; letter-spacing:3px; color:var(--muted);">第七期 · VOL.VII</div>
+  <h1>LLM RL 每日简报</h1>
+  <div class="tagline">The Daily Ledger of Reinforcement Learning for Large Language Models</div>
+  <div class="meta">
+    <span>2026 年 4 月 22 日 · 星期三</span>
+    <span>21 篇新入库论文</span>
+    <span>晨间版 · Morning Edition</span>
+  </div>
+</header>
+
+<div class="editorial">
+  <h2>编者按 · Editor's Desk</h2>
+  <p>
+    <strong>今日主题：当 RL 的「颗粒度」碰上 LLM 的「语义度」——从 token、step、到分布，一次系统性升级。</strong>
+    本期 21 篇新论文围绕三条结构性脉络展开。
+  </p>
+  <p>
+    (1) <strong>颗粒度之争：Token-MDP 的黄昏已至。</strong>
+    <em>StepPO</em>（2604.18401）正面主张——传统 token-level MDP 已不适合 LLM 智能体；真正的「动作」应是「步（step）」而非 token，并据此重设信用分配与奖励传播的粒度。与之呼应：
+    <em>RTMC</em>（2604.11037）用 Rollout-Tree Monte Carlo 在共享前缀状态上聚合统计量，<strong>SWE-bench Verified +3.2pp</strong>，无需 critic；
+    <em>CAL-GRPO</em>（2604.17912）为 Verification@K 重奖励设计了「无偏小方差」的尝试级权重；
+    <em>IPVRM + DistRL</em>（2604.13197）直接学 prefix 条件价值函数，用 TD 差分给 token 级信号。这一轮「粒度革命」共同指向：<em>基于「推理单元」而非「词元单元」的优化</em>。
+  </p>
+  <p>
+    (2) <strong>熵、方差、分布——RL 的「动力学」诊断全面铺开。</strong>
+    <em>SPS</em>（2604.16995）首次把「概率挤压效应」量化为 RL 固有瓶颈，通过对 on-policy rollout 做逆强化学习塑形，显著提升 Pass@k；
+    <em>MCPO</em>（2604.16972）为 GRPO 在「完全掌握」提示下的梯度消失打补丁，用 hinge-KL + 多数正确加权，反直觉地<strong>同时提升 pass@1 与 pass@k</strong>；
+    <em>Bounded Ratio RL</em>（2604.18578）解出 PPO clipped 目标的解析最优解并得到 BPO 算法，给出保持单调改善的可证明路径；
+    <em>Beyond Distribution Sharpening</em>（2604.16259）从第一性原理证明<strong>「分布锐化」在没有任务奖励时本质不稳定</strong>——RL 不是仅仅抽取 base model 的潜能，而是需要真正的任务信号。
+  </p>
+  <p>
+    (3) <strong>智能体 RL 进入「经验管理 + 环境自造」阶段。</strong>
+    <em>Freshness-Aware PER</em>（2604.16918）首次把 prioritized experience replay 成功适配到 LLM/VLM，引入指数年龄衰减解决「优先级陈旧」——<strong>NQ Search +46%、Sokoban +367%、VLM FrozenLake +133%</strong>；
+    <em>Training Agents for Self-Evolution</em>（2604.18131）让智能体在任务前自发探索环境并蒸馏结构化世界知识，外部奖励只在训练期使用；
+    <em>ProCeedRL</em>（2604.02006）提出 process-critic + 反思示范，把探索从被动采样转为主动干预；
+    <em>MAGEO</em>（2604.19516）把「可复用策略」作为多智能体协作的累积资产，在生成式引擎优化（GEO）任务上跨引擎迁移；
+    <em>Latent Preference Tool Calling</em>（2604.17886）给出 265 个多会话基准和 <strong>1.24% token 预算</strong>的 PRefine 方法。
+  </p>
+  <p>
+    (4) <strong>对齐的「诚实与谦卑」成为新前线。</strong>
+    <em>ARES</em>（2604.18789, ACL 2026）第一次把红队攻击同时对准 Policy 与 Reward Model，揭示「双重脆弱性」；
+    <em>Abstain-R1</em>（2604.17073）让 3B 模型在拒答时不仅会「不知道」，还能显式指出「缺了什么」；
+    <em>UA-Bench + RL</em>（2604.17293）区分数据不确定性 vs. 模型不确定性，只在数学数据上训练却能跨域泛化；
+    <em>CoAct</em>（2604.17501）把 self-rewarding 与 active learning 协同起来，GSM8K +13.25%；
+    <em>CiPO</em>（2604.15847）把遗忘机器学习（machine unlearning）表达为反事实 CoT 的迭代偏好优化。
+  </p>
+  <p>
+    (5) <strong>特定领域 RLVR 的「最小化外部依赖」倾向。</strong>
+    <em>EA-RLVR</em>（2604.16881）在跨文化实体翻译中完全抛弃外部知识库；
+    <em>Bilateral Trade LM</em>（2604.16472）在 5 个前沿模型 15,000 场双边议价中挖出「序贯报价 + 价格歧视」为最优策略；
+    <em>Plan-PRM</em>（2604.17957）用 PDDL 规划问题合成约 100 万步的 PRM 训练语料，显著提升非数学推理。
+  </p>
+  <p>
+    一句话：<strong>今日 LLM RL 的集体取向是——更细的颗粒度、更诚实的拒答、更高效的经验复用、更少的外部监督依赖。</strong>
+  </p>
+</div>
+
+
+<section class="category">
+  <h2>一、策略优化与核心方法 · Policy Optimization &amp; Core Methods</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.18401">StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning</a></h3>
+    <div class="authors">作者：Daoyu Wang、Qingchuan Li、Mingyue Cheng、Jie Ouyang、Shuo Yu、Qi Liu、Enhong Chen（中科大认知智能国家重点实验室）</div>
+    <div class="meta-line">arXiv: 2604.18401 · 提交日：2026-04-20 · <span class="tag">Policy Optimization</span><span class="tag">Agentic RL</span><span class="tag">Step-MDP</span></div>
+    <div class="summary">
+      <strong>立场与核心主张：</strong>作者直接挑战传统 LLM RL 的 token-level MDP 建模方式——在多轮交互型 agent 场景下，token 远非「最小决策单元」。论文主张把「步（step，一次完整的思考—工具调用—观察回合）」作为 MDP 的真正动作。
+      <strong>方法：</strong>基于 Step-level MDP 重写状态与动作空间；设计与该粒度对齐的信用分配与奖励传播，使得 delayed / sparse reward 在正确的时间颗粒度上回传；保持与已有 GRPO、DAPO 等算法的可插拔兼容。
+      <strong>为什么重要：</strong>此文是本期「粒度革命」的代表——呼应同期 RTMC、CAL-GRPO、IPVRM 等一系列关于「什么是正确的 RL 动作单元」的讨论，标志着 LLM RL 从 token-view 正式进入 step-view 时代。
+    </div>
+    <div class="method"><strong>方法要点：</strong>step-level MDP 重述 + 步级信用分配 + 奖励传播粒度对齐决策粒度。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17912">Learning to Correct: Calibrated Reinforcement Learning for Multi-Attempt Chain-of-Thought</a></h3>
+    <div class="authors">作者：Muhammed Emrullah Ildiz、Halil Alperen Gozeten、Ege Onur Taga、Samet Oymak</div>
+    <div class="meta-line">arXiv: 2604.17912 · 提交日：2026-04-20 · <span class="tag">GRPO Variant</span><span class="tag">Multi-Attempt</span><span class="tag">Verification@K</span></div>
+    <div class="summary">
+      <strong>核心问题：</strong>现代推理模型常做 K 次重试（模型看到 verifier hard feedback 后再次尝试），目标是最大化 Verification@K。论文指出：<em>朴素按 pass/fail 加权</em>会带来有偏梯度——已经通过的尝试不会被加倍鼓励，已经失败的尝试不会被合理惩罚。
+      <strong>方法 CAL-GRPO：</strong>在 GRPO 基础上引入 Calibrated Attempt-Level 权重，使尝试级估计无偏且方差可控。数学上对应「既要矫正偏差又不能放大噪声」的权衡。
+      <strong>结果：</strong>在 MATH、Maze navigation、结构化 Markov chain 上一致超过轨迹级（TL-GRPO）和朴素尝试级（NAL-GRPO）两种基线，说明 multi-attempt CoT 的正确训练方式并非 trivial。
+    </div>
+    <div class="method"><strong>方法要点：</strong>Calibrated Attempt-Level 权重矫正 + 无偏梯度保证 + 多尝试 RL 统一训练框架。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.18578">Bounded Ratio Reinforcement Learning</a></h3>
+    <div class="authors">作者：Yunke Ao、Le Chen、Bruce D. Lee、Assefa S. Wahd、Aline Czarnobai、Philipp Fürnstahl、Bernhard Schölkopf、Andreas Krause（ETH Zürich、MPI-IS）</div>
+    <div class="meta-line">arXiv: 2604.18578 · 提交日：2026-04-20 · <span class="tag">PPO</span><span class="tag">Theory</span><span class="tag">Policy Improvement</span></div>
+    <div class="summary">
+      <strong>问题：</strong>PPO 的 clipped objective 本质是一个启发式「截断重要性比」，与信任域方法（TRPO）的严格数学基础存在显著断裂。长期以来工业界用启发式，学界 struggle 对其理论解释。
+      <strong>贡献：</strong>提出 BRRL 框架——一个全新的带约束+正则化的策略优化问题，并<strong>解析求解其最优解</strong>。该解析解保证单调性能改进。为此实现了 BPO（Bounded Policy Optimization）算法：最小化当前参数策略与 BRRL 解析最优解之间的 advantage-weighted 散度。
+      <strong>意义：</strong>把 PPO 带回「trust region」理论，提供一个既不靠 KL-penalty 又不靠 clip 的第三条路。
+    </div>
+    <div class="method"><strong>方法要点：</strong>BRRL 约束化问题 + 闭式最优解 + advantage-weighted divergence 最小化得到 BPO。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16972">MCPO: Mastery-Consolidated Policy Optimization for Large Reasoning Models</a></h3>
+    <div class="authors">作者：Ant Group、浙江大学联合团队（完整名单见原文）</div>
+    <div class="meta-line">arXiv: 2604.16972 · 提交日：2026-04-18 · <span class="tag">GRPO Variant</span><span class="tag">Mastery</span><span class="tag">RLVR</span></div>
+    <div class="summary">
+      <strong>问题诊断：</strong>作者指出 GRPO 类目标在两类提示上失效——(1) 已完全掌握的提示（rollout 准确率=1），组相对 advantage 归零，无梯度信号却产生无约束的策略漂移，可能导致遗忘；(2) 多数正确提示，隐含 query-权重随准确率提升反而下降，妨碍「部分正确 → 完全掌握」的巩固过程。
+      <strong>方法 MCPO：</strong>(i) 对已掌握提示加 hinge-KL 正则（仅在当前策略与前一步策略偏离过大时生效），控制漂移；(ii) 引入多数正确加权机制，提升这一区间的优化权重。
+      <strong>反直觉结果：</strong>在三个数学基准上，MCPO 不仅提升 pass@1，还进一步提升 pass@k——即「巩固掌握」并未压缩探索，反而<strong>催化了解多样性</strong>。
+    </div>
+    <div class="method"><strong>方法要点：</strong>hinge-KL 限制策略漂移 + 多数正确加权重分配梯度预算 + 全量 GRPO 替代。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16995">SPS: Steering Probability Squeezing for Better Exploration in Reinforcement Learning for Large Language Models</a></h3>
+    <div class="authors">作者：Yifu Huo、Chenglong Wang、Ziming Zhu、Shunjie Xing、Peinan Feng 等（东北大学、昆明理工、中科院等）</div>
+    <div class="meta-line">arXiv: 2604.16995 · 提交日：2026-04-18 · <span class="tag">Exploration</span><span class="tag">Inverse RL</span><span class="tag">Pass@k</span></div>
+    <div class="summary">
+      <strong>现象：概率挤压效应。</strong>作者首次把 LLM RL 训练中一个普遍现象正式命名——概率质量被过度集中在少量高奖励轨迹上，从而抑制探索并限制 Pass@k 的理论上限。
+      <strong>方法 SPS：</strong>在标准 RL 训练中插入 IRL（逆强化学习）步骤，把 on-policy rollout 当作「示范」，让 IRL 推断出一个更发散的等价奖励，再反过来重塑轨迹分布——无需引入外部标注即可显著增强探索。
+      <strong>结果：</strong>在五个常用推理基准上 Pass@k 显著提升；论文还给出了 Pass@k 的经验上界分析，为后续探索研究提供诊断基线。
+    </div>
+    <div class="method"><strong>方法要点：</strong>IRL 视 on-policy rollout 为示范 → 重塑轨迹分布 → 打破概率挤压。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>二、奖励与价值建模 · Reward &amp; Value Modeling</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.13197">Unleashing Implicit Rewards: Prefix-Value Learning for Distribution-Level Optimization</a></h3>
+    <div class="authors">作者：Shiping Gao、Hongzhan Chen、Xiaojun Quan、Qifan Wang、Lifu Huang</div>
+    <div class="meta-line">arXiv: 2604.13197 · 提交日：2026-04-14 · <span class="tag">PRM</span><span class="tag">Value Function</span><span class="tag">TD Learning</span></div>
+    <div class="summary">
+      <strong>问题：Implicit PRM 的 train-inference 失配。</strong>训练时仅约束序列级聚合信号，推理时却要求逐 token 反映局部步骤质量——token-level 信用 weak-identified，难以真正反映步骤正确性。
+      <strong>方法 IPVRM + DistRL：</strong>
+      <em>(i)</em> IPVRM 直接建模 prefix-conditioned value function，用 TD 差分提取步级信号；
+      <em>(ii)</em> DistRL 同时计算「采样 token」和「高概率候选 token」的 TD advantage，无需额外 rollout 就能得到密集的反事实更新信号。
+      <strong>意义：</strong>把「Implicit PRM」的数学基础从「序列最大似然」改写为「前缀条件价值回归」，给出了一种比 step-wise annotation 便宜得多的训练方案。
+    </div>
+    <div class="method"><strong>方法要点：</strong>Prefix-value 函数 + TD 差分衍生步级信号 + 分布级反事实 advantage。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17957">Process Reward Models Meet Planning: Generating Precise and Scalable Datasets for Step-Level Rewards</a></h3>
+    <div class="authors">作者：Raffaele Pisano、Roberto Navigli</div>
+    <div class="meta-line">arXiv: 2604.17957 · 提交日：2026-04-20 · <span class="tag">PRM Dataset</span><span class="tag">PDDL</span><span class="tag">Planning</span></div>
+    <div class="summary">
+      <strong>问题：PRM 数据集狭窄且难构建。</strong>现有 PRM 语料代价高昂、标注噪声大，且高度集中在数学域。
+      <strong>方法：</strong>利用 PDDL（Planning Domain Definition Language）的逻辑可验证性合成约 <strong>100 万步</strong>的推理数据，覆盖多种规划域。每一步是否「朝向目标 state」都可由 planner 客观判定，天然构成 step-level reward 标签。
+      <strong>结果：</strong>在既有 PRM 训练集上叠加 PDDL 数据，数学与非数学推理基准同步提升——证明结构化非数学数据能把 PRM 的泛化盲区补齐。
+    </div>
+    <div class="method"><strong>方法要点：</strong>PDDL planner 合成 step-level 标签 + 跨域 PRM 数据混合训练。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16259">Beyond Distribution Sharpening: The Importance of Task Rewards</a></h3>
+    <div class="authors">作者：Sarthak Mittal、Leo Gagnon、Guillaume Lajoie（Mila、Université de Montréal）</div>
+    <div class="meta-line">arXiv: 2604.16259 · 提交日：2026-04-17 · <span class="tag">RL Theory</span><span class="tag">Distribution Sharpening</span><span class="tag">Task Reward</span></div>
+    <div class="summary">
+      <strong>论战：RL 是否只是「锐化 base model 的潜能」？</strong>近年盛行的观点（如「RL 没教会新技能，只是挑了旧的更好」）被本文正面挑战。
+      <strong>方法：</strong>用 RL 作工具分别实现「纯分布锐化」和「任务奖励学习」两种范式的可控实现，并在 Llama-3.2-3B-Instruct、Qwen2.5-3B-Instruct、Qwen3-4B-Instruct-2507 上做数学任务对比实验。
+      <strong>结论：</strong>理论上给出「纯锐化最优解可能本质不利且不稳定」的第一性原理证明；经验上「纯锐化收益有限，任务奖励才是主驱」。
+      <strong>启示：</strong>RLVR 的核心是 verifiable reward 本身，不能被 reward-free 的 implicit objective 取代。
+    </div>
+    <div class="method"><strong>方法要点：</strong>分布锐化 vs 任务奖励 RL 的平行对比 + 第一性原理不稳定性证明。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>三、智能体 RL 与经验管理 · Agentic RL &amp; Experience Management</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.18131">Training LLM Agents for Spontaneous, Reward-Free Self-Evolution via World Knowledge Exploration</a></h3>
+    <div class="authors">作者：Qifan Zhang、Dongyang Ma、Tianqing Fang、Jia Li、Jing Tang、Nuo Chen、Haitao Mi、Yan Wang</div>
+    <div class="meta-line">arXiv: 2604.18131 · 提交日：2026-04-20 · <span class="tag">Agent Self-Evolution</span><span class="tag">World Knowledge</span><span class="tag">Meta-Evolution</span></div>
+    <div class="summary">
+      <strong>问题：</strong>目前所谓「agent 自我演化」离不开人类设计的奖励与规则；没有人类就演化停滞。作者把真正的「spontaneous self-evolution」定义为：在任务执行前，agent 就能主动探索环境并沉淀结构化世界知识。
+      <strong>方法：两阶段训练。</strong>
+      <em>(i)</em> 教学阶段：使用 outcome-based reward——测量 agent 自己总结的世界知识是否提升下游任务成功率；reward 仅在训练期使用。
+      <em>(ii)</em> 部署阶段：agent 在新环境中完全无奖励地探索并自发蒸馏知识。
+      <strong>意义：</strong>把「meta-evolution capability」正式作为可训练目标，而不再依赖 inference-time 的显式奖励。
+    </div>
+    <div class="method"><strong>方法要点：</strong>训练期 outcome reward 教「探索/总结」→ 部署期 reward-free 自主演化。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16918">Freshness-Aware Prioritized Experience Replay for LLM/VLM Reinforcement Learning</a></h3>
+    <div class="authors">作者：Weiyu Ma、Yongcheng Zeng、Yan Song、Xinyu Cui、Jian Zhao、Xuhui Liu、Mohamed Elhoseiny</div>
+    <div class="meta-line">arXiv: 2604.16918 · 提交日：2026-04-18 · <span class="tag">Experience Replay</span><span class="tag">PER</span><span class="tag">Sample Efficiency</span></div>
+    <div class="summary">
+      <strong>问题：PER 在 LLM 上水土不服。</strong>直接套用传统 Prioritized Experience Replay 反而降级——原因是千亿级参数策略演化极快，旧轨迹的优先级迅速「陈旧化」，高优先级的老 rollout 反而压制了新样本。
+      <strong>方法 Freshness-Aware PER：</strong>在任意 PER 优先级上乘以一个基于「有效样本大小（ESS）分析」推导出的指数年龄衰减。实现简洁但理论有据。
+      <strong>结果：</strong>在 8 个多步 agentic / reasoning / 数学基准、0.5B/3B/7B 三种规模上，<strong>NQ Search +46%，Sokoban +367%，VLM FrozenLake +133%</strong>；而未做衰减的标准 PER 一致退化。
+      <strong>意义：</strong>第一次把 PER 成功适配到 LLM/VLM RL，显著降低多轮 rollout 成本。
+    </div>
+    <div class="method"><strong>方法要点：</strong>优先级 × 指数年龄衰减（ESS 驱动）→ 消除陈旧轨迹主导。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.11037">RTMC: Step-Level Credit Assignment via Rollout Trees</a></h3>
+    <div class="authors">作者：Tao Wang、Suhang Zheng、Xiaoxiao Xu</div>
+    <div class="meta-line">arXiv: 2604.11037 · 提交日：2026-04-13 · <span class="tag">Credit Assignment</span><span class="tag">Rollout Tree</span><span class="tag">SWE-bench</span></div>
+    <div class="summary">
+      <strong>观察：</strong>在同一问题上采样的多条 rollout 常常经过重叠的中间状态，实际上隐含一棵以决策点分叉的「rollout 树」。
+      <strong>方法 RTMC：</strong>
+      <em>(i)</em> 设计 state-action signature 把原始轨迹压缩为可比较的紧凑表示；
+      <em>(ii)</em> 在共享前缀状态上聚合多 rollout 的 return 统计量，得到每步的 Q-value 和 advantage——<strong>完全无需 learned critic</strong>。
+      <strong>结果：</strong>在 SWE-bench Verified 上 pass@1 相对 GRPO <strong>+3.2pp</strong>。
+      <strong>价值：</strong>为多轮 agentic 任务提供了一种「免训练」的步级信用分配方式，和 StepPO / CAL-GRPO 构成互补。
+    </div>
+    <div class="method"><strong>方法要点：</strong>state-action signature → 跨 rollout 状态匹配 → MC 聚合 step-level advantage。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.02006">ProCeedRL: Process Critic with Exploratory Demonstration Reinforcement Learning for LLM Agentic Reasoning</a></h3>
+    <div class="authors">作者：清华大学、上海期智研究院联合团队</div>
+    <div class="meta-line">arXiv: 2604.02006 · 提交日：2026-04-02 · <span class="tag">Agentic RL</span><span class="tag">Process Critic</span><span class="tag">Reflection</span></div>
+    <div class="summary">
+      <strong>失败模式诊断：</strong>作者指出多轮 agentic RL 的一种结构性失败：次优动作 → 观测进入误导性上下文 → 后续决策进一步劣化 → 错误累积，几乎无法恢复。
+      <strong>方法 ProCeedRL：</strong>把探索从「被动采样」升级为「主动干预」。
+      <em>(i)</em> 过程级 critic 实时监控交互；
+      <em>(ii)</em> 反思式示范（reflection demonstrations）介入错误累积链；
+      <em>(iii)</em> 混合探索示范与 on-policy 样本联合训练。
+      <strong>结果：</strong>在深度搜索和具身任务上显著提高探索效率与最终性能。（补录：此文于 4 月初提交，先前日报未完整覆盖，今日收录。）
+    </div>
+    <div class="method"><strong>方法要点：</strong>process critic + reflection 示范 + 主动干预式探索。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17886">Latent Preference Modeling for Cross-Session Personalized Tool Calling</a></h3>
+    <div class="authors">作者：Yejin Yoon、Minseo Kim、Taeuk Kim（Hanyang University）</div>
+    <div class="meta-line">arXiv: 2604.17886 · 提交日：2026-04-20 · <span class="tag">Tool Calling</span><span class="tag">Latent Preference</span><span class="tag">Memory</span></div>
+    <div class="summary">
+      <strong>问题：</strong>真实交互中用户常省略工具调用所需的关键参数（如舱位、预算），这种信息的「隐式持续约束」需要跨会话被识别和应用。
+      <strong>方法 PRefine：</strong>把用户偏好建模为「不断演化的假设」，在 generate-verify-refine 循环中从历史对话中提取可复用的约束，显著提升工具调用准确率。
+      <strong>关键数字：</strong>仅需 <strong>1.24% 的 full-history prompting 所需 token</strong>，即达到更高的工具调用正确率。
+      <strong>基准 MPT：</strong>265 个多会话对话，覆盖 Preference Recall、Preference Induction、Preference Transfer 三类难度。
+    </div>
+    <div class="method"><strong>方法要点：</strong>generate-verify-refine 循环 + 假设式偏好记忆 + 约束抽取。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.19516">From Experience to Skill: Multi-Agent Generative Engine Optimization via Reusable Strategy Learning</a></h3>
+    <div class="authors">作者：Beining Wu、Fuyou Mao、Jiong Lin、Cheng Yang、Jiaxuan Lu 等（杭电、中南大学等）</div>
+    <div class="meta-line">arXiv: 2604.19516 · 提交日：2026-04-21 · <span class="tag">Multi-Agent</span><span class="tag">GEO</span><span class="tag">ACL 2026</span></div>
+    <div class="summary">
+      <strong>场景：</strong>生成式引擎（如 AI Overview、Perplexity 等）正重塑信息访问方式，但 Generative Engine Optimization 方法仍逐案孤立优化，策略无法跨任务 / 跨引擎复用。
+      <strong>方法 MAGEO：</strong>以多智能体框架（planner / editor / fidelity evaluator 协作）为执行层，逐步把「有效编辑模式」蒸馏为可复用、引擎特异的技能库。
+      <strong>附加贡献：</strong>
+      <em>(i)</em> Twin Branch Evaluation Protocol——内容编辑的因果归因；
+      <em>(ii)</em> DSV-CF——融合语义可见性与归因准确度的对偶指标；
+      <em>(iii)</em> MSME-GEO-Bench 数据集。被 ACL 2026 Findings 接收。
+    </div>
+    <div class="method"><strong>方法要点：</strong>多 agent 执行层 + 策略技能库 + 跨引擎可迁移。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>四、对齐、安全与校准 · Alignment, Safety &amp; Calibration</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.18789">ARES: Adaptive Red-Teaming and End-to-End Repair of Policy-Reward System</a></h3>
+    <div class="authors">作者：Jiacheng Liang、Yao Ma、Tharindu Kumarage、Satyapriya Krishna、Rahul Gupta、Kai-Wei Chang、Aram Galstyan、Charith Peris</div>
+    <div class="meta-line">arXiv: 2604.18789 · 提交日：2026-04-20 · <span class="tag">Red-Teaming</span><span class="tag">Reward Model</span><span class="tag">ACL 2026</span></div>
+    <div class="summary">
+      <strong>核心观察：</strong>现有红队方法几乎只攻击 policy 的弱点，忽略了「systemic weakness」——即 policy 与 Reward Model 同时失效的双重脆弱。一旦 RM 无法惩罚某种不安全行为，RM 就成了对齐的单点故障。
+      <strong>方法 ARES：</strong>
+      <em>(i)</em> Safety Mentor 组合结构化攻击组件（topic / persona / tactic / goal）动态生成语义连贯的对抗提示；
+      <em>(ii)</em> 同时生成配对的恶意/安全响应；
+      <em>(iii)</em> 端到端修复 policy + RM 双重漏洞。
+      <strong>意义：</strong>把对齐评测从「单点」升级到「policy–RM 系统」维度，被 ACL 2026 接收。
+    </div>
+    <div class="method"><strong>方法要点：</strong>Safety Mentor 组合式攻击生成 + 双重目标（policy, RM）+ 系统级修复。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17501">CoAct: Co-Active LLM Preference Learning with Human-AI Synergy</a></h3>
+    <div class="authors">作者：Ruiyao Xu、Mihir Parmar、Tiankai Yang、Zhengyu Hu、Yue Zhao、Kaize Ding</div>
+    <div class="meta-line">arXiv: 2604.17501 · 提交日：2026-04-19 · <span class="tag">Preference Learning</span><span class="tag">Active Learning</span><span class="tag">Self-Rewarding</span></div>
+    <div class="summary">
+      <strong>问题：</strong>高质量偏好数据稀缺。现有思路要么 self-rewarding 靠 AI 自己打分（不可靠），要么 active learning 请 oracle 标注（无法有效使用未标注数据）。
+      <strong>方法 CoAct：</strong>把两者协同——
+      <em>(i)</em> 利用 self-consistency 识别可信自标注数据；
+      <em>(ii)</em> 其余样本送 oracle 验证；
+      <em>(iii)</em> oracle 反馈还用于引导模型「在可解范围内」生成新指令（防止超出模型能力导致的无效训练）。
+      <strong>结果：</strong>三个推理基准、两个模型家族——<strong>GSM8K +13.25%，MATH +8.19%，WebInstruct +13.16%（平均）</strong>。
+    </div>
+    <div class="method"><strong>方法要点：</strong>self-consistency 筛分可信数据 + oracle 二次验证 + 能力范围内指令生成。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17073">Abstain-R1: Calibrated Abstention and Post-Refusal Clarification via Verifiable RL</a></h3>
+    <div class="authors">作者：Skylar Zhai、Jingcheng Liang、Dongyeop Kang</div>
+    <div class="meta-line">arXiv: 2604.17073 · 提交日：2026-04-18 · <span class="tag">Abstention</span><span class="tag">RLVR</span><span class="tag">Honesty</span></div>
+    <div class="summary">
+      <strong>问题：</strong>微调（RLVR）会鼓励模型「有问必答」——即使问题所需信息根本不足，也会通过猜测或幻觉给出答案。已有抽象拒答方法要么给泛泛的「I don't know」，要么鼓励 follow-up 澄清但无法验证是否真的识别到了关键缺失。
+      <strong>方法：Clarification-Aware RLVR。</strong>一个复合奖励同时优化：
+      <em>(a)</em> 可答题的答案正确性；
+      <em>(b)</em> 不可答题的明确拒答；
+      <em>(c)</em> 与真实缺失信息在语义上对齐的 post-refusal clarification。
+      <strong>结果：</strong>3B 的 Abstain-R1 在不可答查询上同时提升拒答率与澄清质量，同时不损伤可答题性能。
+    </div>
+    <div class="method"><strong>方法要点：</strong>可答/不可答双轨奖励 + 语义对齐的澄清验证 + 3B 小模型可达成。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.17293">Beyond "I Don't Know": Evaluating LLM Self-Awareness in Discriminating Data and Model Uncertainty</a></h3>
+    <div class="authors">作者：Jingyi Ren、Ante Wang 等（清华大学）</div>
+    <div class="meta-line">arXiv: 2604.17293 · 提交日：2026-04-19 · <span class="tag">Uncertainty</span><span class="tag">UA-Bench</span><span class="tag">RL Training</span></div>
+    <div class="summary">
+      <strong>区分：</strong>拒答不能被简单视作「不知道」，而应区分：
+      <em>(a)</em> 输入层模糊（data uncertainty，例如问题本身缺参数）；
+      <em>(b)</em> 能力层限制（model uncertainty，例如本域知识缺失）。
+      二者对应不同下游动作（补问 vs 调用外部工具）。
+      <strong>基准 UA-Bench：</strong>3,500+ 题，覆盖知识密集与推理密集 6 个数据集；对 18 个前沿 LLM 的评测显示——<strong>即使 SOTA 也难以可靠区分这两类不确定性</strong>。
+      <strong>方法：</strong>用可控改写的数学题合成 RL 训练数据，奖励「正确分类不确定性类型」而非盲目回答；尽管只在数学域训练，Qwen 系列模型在 UA-Bench 全部任务上均显著泛化提升。
+    </div>
+    <div class="method"><strong>方法要点：</strong>合成可控数学题 + RL 奖励不确定性分类 + 跨域泛化。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.15847">CiPO: Counterfactual Unlearning for Large Reasoning Models through Iterative Preference Optimization</a></h3>
+    <div class="authors">作者：Junyi Li 等</div>
+    <div class="meta-line">arXiv: 2604.15847 · 提交日：2026-04-17 · <span class="tag">Unlearning</span><span class="tag">Preference Optimization</span><span class="tag">Reasoning Model</span></div>
+    <div class="summary">
+      <strong>问题：</strong>大推理模型（LRM）的 CoT 中通常隐藏着原始训练语料的痕迹。现有 unlearning 方法要么无法完全清除 CoT 中的敏感知识，要么严重损伤推理能力。
+      <strong>方法 CiPO：</strong>把 unlearning 重新定义为「对 CoT 推理轨迹的定向干预」。
+      <em>(i)</em> 给定需要「遗忘」的目标答案，引导 LRM 生成<strong>逻辑上有效的反事实推理轨迹</strong>；
+      <em>(ii)</em> 迭代更新偏好数据，持续增大与原模型的语义差异；
+      <em>(iii)</em> 最终既擦除 CoT 中的痕迹，又保留推理能力。
+    </div>
+    <div class="method"><strong>方法要点：</strong>反事实 CoT 合成 + 迭代偏好优化 + CoT 轨迹级遗忘。</div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>五、领域特定 RL 与应用 · Domain-Specific RL &amp; Applications</h2>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16881">Incentivizing Parametric Knowledge via Reinforcement Learning with Verifiable Rewards for Cross-Cultural Entity Translation</a></h3>
+    <div class="authors">作者：Jiang Zhou 等</div>
+    <div class="meta-line">arXiv: 2604.16881 · 提交日：2026-04-18 · <span class="tag">RLVR</span><span class="tag">Entity Translation</span><span class="tag">Cross-Cultural</span></div>
+    <div class="summary">
+      <strong>问题：</strong>LLM 在跨文化实体翻译上常产出字面或音译结果，而非语境文化合适的译法。但事实上，相关知识很可能已在大规模预训练阶段编码进参数。
+      <strong>方法 EA-RLVR：</strong>Entity-Anchored RLVR——
+      <em>(i)</em> 把监督信号锚定在<strong>实体级可验证奖励</strong>（而非整句相似度）；
+      <em>(ii)</em> 加入轻量结构化门控稳定优化；
+      <em>(iii)</em> <strong>完全不依赖外部知识库</strong>，激励模型学习稳健推理过程而非记忆 reference。
+      <strong>结果：</strong>XC-Translate 数据上实体翻译准确率和 OOD 泛化一致提升。
+    </div>
+    <div class="method"><strong>方法要点：</strong>实体级可验证奖励 + 结构化门控 + 无外部 KB 依赖。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16472">Training Language Models for Bilateral Trade with Private Information</a></h3>
+    <div class="authors">作者：Dirk Bergemann、Soheil Ghili、Xinyang Hu、Chuanhao Li、Zhuoran Yang（Yale、Cowles 基金会）</div>
+    <div class="meta-line">arXiv: 2604.16472 · 提交日：2026-04-10 · <span class="tag">Negotiation</span><span class="tag">Game Theory</span><span class="tag">RL Environment</span></div>
+    <div class="summary">
+      <strong>研究设计：</strong>不完全信息下的双边议价为 LLM agent 能力提供了严格可控的实验平台。构造了 event-driven 模拟环境：LLM 通过工具调用发出「具约束力的报价」，与自然语言消息分离——可被自动评估。
+      <strong>双重用途：</strong>既作为前沿模型基准，也作为开源模型 RL 训练环境。
+      <strong>5 模型 15,000 场 round-robin 锦标赛发现：</strong>最优策略呈现「价格歧视 + 序贯报价」特征——激进锚定、校准让步、时间耐心与最终的剩余份额和成交率正相关。
+      <strong>意义：</strong>为 agentic RL 提供了一个博弈论上严谨、结构化的训练环境。
+    </div>
+    <div class="method"><strong>方法要点：</strong>event-driven 模拟 + 报价与消息分离 + 博弈论指标可验证。</div>
+  </article>
+
+  <article class="paper">
+    <h3><a href="https://arxiv.org/abs/2604.16004">AgentV-RL 的「前后向验证」范式——昨日延续观察</a></h3>
+    <div class="authors">今日延续焦点（原文已于 2026-04-21 日报中介绍，此处不再单独列为新论文）</div>
+    <div class="meta-line"><span class="tag">Carry-over</span></div>
+    <div class="summary">
+      今日多篇新论文（StepPO、CAL-GRPO、ARES、GenAC、Abstain-R1）均在引用或对比 AgentV-RL 的「agent-as-verifier」方法论，尤其在 <em>reward-model-as-agent</em> 与 <em>policy–RM 双重漏洞</em> 两个议题上形成交叉。建议回看昨日 2026-04-21 日报。
+    </div>
+  </article>
+</section>
+
+<footer>
+  LLM RL 每日简报 · 由 Claude + arXiv + 社区贡献自动编辑 · 2026 年 4 月 22 日晨间版 · 去重校验已完成（共对照 154 个历史论文 ID）
+</footer>
+
+</div>
+</body>
+</html>

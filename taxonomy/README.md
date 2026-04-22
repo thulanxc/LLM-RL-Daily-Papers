@@ -611,3 +611,70 @@ Three papers in the 2026-04-21 batch treat *resource allocation* itself as what 
 4. **Latent-state everything**: Latent CoT + LAnR + AtManRL + Grift + LongAct — five papers across two weeks that converge on "the useful signal is model-internal, not token-surface". The "look-inward" trend is now a full research program.
 
 5. **Formal + RL**: Semantic Equivalence Self-Play, QuantumQA, OOM-RL, MedVR — four examples where *domain formal structure* (proof systems / physics / markets / rubrics) is wired directly into the RL loop as the verifier. The "which signal" question is being answered by "whatever domain already has a formal signal".
+
+## April 22, 2026 — Morning Edition Additions (21 new papers)
+
+### 64. The Granularity Revolution (new cross-cutting cluster)
+
+Six papers this week explicitly target the **action / decision unit** in LLM RL:
+- **StepPO** (2604.18401): token-level MDP → step-level MDP
+- **CAL-GRPO** (2604.17912): attempt-level calibrated weights for Verification@K
+- **RTMC** (2604.11037): critic-free step-credit via shared-prefix rollout trees
+- **ProCeedRL** (2604.02006): process-level critic + reflection-demonstration intervention
+- **IPVRM + DistRL** (2604.13197): prefix-value function with TD step signals
+- **MCPO** (2604.16972): prompt-level adaptive regularization by mastery state
+
+**Thesis**: The right RL unit is the *reasoning step* (or sometimes prompt / attempt), not the token. Token-level MDP is now an inherited assumption, not a justified one.
+
+### 65. The First-Principles PPO Correction
+
+- **Bounded Ratio RL (BPO)** (2604.18578): closed-form analytical optimum for PPO's clipped objective; BPO minimizes advantage-weighted divergence to the analytic optimum, giving provable monotonic improvement.
+
+**Connection**: Parallel to VGF (2604.14265, April 19) which replaces KL with OT, and Demystifying Online Alignment (2604.17207, April 21) which gives O(1) regret. Three attacks on the same problem — *the theoretical justification of current alignment methods is finally catching up with empirics*.
+
+### 66. The Exploration Debate Intensifies
+
+- **SPS** (2604.16995): names and quantifies the "probability squeezing effect"; uses inverse RL on on-policy rollouts to reshape trajectory distribution.
+- **MCPO** (2604.16972): counter-intuitive result — tightening policy on mastered prompts IMPROVES both pass@1 and pass@k.
+- **Beyond Distribution Sharpening** (2604.16259): first-principles proof that pure sharpening (RL without task rewards) is unstable.
+
+**Thesis**: Exploration in LLM RL is no longer "add entropy bonus" — it's now a study of **trajectory distribution geometry**, where the distribution itself is the object of optimization.
+
+### 67. Experience as a First-Class Citizen (new in Agentic RL)
+
+- **Freshness-Aware PER** (2604.16918): first successful PER for LLM/VLM RL, with age-decay preventing priority staleness. Dramatic gains (+46% / +367% / +133%).
+- **Self-Evolution via World Knowledge** (2604.18131): reward-based training teaches "how to explore and distill"; deployment is spontaneous and reward-free.
+- **MAGEO** (2604.19516): reusable-strategy library as a durable team asset.
+- **Latent Preference Tool Calling** (2604.17886): cross-session preference memory with 1.24% token budget.
+
+**Thesis**: LLM RL has entered an **experience management phase** — not just "what reward do we use?" but "how does the training system remember, prioritize, and transfer what it has learned?"
+
+### 68. Epistemic Honesty as Optimization Target
+
+Five papers push honesty into training:
+- **Abstain-R1** (2604.17073): know *why* you don't know
+- **UA-Bench + RL** (2604.17293): distinguish *what kind* of uncertainty
+- **CoAct** (2604.17501): know *which* self-labels to trust
+- **ARES** (2604.18789, ACL 2026): know *jointly* where policy+RM fail
+- **CiPO** (2604.15847): know *how* to forget without destroying reasoning
+
+**Thesis**: Alignment is shifting from "avoid harmful output" toward "calibrate confidence and scope of knowledge."
+
+### 69. RLVR Portability (new in RLVR)
+
+- **EA-RLVR** (2604.16881): cross-cultural entity translation, no external KB
+- **Bilateral Trade LM** (2604.16472): game-theoretic negotiation with formal solution concepts
+- **Plan-PRM** (2604.17957): PDDL planning as a step-annotation source
+
+**Thesis**: RLVR's core engine — verifiable reward — is portable to any domain with a decidable verifier. Today's papers extend it to translation cultural-fit, negotiation strategy, and non-math step-rewards.
+
+## Cross-Cutting Meta-Observation (April 22)
+
+**Theme of the day**: *The RL engine is being dismantled and re-engineered at four levels simultaneously — the granularity of actions, the geometry of trust regions, the management of experience, and the honesty of the policy.*
+
+1. **Granularity**: token → step (StepPO, RTMC, CAL-GRPO, IPVRM).
+2. **Geometry**: clip → analytical optimum (BPO); sharpening → task-reward primacy (Beyond Distribution Sharpening); squeezing → IRL reshaping (SPS).
+3. **Experience**: episode → replay buffer with age decay (Freshness-Aware PER); episode → skill library (MAGEO, Self-Evolution).
+4. **Honesty**: answer always → calibrated abstention (Abstain-R1); uniform uncertainty → typed uncertainty (UA-Bench); blind trust → Policy+RM joint red-teaming (ARES).
+
+Combined, the field is moving from "scale the same PPO pipeline" to "**decompose the pipeline into orthogonal design axes and study each axis as a first-class research object**".

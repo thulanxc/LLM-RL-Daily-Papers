@@ -127,3 +127,17 @@ A **sixth movement**:
 ### Connections
 - AgentV-RL ↔ GenAC (2604.10701): both revive "learned critics" but via different structural choices — GenAC makes the critic a CoT reasoner; AgentV-RL makes it a tool-using agent team.
 - AtManRL ↔ CPMI (2604.10660): two orthogonal forms of fine-grained reward — CPMI uses mutual information across rollouts; AtManRL uses attention perturbation within a rollout.
+
+## April 22, 2026 additions
+
+- **IPVRM + DistRL** [2604.13197] — Implicit Prefix-Value Reward Model. Trains prefix-conditioned value function directly (not sequence-level aggregate); derives step-level signals via TD differences. DistRL extends this to compute TD advantages for sampled + high-probability candidate tokens, enabling dense counterfactual updates without extra rollouts.
+- **Plan-PRM** [2604.17957] — PDDL-based scalable PRM dataset generation. ~1M step-level reasoning samples across PDDL domains; step-level labels come from planner-verifiable target-approach. Augmenting existing PRM training data with Plan-PRM improves both math AND non-math reasoning benchmarks — closing the PRM domain generalization gap.
+- **Beyond Distribution Sharpening** [2604.16259] — First-principles proof that pure distribution sharpening (RL without task reward) is inherently unstable; empirically demonstrates task-reward RL > sharpening on Llama-3.2-3B, Qwen2.5-3B, Qwen3-4B. A normative argument that RLVR's verifiable reward is irreplaceable.
+
+### Connection
+Together with AgentV-RL (2604.16004, yesterday), today's reward modeling work pushes three directions:
+1. **Reward as agent** (AgentV-RL) — multi-turn, tool-using verifier
+2. **Reward as value function** (IPVRM, GenAC) — prefix-conditioned value with TD
+3. **Reward as domain-agnostic structure** (Plan-PRM) — PDDL as a free step-annotation source
+
+The trend: PRMs are being rebuilt from "scalar classifier of step-correctness" to "structured verifier with multiple signal channels."

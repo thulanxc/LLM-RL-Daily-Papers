@@ -43,3 +43,22 @@ RLVR is expanding beyond math/code to general reasoning (SUPERNOVA), negotiation
 ### Connections
 - QuantumQA ↔ OOM-RL (market signal) ↔ MedVR (medical rubric): domain-specific executable verifiers continue to expand the RLVR applicability frontier.
 - AtManRL introduces a new axis: verifiability-of-reasoning-*process*, not just answer.
+
+## April 22, 2026 additions
+
+- **MCPO** [2604.16972] — Fixes GRPO's mastered-prompt gradient collapse (see policy-optimization thread).
+- **EA-RLVR** [2604.16881] — Entity-Anchored RLVR for cross-cultural entity translation. Anchors supervision on entity-level verifiable reward (not sequence similarity) + lightweight structural gates. Explicitly avoids external knowledge base dependency — relies on parametric knowledge already in pretraining.
+- **Bilateral Trade LM** [2604.16472] — Training LMs for bilateral bargaining with private information. Event-driven simulator separates binding offers (tool calls) from natural-language messages for automated evaluation. Round-robin tournament (5 frontier models, 15,000 negotiations) reveals "price discrimination via sequential offers" as optimal strategy.
+- **Abstain-R1** [2604.17073] — Clarification-aware RLVR (see alignment thread).
+- **Plan-PRM** [2604.17957] — PDDL-verifiable step rewards for PRM training (see reward-modeling thread).
+
+### Key Trend (April 22): RLVR Expands Beyond Math
+
+Today's RLVR work covers:
+- Cross-cultural translation (EA-RLVR)
+- Game-theoretic negotiation (Bilateral Trade LM)
+- Unanswerable-query detection (Abstain-R1)
+- Non-math reasoning via PDDL planning (Plan-PRM)
+- Calibrated abstention (Abstain-R1)
+
+The verifiable-reward paradigm is proving portable — provided one can design a domain-appropriate verifier.

@@ -30,3 +30,22 @@ Alignment is shifting from "one model fits all" to personalization. PALM, VRF, a
 - Demystifying ↔ Shortest-Path Generalization (April 17): both theoretical works constraining the explanatory scope of RL/alignment methods.
 - HorizonBench ↔ APEX-MEM / MIA: HorizonBench supplies the evaluation axis that memory-augmented agents urgently need.
 - Rejection Criterion ↔ Flexible Empowerment BoN (2604.15614) ↔ RCFG (2604.15577): three ways test-time RL is being formalized beyond hand-tuned BoN.
+
+## April 22, 2026 additions
+
+- **ARES** [2604.18789, ACL 2026] — First red-teaming framework jointly attacking Policy and Reward Model. Introduces "systemic weakness" concept: cases where policy AND RM fail in tandem. Safety Mentor dynamically composes attacks from structured components (topic/persona/tactic/goal) and ends-to-end repairs both Policy and RM.
+- **CoAct** [2604.17501] — Co-Active preference learning synergizing self-rewarding + active learning. Uses self-consistency to identify reliable self-labeled data vs. oracle-verification candidates; oracle feedback also guides generation of new within-capability instructions. +13.25% GSM8K, +8.19% MATH, +13.16% WebInstruct.
+- **Abstain-R1** [2604.17073] — RLVR for calibrated abstention. Novel "clarification-aware" reward: rewards correct answers on answerable queries AND explicit abstention + semantically-aligned post-refusal clarification on unanswerable ones. 3B model achieves both behaviors simultaneously.
+- **UA-Bench + RL Training** [2604.17293] — Distinguishes data uncertainty (input ambiguity) from model uncertainty (capability limits). 3,500+ benchmark; 18 frontier LLMs struggle. RL training on math-only synthetic data yields cross-domain generalization for uncertainty classification.
+- **CiPO** [2604.15847] — Counterfactual-CoT machine unlearning for large reasoning models. Reframes unlearning as targeted intervention on CoT traces via iterative preference optimization on counterfactual reasoning. Preserves reasoning while completely removing target knowledge.
+
+### Key Trend (April 22): Honesty Becomes an Optimization Target
+
+All five papers above push "epistemic honesty" to the training objective:
+- Abstain-R1: know *why* you don't know
+- UA-Bench: distinguish *what kind* of uncertainty
+- CoAct: know *which* self-labels to trust
+- ARES: know *jointly* where policy+RM fail
+- CiPO: know *how* to forget without destroying reasoning
+
+This shifts alignment from "avoid harmful output" toward "calibrate confidence and scope of knowledge."

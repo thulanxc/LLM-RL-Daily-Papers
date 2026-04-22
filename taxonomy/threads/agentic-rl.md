@@ -149,3 +149,22 @@ The five pillars are now augmented by a **sixth**:
 - LAnR ↔ Latent CoT (2604.15726): both push the "surface text → latent state" migration — LAnR extends it to retrieval.
 - MT-GRPO ↔ CW-GRPO (2604.14267): two ways to make GRPO multi-turn — MT-GRPO iteratively calibrates reward; CW-GRPO rescales advantages with per-round LLM-judge contributions.
 - π-Play ↔ MARS² (2604.14564): two multi-agent RL paradigms — MARS² shares search tree; π-Play shares privileged knowledge via distillation.
+
+## April 22, 2026 additions
+
+- **StepPO** [2604.18401] — Step-level MDP for agentic RL (see policy-optimization thread for detail).
+- **Self-Evolution via World Knowledge** [2604.18131] — Trains agents with outcome-based reward on "how much self-distilled world knowledge improves downstream task success". Reward only in training phase; deployment is spontaneous and reward-free. A path to "meta-evolution" agents.
+- **Freshness-Aware PER** [2604.16918] — First successful Prioritized Experience Replay for LLM/VLM RL. Adds multiplicative exponential age decay to any PER priority (grounded in effective sample size). Dramatic gains: +46% NQ Search, +367% Sokoban, +133% VLM FrozenLake. Standard PER without decay consistently degrades performance.
+- **RTMC** [2604.11037] — Rollout-Tree Monte Carlo step-level credit assignment (see policy-optimization thread).
+- **ProCeedRL** [2604.02006] — Process Critic + Exploratory Demonstration RL. Addresses the "error accumulation in misleading contexts" failure mode in multi-turn agents. Shifts exploration from passive selection to active intervention.
+- **Latent Preference Tool Calling** [2604.17886] — Cross-session personalized tool calling. PRefine uses generate-verify-refine loop; achieves tool-call accuracy with only 1.24% of full-history prompting tokens. Introduces MPT benchmark (265 multi-session dialogues).
+- **MAGEO** [2604.19516] — Multi-agent framework for Generative Engine Optimization with reusable strategy library. Planner/editor/fidelity evaluator collaborate; validated edits are progressively distilled into engine-specific skills. ACL 2026 Findings.
+
+### Key Trend (April 22): Experience Becomes a First-Class Citizen
+
+Three papers this week treat "experience" or "knowledge" as the central training asset:
+- **Freshness-Aware PER**: manages replay-buffer priorities with age decay
+- **Self-Evolution Agents**: distills self-generated world knowledge
+- **MAGEO**: accumulates reusable editing strategies as a "skill library"
+
+This marks a shift from per-episode optimization to **cross-episode experience management** — closer to how humans learn.

@@ -53,3 +53,22 @@ The credit-assignment thread has fragmented into four orthogonal design axes: (1
 ### Connections
 - MT-GRPO ↔ CW-GRPO (2604.14267): parallel ways to extend GRPO to multi-turn — temporal calibration vs per-round contribution rescaling.
 - Selective Parameter Optimization ↔ LongAct (2604.14922): the "RL on a restricted sub-parameter set" motif — LongAct constrains via self-emergent QK activations; this paper constrains via gradient sensitivity.
+
+## April 22, 2026 additions — 粒度革命 · Granularity Revolution
+
+- **StepPO** [2604.18401] — Position paper: token-level MDP is inadequate for LLM agents; proposes step-level MDP where a "step" (think+tool-call+observe round) is the proper action. Step-level credit assignment aligns reward propagation with decision granularity.
+- **CAL-GRPO (Learning to Correct)** [2604.17912] — Calibrated Attempt-Level GRPO for multi-attempt CoT (Verification@K). Proves naive pass/fail weighting is biased; derives unbiased low-variance weights. Outperforms trajectory-level and naive attempt-level on MATH, Maze, structured Markov Chains.
+- **Bounded Ratio RL (BRRL/BPO)** [2604.18578] — Closed-form analytical optimal for PPO's clipped objective. BPO minimizes advantage-weighted divergence to the analytical optimum, giving provable monotonic policy improvement — a third path between KL-penalty and heuristic clipping.
+- **MCPO** [2604.16972] — Mastery-Consolidated Policy Optimization. Fixes GRPO's two failure modes: (1) vanishing advantage on fully-mastered prompts leads to unbounded policy drift, (2) majority-correct prompts get under-weighted. Adds hinge-KL (only on mastered prompts) + majority-correct weighting. Counter-intuitively improves both pass@1 AND pass@k.
+- **SPS** [2604.16995] — Steering Probability Squeezing. First to name and quantify the "squeezing effect" (probability mass concentrating on few high-reward trajectories). Interleaves IRL on on-policy rollouts to reshape trajectory distribution; improves Pass@k without external supervision.
+- **RTMC** [2604.11037] — Rollout-Tree Monte Carlo critic-free step-level credit assignment. State-action signatures compress trajectories for cross-rollout state matching; aggregates MC returns on shared prefixes. +3.2pp on SWE-bench Verified over GRPO.
+
+### Key Trend (April 22): The Granularity Revolution
+Four papers this week explicitly target the **action/decision unit** in LLM RL:
+1. **Token-level → step-level** (StepPO, RTMC, ProCeedRL)
+2. **Attempt-level calibration** (CAL-GRPO)
+3. **Trajectory distribution-level** (SPS, Beyond Distribution Sharpening)
+4. **Analytical PPO structure** (Bounded Ratio RL)
+5. **Prompt-level adaptive regularization** (MCPO)
+
+Combined with the emerging consensus from Beyond Distribution Sharpening (2604.16259) that RL must inject task rewards, the field is converging on: **the right RL unit is the reasoning step, and the right regularization is adaptive to mastery state**.
