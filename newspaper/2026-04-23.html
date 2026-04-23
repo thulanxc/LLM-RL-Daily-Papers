@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>LLM RL 每日论文速报 · 2026年4月23日</title>
+<style>
+  :root {
+    --ink: #111;
+    --muted: #555;
+    --accent: #8a1d1d;
+    --rule: #bbb;
+    --paper: #fcfaf5;
+  }
+  body {
+    font-family: "Iowan Old Style", "Palatino Linotype", "Hoefler Text", "Source Serif Pro", Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 40px 80px;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  header.masthead {
+    border-top: 4px double var(--ink);
+    border-bottom: 4px double var(--ink);
+    text-align: center;
+    padding: 18px 0 12px;
+    margin-bottom: 18px;
+  }
+  header.masthead h1 {
+    font-family: "UnifrakturMaguntia", "Cinzel", "Playfair Display", serif;
+    font-size: 54px;
+    letter-spacing: 2px;
+    margin: 0;
+    font-weight: 900;
+  }
+  header.masthead .meta {
+    font-variant: small-caps;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-size: 14px;
+  }
+  header.masthead .tagline {
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 4px;
+    font-size: 15px;
+  }
+  .editorial {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 20px 26px;
+    margin-bottom: 30px;
+    column-count: 1;
+  }
+  .editorial h2 {
+    font-variant: small-caps;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 4px;
+    margin-top: 0;
+    letter-spacing: 2px;
+  }
+  h2.section {
+    font-variant: small-caps;
+    letter-spacing: 3px;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0 6px;
+    margin-top: 40px;
+    margin-bottom: 18px;
+    font-size: 22px;
+    color: var(--accent);
+  }
+  article.paper {
+    border-left: 3px solid var(--accent);
+    padding: 2px 18px 8px;
+    margin-bottom: 26px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  article.paper h3 {
+    margin: 10px 0 2px;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  article.paper .authors {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 2px;
+    font-size: 14px;
+  }
+  article.paper .link {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  article.paper .link a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+  }
+  article.paper p {
+    margin: 6px 0;
+  }
+  article.paper .label {
+    font-variant: small-caps;
+    letter-spacing: 1px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  article.paper ul {
+    padding-left: 22px;
+    margin: 6px 0;
+  }
+  footer {
+    margin-top: 60px;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    font-variant: small-caps;
+    letter-spacing: 2px;
+  }
+  code {
+    font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
+    background: #f1ece0;
+    padding: 0 4px;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <h1>LLM RL Daily</h1>
+  <div class="meta">VOL. VIII · NO. 10 · 2026 年 4 月 23 日 · 星期四</div>
+  <div class="tagline">"All the RL that's fit to read" — 大语言模型强化学习每日速览</div>
+</header>
+
+<section class="editorial">
+<h2>编者按 · 今日要闻</h2>
+<p>
+今日收录 <strong>17 篇</strong> 全新 LLM 强化学习相关论文，主题呈现三大聚焦：
+<strong>(1) 策略优化算法的"后 GRPO 时代"分化 </strong>—
+<strong>EVPO（2604.19485）</strong>把 PPO 与 GRPO 的 baseline 选择重新表述为 <em>Kalman 滤波问题</em>，并用 <em>Explained Variance</em> 作为一键可算指标，在<strong>单步</strong>之内自适应切换 critic/batch-mean 两种优势估计，在经典控制、Agentic 与数学四任务上<strong>全面超越 PPO 与 GRPO</strong>；
+<strong>CalibAdv / Negative Advantage（2604.18235）</strong>首次量化 GRPO 在"深搜"任务中<em>负优势</em>的双刃剑效应，提出用校准项避免正确中间步被错判惩罚；
+<strong>LVLM 重思（2604.19857）</strong>构造 <em>Tool-Augmented MDP</em> 理论框架，为 Visual-ARFT 的收敛性与跨域泛化首次给出数学解释。
+</p>
+<p>
+<strong>(2) Agentic RL 的"小模型 × 开放数据"路线成熟 </strong>—
+<strong>LiteResearcher-4B（2604.17931）</strong>构建合成"虚拟 Web"绕开真实搜索开销，在 GAIA/Xbench 上追平 <strong>Claude-4.5-Sonnet / GLM-4.6</strong>；
+<strong>DR-Venus-4B（2604.19859）</strong>在仅 10K 开放数据下证明 Agentic SFT → Agentic RL 二阶段配方对边缘部署的有效性；
+<strong>CoSearch（2604.17555）</strong>用<em>语义聚类子查询</em>把"推理+排序"放进同一 GRPO 群组，七个 QA 基准一致提升；
+<strong>OThink-SRR1（2604.19766）</strong>提出 <em>Refine 证据蒸馏</em> 阶段 + <em>GRPO-IR</em> 端到端算法，降 token 用量而提 QA 准确率。
+</p>
+<p>
+<strong>(3) 奖励设计与工具行为的深度再审视 </strong>—
+<strong>R2IF（2604.20316）</strong>首次把 <em>CoT 有效性</em>量化为 CER 奖励并与 SMV（规范-修改-赋值）联合，在 BFCL 上 Llama3.2-3B <strong>+34.62%</strong>；
+<strong>ToolsRL（2604.19945）</strong>用"工具监督 → 准确率"二阶段课程避免异质任务冲突；
+<strong>POP（2604.20051）</strong>把 Self-Play 首次扩展到开放域，借"特权预训练文本"防 reward hacking；
+<strong>JTPRO（2604.19821）</strong>以 rollout 反思联合优化 prompt 与工具 schema；
+<strong>Tool-Overuse Illusion（2604.19749）</strong>揭示 LLM 对自身知识边界的"认知幻觉"，用 DPO 减少 82.8% 不必要调用。
+此外，<strong>TRN-R1-Zero（2604.19070）</strong>将 GRPO 拓展至文本富网络零样本图推理，<strong>NGC（2604.18002）</strong>以结果奖励让模型在推理同时学会遗忘 KV 缓存，<strong>SaFeR-Steer（2604.16358）</strong>用"导师—学生" GRPO 循环完成多轮安全对齐，<strong>DCF（2604.20098）</strong>让 Conformal Factuality 首次成为可微训练目标，真实保留 +141%。
+</p>
+<p>
+总体上，今日工作显示：<em>策略优化</em>从 GRPO 的单一形态分化为"自适应 / 校准 / 理论化"三种方向，<em>Agentic RL</em> 正迅速收敛到"开放数据 + 小模型 + 合成环境"的可复现配方，而<em>奖励设计</em>越过了"format+accuracy"阶段，开始量化 CoT、工具使用、遗忘、认知幻觉等细粒度行为指标。
+</p>
+</section>
+
+<h2 class="section">I. 策略优化 · Policy Optimization</h2>
+
+<article class="paper">
+<h3>EVPO：用 Explained Variance 自适应切换 critic 与 batch-mean 基线</h3>
+<div class="authors">Chengjun Pan, Shichun Liu, Jiahang Lin, Dingwei Zhu, Jiazheng Zhang, Shihan Dou, Songyang Gao, Zhenhua Han, Binghai Wang, Rui Zheng, Xuanjing Huang, Tao Gui, Yansong Feng（北京大学 / 复旦大学 / 上海启计智丰 / 上海人工智能实验室）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19485">2604.19485</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>把 "PPO 带 critic" 与 "GRPO 用 batch 均值" 重新表述为同一 <em>Kalman 滤波</em>问题的两个极端，证明可解释方差 (Explained Variance, EV) 是唯一分界：EV&gt;0 时 critic 减方差，EV≤0 时 critic 反而注入噪声超过信号。由此提出 <strong>EVPO</strong>——在每一步训练中用单批数据计算 EV，自适应选择最优 baseline。</p>
+<p><span class="label">方法：</span>(i) 把优势估计视为对真实 Q 值的"带噪观测组合"，推导 Kalman 增益闭式解；(ii) 用当前 batch 的 critic 预测 R² 作为 EV，设置阈值 τ=0 做开关；(iii) 在稀疏奖励的 agentic 任务里，EVPO 能自动退化为 GRPO，在稠密奖励的数学任务里又能退化为 PPO。</p>
+<p><span class="label">关键结果：</span>覆盖 Sokoban、FrozenLake、WebShop、MATH 四个任务，EVPO 一致<strong>超越 PPO 与 GRPO</strong>——在 Sokoban 稀奖励设置下比 PPO +3.6pp，同时比 GRPO +2.1pp；在 MATH 上比 GRPO +1.8pp。证明"是否使用 critic"不应是设计者先验，而是训练过程中<strong>动态可学的信号</strong>。</p>
+<p><span class="label">意义：</span>PPO vs GRPO 的旷日争论迎来首个<em>统一解释</em>，也是 LLM RL 工具箱里第一个"零额外成本"的自适应基线。</p>
+</article>
+
+<article class="paper">
+<h3>Negative Advantage Is a Double-Edged Sword：为深搜任务校准 GRPO 优势</h3>
+<div class="authors">Jiayi Wu 等（8 名作者）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.18235">2604.18235</a> · 2026-04-19</div>
+<p><span class="label">核心贡献：</span>首次量化揭示 GRPO 在"深搜 (deep search)"多轮 Agent 训练中两大失败模式：
+(1) 中间步正确但最终答案错误时，<em>负优势</em>会不加区分地惩罚所有 token，导致大量有价值的搜索轨迹被污染；
+(2) 在训练后期自然语言能力出现<strong>灾难性坍塌</strong>。</p>
+<p><span class="label">方法：</span>提出 <strong>CalibAdv</strong>——为深搜任务设计的优势校准机制：对 group 内负优势 trajectory 进行<em>前缀共享度</em>加权，保留与正 trajectory 共享前缀的 token 的梯度符号，只惩罚真正"分叉错误"的 token；同时引入 language quality guardrail 监测自然语言熵。</p>
+<p><span class="label">结果：</span>在 HotpotQA、Musique、2WikiMHQA 等多跳检索基准上相对基线 GRPO 平均提升 <strong>+4.7pp F1</strong>，同时消除训练崩溃。</p>
+<p><span class="label">意义：</span>与 <em>MCPO (2604.16972)</em>、<em>SPS (2604.16995)</em> 形成"GRPO 负梯度三部曲"：MCPO 修掉负优势在已掌握提示上的消除作用，SPS 修掉负优势引起的概率挤压，CalibAdv 修掉负优势在多轮工具轨迹上的前缀误伤。</p>
+</article>
+
+<article class="paper">
+<h3>LVLM 中 RLVR 的再思考：收敛、奖励分解与泛化</h3>
+<div class="authors">作者信息待公开</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19857">2604.19857</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>给 Visual-ARFT、MM-Eureka 等视觉 Agentic RL 训练首次提供理论地基：引入 <strong>Tool-Augmented MDP (TA-MDP)</strong> ——带有有界深度工具调用的多模态 MDP 形式化，在此框架内解决两个长期悬而未决的问题：
+(i) verifiable reward 的<em>三分量结构</em>（format、accuracy、tool-executability）如何影响 GRPO 收敛？
+(ii) 为何仅用少量工具相关任务训练即可跨域泛化？</p>
+<p><span class="label">主要结果：</span>(1) 证明三奖励项满足<em>势函数可分解</em>条件，GRPO 在 TA-MDP 上收敛速率取决于最慢的那一分量；(2) 给出跨域泛化的上界：与"工具调用分布的覆盖熵"成反比，这解释了为何"小工具集覆盖即可获得广泛迁移"。</p>
+<p><span class="label">意义：</span>补上了多模态 Agentic RL 缺失的理论层，预计会成为未来 LVLM-RL 收敛性分析的标准工具。</p>
+</article>
+
+<article class="paper">
+<h3>OLLM：把"选项"作为显式潜变量嵌入 LLM，为强化学习提供结构化探索空间</h3>
+<div class="authors">Shashank Sharma, Janina Hoffmann, Vinay Namboodiri（University of Bath）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19087">2604.19087</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>提出 <strong>Options-based LLM (OLLM)</strong>——在输出 head 前插入 <em>encoder+decoder</em> 两层轻量"插件"，把传统的"下一个 token 的单一分布"替换为"由离散潜变量索引的一组候选 next-token options"。变化被显式建模，而不再依赖 temperature/top-p 等 post-hoc 采样启发式。</p>
+<p><span class="label">RL 视角：</span>在 1.7B OpenMathReasoning 模型上，把 options 作为策略空间进行 RL 训练时<strong>无需 KL 惩罚</strong>——因为探索已被潜变量结构约束，策略方差显著降低。这挑战了"KL 是 LLM RL 必要正则"的主流假设。</p>
+<p><span class="label">结果：</span>在 OmniMath 基准上，OLLM 相较 top-p 采样基线同时提升 token-level 准确率和 final-answer 正确率，且 RL 训练中的策略方差下降 ~40%。</p>
+<p><span class="label">意义：</span>为"latent reasoning（潜状态推理）"方向（见 2604.15726）提供了一个可训练、可 RL 的具体实例化载体。</p>
+</article>
+
+
+<h2 class="section">II. Agentic RL · 智能体强化学习</h2>
+
+<article class="paper">
+<h3>LiteResearcher：用合成虚拟 Web 替代真实搜索，4B 小模型比肩 Claude 4.5-Sonnet</h3>
+<div class="authors">Wanli Li, Bince Qu, Bo Pan, Jianyu Zhang, Zheng Liu, Pan Zhang, Wei Chen, Bo Zhang（浙江大学 / Simplex AI / 香港理工大学）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.17931">2604.17931</a> · 2026-04-20</div>
+<p><span class="label">核心贡献：</span>针对"深度研究 Agent"的两大痛点——手工合成数据无法激发真实搜索能力、而在线真实搜索训练又不稳定且成本高——提出 <strong>LiteResearcher</strong>：构建一个镜像真实 Web 架构的<em>虚拟世界</em>，分三步合成真实搜索数据、模拟搜索环境、再经<strong>课程 RL</strong> 持续提升。</p>
+<p><span class="label">方法亮点：</span>(i) 用 crawler + LLM 蒸馏把 100M 真实网页压缩为离线可重现的搜索图；(ii) Agent 的 RL 奖励包括"检索相关度 × 推理链长度 × 最终答案正确率"三分量；(iii) 从"简单多跳 → 开放式调查"递进 3-level 课程。</p>
+<p><span class="label">关键结果：</span>LiteResearcher-4B 在 <strong>GAIA 上 71.3%</strong>、<strong>Xbench 上 78.0%</strong>，超过参数量高达 8× 的开源 Agent，<strong>追平甚至超越 Claude-4.5-Sonnet 与 GLM-4.6</strong>。相比同尺寸的 AgentCPM-Explore-4B（在线 Web 训练），GAIA +7.4pp / Xbench +8.0pp。</p>
+<p><span class="label">意义：</span>证明"离线虚拟 Web + 合成真实搜索数据"可以取代昂贵的在线 RL，为深研 Agent 的社区复现提供第一个完整开源配方。</p>
+</article>
+
+<article class="paper">
+<h3>DR-Venus：仅用 10K 开放数据，训练 4B 边缘级深度研究 Agent</h3>
+<div class="authors">Venus Team：Sunhao Dai, Yong Deng, Jinzhen Lin, Yusheng Song, Guoqing Wang, Xiaofeng Wu, Yuqi Zhou, Shuo Yang, Zhenzhe Ying, Zhanwei Zhang, Changhua Meng, Weiqiang Wang（inclusionAI）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19859">2604.19859</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>研究"在开放数据受限下如何训练强大的小型 Deep-Research Agent"。提出两阶段配方：<em>Agentic SFT</em>（建立基础调用能力）+ <em>Agentic RL</em>（针对长时界任务的执行可靠性）。</p>
+<p><span class="label">方法：</span>(i) 通过<strong>数据质量滤波</strong>和<strong>数据利用率优化</strong>把 10K 开放样本用到极致；(ii) RL 阶段用 outcome-level verifiable reward + trace-consistency 辅助信号；(iii) 开源训练框架 & 数据。</p>
+<p><span class="label">结果：</span>DR-Venus-4B 在 BrowseComp / SimpleDR / xBench-DR 多项基准上刷新边缘部署 SOTA，与 LiteResearcher-4B（2604.17931）形成"合成虚拟 Web vs 少量真实数据"两条互补路线。</p>
+<p><span class="label">意义：</span>为"成本 / 延迟 / 隐私敏感"的真实落地场景提供可复现范式，证明深研 Agent 不再是百亿级专属。</p>
+</article>
+
+<article class="paper">
+<h3>CoSearch：通过语义聚类把"推理+文档排序"联合塞进 GRPO 群组</h3>
+<div class="authors">Hansi Zeng, Liam Collins, Bhuvesh Kumar, Neil Shah, Hamed Zamani</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.17555">2604.17555</a> · 2026-04-19（v2: 2026-04-21）</div>
+<p><span class="label">核心贡献：</span>先以探针实验证明"固定检索器"与"oracle 检索"之间存在高达 <strong>+26.8% F1</strong> 的可利用差距，随即提出 <strong>CoSearch</strong> —— 用 GRPO 同时训练多步推理 Agent 与生成式文档排序器。</p>
+<p><span class="label">关键技巧：</span>(i) <em>语义聚类策略</em>——将 token 相似的子查询聚到同一 GRPO 组，无需额外 rollout 就能形成有效的 group-relative 优化；(ii) <em>复合奖励</em>——排序质量信号 + trajectory-level outcome 反馈；(iii) 推理 Agent 与排序器<strong>共享一个 LLM backbone</strong>，参数解耦仅在输出头。</p>
+<p><span class="label">结果：</span>在 7 个单跳/多跳 QA 基准上一致超越强基线；消融实验证实语义聚类是 +3.1pp 的主要来源。</p>
+<p><span class="label">意义：</span>打破"检索器 = 黑箱工具"的默认假设，开启"推理–检索联合优化"新方向。</p>
+</article>
+
+<article class="paper">
+<h3>OThink-SRR1：Search–Refine–Reason 三阶段 + GRPO-IR 端到端 RAG 训练</h3>
+<div class="authors">Haijian Liang, Zenghao Niu, Junjie Wu, Changwang Zhang, Wangchunshu Zhou, Jun Wang</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19766">2604.19766</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>指出动态检索 RAG 的两大瓶颈：(1) 无关检索噪声会误导推理；(2) 处理全文档代价高昂。提出 <strong>OThink-SRR1</strong>——在推理前增设 <em>Refine</em> 阶段，把检索到的文档<strong>蒸馏为简洁相关事实</strong>，再交给 Reason 阶段。</p>
+<p><span class="label">算法：</span>提出 <strong>GRPO-IR</strong>（Information-Refined GRPO）——奖励同时考虑"关键证据识别准确率"与"过度检索惩罚"，实现端到端训练：Search 不过度、Refine 精准、Reason 高效。</p>
+<p><span class="label">结果：</span>在 4 个多跳 QA 基准上准确率超越强基线，而所需检索步骤与 token 数量<strong>显著更少</strong>。</p>
+<p><span class="label">意义：</span>与 AutoSearch (2604.17337) 的"最小充分深度"形成互补：前者压缩深度、后者压缩每步内容，共同推动"高效而准确"的 Agentic RAG。</p>
+</article>
+
+<article class="paper">
+<h3>SaFeR-Steer：多轮 MLLM 对齐的"导师-学生" GRPO 循环</h3>
+<div class="authors">Haolong Hu, Hanyu Li, Tiancheng He, Huahui Yi, An Zhang, Qiankun Li, Kun Wang, Yang Liu, Zhigang Zeng</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.16358">2604.16358</a> · 2026-04-18</div>
+<p><span class="label">核心贡献：</span>针对多轮 MLLM 安全对齐中常见的"一次性静态对抗数据"局限，提出 <strong>SaFeR-Steer</strong>：分阶段合成引导 + <em>Tutor-in-the-Loop GRPO</em>。在 RL 阶段一个统一 Safety Tutor 同时承担<strong>自适应后续攻击</strong>与<strong>安全性评分</strong>两职，让单个学生模型在持续演化的攻击下对齐。</p>
+<p><span class="label">方法：</span>(i) Stage-1 合成引导：从弱对抗到强对抗逐步暴露学生弱点；(ii) Stage-2 GRPO：Tutor 根据 feedback dynamics 动态生成 follow-up 攻击，学生用 group-relative 比较学习最安全响应。</p>
+<p><span class="label">意义：</span>把多轮对抗攻防从 static red-team 升级到 <em>on-policy 攻防博弈</em>，与 ARES（2604.18789）形成"联合攻 Policy+RM vs 单模型防"的两极。</p>
+</article>
+
+<article class="paper">
+<h3>ToolsRL：用工具监督打破多模态视觉推理的异质任务优化冲突</h3>
+<div class="authors">Qihua Dong（Northeastern University / Amazon AGI 实习）, Gozde Sahin, Pei Wang, Zhaowei Cai, Robik Shrestha, Hao Yang, Davide Modolo（Amazon AGI）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19945">2604.19945</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>针对多模态工具使用中"精度奖励与格式奖励相互冲突"的问题，提出 <strong>Tool-supervised RL (ToolsRL)</strong>：把工具监督直接作为显式中间奖励。只选择简单、原生、可解释的视觉工具——zoom-in、rotate、flip、draw point/line——这些工具的监督信号极易收集。</p>
+<p><span class="label">二阶段课程：</span>Stage-1 仅用<em>工具专项奖励</em>（正确调用与否）训练；Stage-2 切换为<em>准确率导向奖励</em>，允许自由工具调用。两阶段分离避免了异质目标下的梯度冲突。</p>
+<p><span class="label">意义：</span>补上了 Visual-ARFT、OpenVLThinker 等方法缺失的"工具使用监督"拼图，与 R2IF（2604.20316）在文本工具领域呼应。</p>
+</article>
+
+<article class="paper">
+<h3>JTPRO：联合反思优化 prompt + 工具 schema，提升工具调用可靠性</h3>
+<div class="authors">作者信息待公开</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19821">2604.19821</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>发现大量工具调用失败源于两类问题：(i) 通用 prompt 忽略工具特性；(ii) 工具 schema 本身描述不清。提出 <strong>JTPRO (Joint Tool-Prompt Reflective Optimization)</strong>——用 rollout-driven 反思联合优化全局指令 + 每工具 schema/参数描述。</p>
+<p><span class="label">评估：</span>在多工具基准上引入三指标 Tool Selection Accuracy (TSA)、Slot Filling Accuracy (SFA)、Overall Success Rate (OSR)。</p>
+<p><span class="label">结果：</span>OSR 相对强基线<strong>一致提升 5%–20%</strong>。与 GEPA 一脉相承，但首次把<strong>工具描述本身</strong>列入联合优化变量。</p>
+</article>
+
+<article class="paper">
+<h3>Tool-Overuse Illusion：LLM 为何偏爱工具而轻视自身知识？</h3>
+<div class="authors">Yirong Zeng, Shen You, Yufei Liu, Qunyao Du, Xiao Ding, Yutai Hou, Yuxian Wang, Wu Ning, Haonan Song, Dandan Tu, Bibo Cai, Ting Liu</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19749">2604.19749</a> · 2026-04-21</div>
+<p><span class="label">核心发现：</span>揭示"工具过度使用"是当前 LLM Agent 普遍存在的现象。通过跨不同<em>内部知识可用区间</em>的行为分析，归因于一个<strong>认知幻觉 (knowledge epistemic illusion)</strong>——模型系统性错判自身知识边界，无法感知"哪些问题自己已经知道"。</p>
+<p><span class="label">缓解方法：</span>提出基于 DPO 的<strong>知识感知认知边界对齐</strong>策略：构造"应当 / 不应调用"的偏好对，直接优化 Agent 在知识可用区间的自信度。</p>
+<p><span class="label">结果：</span>工具使用减少 <strong>82.8%</strong>，同时准确率不降反升。证明"少调用 = 更诚实"可以是明确的对齐目标。</p>
+<p><span class="label">意义：</span>给"工具调用效率"第一次赋予了<em>认知论</em>意义，不再只是 cost/latency 问题。</p>
+</article>
+
+
+<h2 class="section">III. 推理 RL · Reasoning RL</h2>
+
+<article class="paper">
+<h3>TRN-R1-Zero：用纯 RL 让 LLM 掌握文本富网络 (TRN) 推理</h3>
+<div class="authors">作者信息待公开</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19070">2604.19070</a> · 2026-04-21</div>
+<p><span class="label">核心贡献：</span>零样本 TRN 推理仍是前沿难题——需要同时整合文本语义与关系结构。提出 <strong>TRN-R1-Zero</strong>：一个<em>完全依靠 RL</em> 的 post-training 框架，<strong>无需任何 SFT 或来自大型推理模型的 CoT 数据</strong>。</p>
+<p><span class="label">算法：</span>提出 <em>Neighbour-aware GRPO</em>——基于一个全新的<strong>边际增益 (margin gain) 指标</strong>动态调整奖励，该指标量化邻居信号的信息量，从而显式引导模型进行关系推理。</p>
+<p><span class="label">结果：</span>在引用、超链接、社交、协购四大 TRN 基准上一致领先；更关键的是，<em>仅在节点级任务训练</em>即可零样本推广到边级与图级任务，展现超越跨域迁移的结构性泛化。</p>
+<p><span class="label">意义：</span>把 R1-Zero 的"纯 RL / 无 SFT"思想首次推广到图 + 文本混合模态，为知识图推理 RL 树立新基线。</p>
+</article>
+
+<article class="paper">
+<h3>NGC：在 "推理–遗忘"联合学习中控制 KV 缓存，纯 outcome 奖励驱动</h3>
+<div class="authors">Michael Y. Li, Jubayer Ibn Hamid, Emily B. Fox, Noah D. Goodman（斯坦福大学）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.18002">2604.18002</a> · 2026-04-20</div>
+<p><span class="label">核心贡献：</span>CoT 推理每步都扩张 KV 缓存，是长推理继续 scale 的根本瓶颈。提出 <strong>Neural Garbage Collection (NGC)</strong>——让语言模型在推理同时<strong>学习遗忘</strong>：周期性暂停、决定驱逐哪些 KV 条目、然后在剩余缓存上继续推理。整个过程<em>仅用 outcome-based 任务奖励</em>端到端训练。</p>
+<p><span class="label">关键设计：</span>(i) 驱逐决策被形式化为稀疏离散动作；(ii) 推理-遗忘交替被实现为 token 流上的状态机；(iii) 奖励只来自最终答案正确性，<strong>不需要逐条缓存的标签</strong>——模型必须自己发现哪些信息值得保留。</p>
+<p><span class="label">结果：</span>在数学与多跳推理任务上，NGC 缩减 <strong>~50% KV 缓存</strong>的同时准确率无下降、部分超越全缓存基线。展示了"学习遗忘"作为 RL 目标的可行性。</p>
+<p><span class="label">意义：</span>与 KV eviction/quantization 研究脱钩，首次给出"reward-driven forgetting"作为推理效率 RL 新范式。</p>
+</article>
+
+<article class="paper">
+<h3>POP：基于预训练文本的 rubric-based Self-Play，把 RL 自博弈扩展到开放域</h3>
+<div class="authors">Chengyu Huang 等（4 名作者）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20051">2604.20051</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>Self-Play 在数学与代码已有显著效果，但开放域因缺乏可验证奖励长期无法受益。提出 <strong>POP (Post-trains on Open-ended tasks via Pretraining)</strong>——同一 LLM 同时合成"查询 + 回答 + 评估 rubric"，再用 rubric 打分，DPO 训练模型。</p>
+<p><span class="label">防 reward hacking 关键：</span>(1) <em>特权预训练文本</em>——让 rubric 生成过程可以"偷看"预训练语料，保留生成-验证差距；(2) 只取得分最高与最低的 pair 做 DPO，避开中间高方差段。</p>
+<p><span class="label">结果：</span>在 Qwen-2.5-7B 上提升多项开放评测；理论上首次给出"rubric 自博弈"避免崩溃的充分条件。</p>
+<p><span class="label">意义：</span>与 TCER（2604.11522）"开放写作 RLVR"并列，共同把 RL 从 verifiable 走向 evaluable 的下一里程碑。</p>
+</article>
+
+<article class="paper">
+<h3>DCF：让 Conformal Factuality 成为可微训练目标</h3>
+<div class="authors">Nathan Hittesdorf 等（3 名作者）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20098">2604.20098</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>Conformal Factuality 以依赖图表示输出并与"逻辑先祖"联合验证，能给 LLM 事实性提供严格的统计保证；但原算法<em>不可微</em>，必须手工打分，从而在高可靠水平下删除高达 <strong>60% 的真声明</strong>。提出 <strong>Differentiable Coherent Factuality (DCF)</strong>：对原算法做完全可微松弛，既保留统计保证又可学习更好打分器。</p>
+<p><span class="label">方法：</span>把依赖图上的联合验证过程重写为可微的概率积分；引入"温度退火"收紧与原算法的等价性。</p>
+<p><span class="label">结果：</span>在两个推理基准上，真声明保留率 <strong>+141%</strong>，同时维持原有的 hallucination rate 控制。为 LLM 可靠性设立"带保证的 RL 训练目标"。</p>
+<p><span class="label">意义：</span>打通 Conformal Prediction 与 RL post-training 之间的"可微墙"，是近期 Factuality RL 最重要的单点突破。</p>
+</article>
+
+<h2 class="section">IV. 奖励建模 · Reward Modeling & Alignment</h2>
+
+<article class="paper">
+<h3>R2IF：把 CoT 有效性量化为 RL 奖励，端到端优化函数调用</h3>
+<div class="authors">Aijia Cheng, Kailong Wang, Ling Shi, Yongxin Zhao</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20316">2604.20316</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>现有函数调用 RL 方法普遍存在"推理过程与实际调用决策不一致"。提出 <strong>R2IF (Reasoning-to-Interpretable Function calling)</strong>——一个 GRPO-based 复合奖励框架：
+<br/>• <strong>格式/正确性奖励</strong>；
+<br/>• <strong>Chain-of-Thought Effectiveness Reward (CER)</strong>：量化 CoT 对最终调用决策的边际贡献；
+<br/>• <strong>Specification-Modification-Value (SMV) 奖励</strong>：分拆参数规范、修改与取值三个语义维度。</p>
+<p><span class="label">结果：</span>在 BFCL/ACEBench 上，Llama3.2-3B 相对基线最高 <strong>+34.62%</strong>；平均 CoT Effectiveness 变为正值（0.05），证明 CoT 确实在辅助决策而非装饰。</p>
+<p><span class="label">意义：</span>把"CoT 是否真的有用"从人工评估升级为可微奖励，是<em>可解释工具调用</em>方向的第一个量化指标。</p>
+</article>
+
+<article class="paper">
+<h3>Beyond Overlap Metrics：GRPO + 双重奖励提升多角色对话摘要忠实度</h3>
+<div class="authors">作者信息待公开</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.17188">2604.17188</a> · 2026-04-19</div>
+<p><span class="label">核心贡献：</span>多角色对话摘要现有方法一味优化 ROUGE/BERTScore，导致表面模仿而非忠实。提出<strong>认知式推理 + 奖励优化</strong>的两阶段框架：
+<br/>① 从教师大模型蒸馏结构化推理轨迹，用作辅助监督初始化"推理感知摘要器"；
+<br/>② 以 <strong>GRPO + 双原则奖励</strong>训练——同时混合 metric-based 信号与"关键信息覆盖 + 隐性推理 + 事实忠实 + 简洁性"四个人类对齐准则。</p>
+<p><span class="label">意义：</span>给"摘要 RLVR"提供一套可落地的<em>结构化奖励模板</em>，缓解摘要任务长期"指标驱动 → 漂移"困境。</p>
+</article>
+
+<h2 class="section">V. 基准与环境 · Benchmarks & Training Environments</h2>
+
+<article class="paper">
+<h3>SkillLearnBench：首个评估 LLM Agent 持续技能学习的基准</h3>
+<div class="authors">Shanshan Zhong, Yi Lu, Jingjie Ning, Yibing Wan, Lihan Feng, Yuyi Ao, Leonardo F. R. Ribeiro, Markus Dreyer, Sean Ammirati, Chenyan Xiong（卡内基梅隆大学 & Amazon AGI）</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20087">2604.20087</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>技能已成为让 LLM Agent 在定制指令 / 工作流 / 工具下完成复杂真实任务的主流方式，但"如何自动、持续地学习这些技能"仍缺乏评估。<strong>SkillLearnBench</strong> 是首个面向连续技能学习方法的基准——包含 <strong>20 个经验证的技能依赖任务</strong>，覆盖真实技能分类学中的 15 个子领域。</p>
+<p><span class="label">三级评估：</span>(i) 技能质量；(ii) 执行轨迹；(iii) 任务结果。这种设计区分了"学会技能 vs 正确使用技能 vs 技能是否真有帮助"三个层面。</p>
+<p><span class="label">意义：</span>为 Agent-RL 与 continual learning 提供长期缺失的评估基础，和 ClawEnvKit（2604.18543）、FT-Bench（2604.14116）共同构筑 Agentic RL 的"公共靶场"。</p>
+</article>
+
+<article class="paper">
+<h3>SuperIgor：LLM 规划者与 RL 执行者的自引导互训练（Self-Guided Plan Extraction）</h3>
+<div class="authors">Zoya Volovikova, Nikita Sorokin, Dmitriy Lukashevskiy, Aleksandr Panov, Alexey Skrynnik</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20601">2604.20601</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>面向指令跟随任务，提出 <strong>SuperIgor</strong>——让语言模型通过<em>自学习机制</em>生成并持续修订高层计划，<strong>减少对人工标注数据集的依赖</strong>。</p>
+<p><span class="label">方法：</span>迭代协同训练：RL Agent 学习执行计划；LLM 规划者根据 RL 反馈与偏好修订计划；二者在<em>反馈闭环</em>中共同改进。在具有丰富动态性与随机性的环境验证有效性。</p>
+<p><span class="label">意义：</span>把"规划者 = 教师, 执行者 = 学生"的固化角色打破为<em>互为教师的闭环</em>，为 goal-conditioned RL 提供新范式。</p>
+</article>
+
+<article class="paper">
+<h3>ActuBench：多 Agent 精算推理任务的自动生成与评估流水线</h3>
+<div class="authors">作者信息待公开</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20273">2604.20273</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>提出 <strong>ActuBench</strong>——多 Agent LLM 流水线，按国际精算协会 (IAA) 教育大纲自动生成和评估高级精算评估题。四个 LLM 角色通过 adapter 分工：出题、解题、判分、反馈。</p>
+<p><span class="label">Agentic RL 价值：</span>为"多 Agent 协作 + 领域推理"提供可自动生成的合成训练环境，为模型推理能力评估扩展到非数学/非代码的高度专业领域（保险、精算、风险建模）。</p>
+</article>
+
+<article class="paper">
+<h3>Trust, Lies, and Long Memories：多轮 Avalon 博弈中 LLM Agent 的涌现社会动态</h3>
+<div class="authors">作者信息待公开</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20582">2604.20582</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>研究 LLM Agent 在 The Resistance: Avalon 欺骗博弈中<strong>跨多局长期记忆</strong>的行为。Agent 保留前局互动记忆，在重复博弈中涌现出<em>信任 / 说谎 / 声誉管理</em>等社会动态。</p>
+<p><span class="label">Agentic RL 意义：</span>为"长程记忆 + 欺骗 / 博弈"提供一个可重放、可分析的测试床，与 π-Play (2604.14054)、HorizonBench (2604.17283) 共同扩展多轮博弈类 Agent RL 的评估半径。</p>
+</article>
+
+<article class="paper">
+<h3>Synthesizing Multi-Agent Harnesses for Vulnerability Discovery</h3>
+<div class="authors">作者信息待公开</div>
+<div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20801">2604.20801</a> · 2026-04-22</div>
+<p><span class="label">核心贡献：</span>把"漏洞发现"改造为多 Agent 协作任务——不同角色负责 fuzz、静态分析、PoC 构造，由 <em>harness</em> 协调信息传递、工具调用与重试。</p>
+<p><span class="label">Agentic RL 视角：</span>提出自动合成 harness 的方法，为<em>长链、多工具、协作型安全 Agent</em> 提供训练/评估环境，是 ARES（2604.18789，ACL 2026）之后安全向 Agent RL 的重要补充。</p>
+</article>
+
+<footer>
+LLM RL Daily · 2026-04-23 · Thursday Edition · 17 new papers curated<br/>
+"The field moves faster than our cache."
+</footer>
+</body>
+</html>

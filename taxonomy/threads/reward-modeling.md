@@ -141,3 +141,13 @@ Together with AgentV-RL (2604.16004, yesterday), today's reward modeling work pu
 3. **Reward as domain-agnostic structure** (Plan-PRM) — PDDL as a free step-annotation source
 
 The trend: PRMs are being rebuilt from "scalar classifier of step-correctness" to "structured verifier with multiple signal channels."
+
+## April 23, 2026 additions
+
+- **R2IF** [2604.20316] — First composite reward to quantify CoT-to-decision alignment in function calling: format + correctness + **CER (CoT Effectiveness Reward)** + **SMV (Specification-Modification-Value)**. Up to +34.62% on BFCL with GRPO.
+- **Multi-Role Dialogue Dual Reward** [2604.17188] — GRPO with dual-principle reward (metric signals + key-information coverage / implicit inference / factual faithfulness / conciseness) for faithful multi-role dialogue summarization.
+- **Tool-Overuse Illusion** [2604.19749] — Identifies LLM's *knowledge epistemic illusion*: models misjudge their internal knowledge boundary and over-call tools. DPO on boundary-aware preference pairs reduces tool use by 82.8% without accuracy loss.
+- **TA-MDP Convergence Bounds** [2604.19857] — Theoretical dissection of verifiable-reward three-component structure (format/accuracy/executability): decomposition yields GRPO convergence rate set by slowest component; tool-call coverage entropy bounds OOD generalization.
+
+### Key Trend: Rewards Beyond "Format + Accuracy"
+R2IF quantifies CoT quality, Tool-Overuse Illusion quantifies tool-call appropriateness, Multi-Role Dual Reward quantifies summarization faithfulness, and TA-MDP provides the theoretical framework to combine them. The era of single-signal RLVR is giving way to multi-dimensional, theoretically motivated composite rewards.

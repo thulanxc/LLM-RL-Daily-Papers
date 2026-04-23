@@ -168,3 +168,22 @@ Three papers this week treat "experience" or "knowledge" as the central training
 - **MAGEO**: accumulates reusable editing strategies as a "skill library"
 
 This marks a shift from per-episode optimization to **cross-episode experience management** — closer to how humans learn.
+
+## April 23, 2026 additions
+
+- **LiteResearcher-4B** [2604.17931] — Scalable agentic-RL framework for deep research. Builds a *virtual Web* that mirrors real web architecture to sidestep the cost and instability of online search RL. Three-stage recipe: synthesize real search data → simulate search environment → curriculum RL. 4B model matches Claude-4.5-Sonnet / GLM-4.6 on GAIA (71.3%) and Xbench (78.0%).
+- **DR-Venus-4B** [2604.19859] — Frontier edge-scale deep-research agent with only 10K open data. Two-stage recipe: *Agentic SFT* (basic capability) → *Agentic RL* (execution reliability on long-horizon tasks). Companion to LiteResearcher: synthetic-web vs. data-efficient-real-data routes.
+- **CoSearch** [2604.17555] — Joint GRPO training of reasoning agent and generative document ranker. Semantic-clustering strategy lets ranker run valid group-relative optimization without extra rollouts; composite reward combines ranking quality with outcome feedback. +3.1pp from clustering alone.
+- **OThink-SRR1** [2604.19766] — Inserts a **Refine** stage to distill retrieved documents into concise facts before reasoning; end-to-end algorithm **GRPO-IR** rewards evidence identification and penalizes over-retrieval. Fewer retrieval steps and tokens with higher accuracy.
+- **SaFeR-Steer** [2604.16358] — Multi-turn MLLM safety alignment via staged synthetic bootstrapping + *tutor-in-the-loop* GRPO. A single Safety Tutor both generates adaptive follow-up attacks and evaluates the student in an on-policy attack-defense loop.
+- **ToolsRL** [2604.19945] — Tool-supervised RL for multimodal visual reasoning (zoom/rotate/flip/draw). Two-stage curriculum avoids gradient conflict between tool-specific and accuracy rewards.
+- **JTPRO** [2604.19821] — Joint Tool-Prompt Reflective Optimization. Rollout-driven reflection co-optimizes global instructions *and* per-tool schema/argument descriptions (+5–20% OSR).
+- **Tool-Overuse Illusion** [2604.19749] — LLMs misjudge their own knowledge boundary ("knowledge epistemic illusion"). DPO-based boundary alignment reduces tool usage **82.8%** while improving accuracy.
+- **SkillLearnBench** [2604.20087] — First benchmark for *continual* skill learning in LLM agents. 20 skill-dependent tasks across 15 sub-domains; evaluates at skill / trajectory / outcome levels.
+- **SuperIgor (Self-Guided Plan Extraction)** [2604.20601] — Iterative co-training of an RL agent with an LLM planner, both improving via feedback loop without manual plan annotations.
+- **ActuBench** [2604.20273] — Multi-agent LLM pipeline for actuarial reasoning (four adapter-separated roles: generator / solver / grader / feedback).
+- **Trust, Lies, and Long Memories** [2604.20582] — Multi-round Avalon LLM-agent environment for studying emergent deception, trust, and reputation under long memory.
+- **Vuln-Discovery Multi-Agent Harness** [2604.20801] — Auto-synthesized harnesses for security-focused agent collaboration.
+
+### Key Trend (April 23): The Reproducible 4B Deep-Research Recipe
+Two independent 4B systems — LiteResearcher and DR-Venus — published within 48 hours converge on the same conclusion: a well-designed *offline/synthetic* environment plus Agentic SFT → Agentic RL is enough to **match frontier closed models** on deep-research benchmarks. Combined with CoSearch (joint ranker+agent training) and OThink-SRR1 (evidence-distillation stage), the "small-model deep-research" niche now has a concrete reference architecture for community reproduction.

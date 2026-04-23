@@ -72,3 +72,12 @@ Four papers this week explicitly target the **action/decision unit** in LLM RL:
 5. **Prompt-level adaptive regularization** (MCPO)
 
 Combined with the emerging consensus from Beyond Distribution Sharpening (2604.16259) that RL must inject task rewards, the field is converging on: **the right RL unit is the reasoning step, and the right regularization is adaptive to mastery state**.
+
+## April 23, 2026 additions
+- **EVPO** [2604.19485] — Explained Variance Policy Optimization. Casts the PPO-vs-GRPO choice as a **Kalman filtering** problem, proves Explained Variance (computable from a single batch) is the exact decision boundary between critic and batch-mean baselines, and adaptively switches each step. Beats both PPO and GRPO across classical control, agentic tasks, and math reasoning.
+- **CalibAdv (Negative Advantage Is a Double-Edged Sword)** [2604.18235] — First quantitative analysis of GRPO's *negative-advantage* pathology in deep-search: correct intermediate steps get uniformly penalized when the final answer is wrong. Fixes it with **prefix-shared weighting** + natural-language guardrail. +4.7pp F1 on multi-hop QA.
+- **LVLM RL Theory (TA-MDP)** [2604.19857] — Rethinks Visual-ARFT convergence. Introduces Tool-Augmented MDP formalism, proves the three-component verifiable reward (format/accuracy/executability) is potential-decomposable and that GRPO convergence is bottlenecked by the slowest component; OOD generalization bounded by tool-call distribution coverage entropy.
+- **OLLM** [2604.19087] — Options-based LLM inserts a 2-layer latent "plug-in" before the output head, modeling variation via discrete options. RL no longer needs a KL penalty because exploration is structurally constrained by the latent space.
+
+### Post-GRPO Differentiation (April 23)
+The "critic vs. critic-free" debate is collapsing into a unified lens: EVPO treats the two as a continuum with a data-driven switching rule; CalibAdv focuses on the *direction* of the gradient rather than its magnitude; TA-MDP gives the theoretical ceiling for multi-component verifiable rewards. OLLM meanwhile argues the entire RL objective should re-architect the underlying sampling space rather than patch the policy gradient.

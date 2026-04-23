@@ -103,3 +103,13 @@ The field is converging on a template: **structural diversity in training data �
 - AtManRL ↔ Latent CoT (2604.15726): AtManRL is a concrete algorithmic answer to Latent CoT's position — measures and rewards *actual* use of CoT tokens.
 - KnowRL ↔ Rethinking Generalization (2604.06628): KnowRL operationalizes curriculum-driven RL in the regime where RL alone cannot extend capability.
 - QuantumQA ↔ MedVR / OOM-RL: joins the thread of "RL with domain-specific executable verifiers" (physics simulator / medical rubric / market loss).
+
+## April 23, 2026 additions
+
+- **TRN-R1-Zero** [2604.19070] — Pure-RL Neighbour-aware GRPO for text-rich network (graph+text) reasoning. No SFT or CoT distillation; node-level training generalizes to edge/graph tasks via *margin-gain* reward shaping.
+- **NGC (Neural Garbage Collection)** [2604.18002] — Joint learning to *forget* while reasoning, driven only by outcome reward. Periodic KV-cache eviction decisions are trained end-to-end; ~50% cache reduction at preserved accuracy.
+- **POP (Rubric Self-Play on Pretraining Text)** [2604.20051] — Extends self-play from verifiable domains to open-ended tasks. Same LLM generates query/answer/rubric; defends against reward hacking with privileged pretraining-text access + DPO on highest/lowest scored pairs.
+- **DCF (Differentiable Coherent Factuality)** [2604.20098] — First differentiable relaxation of Conformal Factuality; +141% claim retention at fixed hallucination rate. Enables factuality as a trainable RL objective with statistical guarantees.
+
+### Key Trend (April 23): From Verifiable to Trainable-with-Guarantees
+POP and DCF both address how to make non-math reasoning RL-trainable with statistical safeguards: POP via self-generated rubrics + privileged access, DCF by making the conformal factuality loop differentiable. Together they chart a path from "RLVR on ground-truth answers" to "RL on open-ended tasks with principled reliability."
