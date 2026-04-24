@@ -187,3 +187,18 @@ This marks a shift from per-episode optimization to **cross-episode experience m
 
 ### Key Trend (April 23): The Reproducible 4B Deep-Research Recipe
 Two independent 4B systems — LiteResearcher and DR-Venus — published within 48 hours converge on the same conclusion: a well-designed *offline/synthetic* environment plus Agentic SFT → Agentic RL is enough to **match frontier closed models** on deep-research benchmarks. Combined with CoSearch (joint ranker+agent training) and OThink-SRR1 (evidence-distillation stage), the "small-model deep-research" niche now has a concrete reference architecture for community reproduction.
+
+## April 24, 2026 additions
+
+- **AgenticQwen** [2604.21590] — Industrial small-agent recipe. GRPO-style multi-round RL jointly on reasoning RL (math/search/code) and agentic RL (rubric-verified subgoals). *Dual data flywheels*: (i) reasoning flywheel escalates difficulty from errors; (ii) agentic flywheel expands linear workflows into multi-branch behavior trees. Closes the gap with much larger models on production search/analysis at fixed cost.
+- **AEL — Agent Evolving Learning** [2604.21725] — Two-timescale coupled system. Fast timescale: Thompson-Sampling bandit over candidate memory-retrieval policies. Slow timescale: LLM reflection diagnoses failures and, when structural change is warranted, *generates new retrieval policies*. Sharpe 2.13 across 208 sequential portfolio episodes.
+- **TPGO / GRAO** [2604.20714] — Models MAS as a Textual Parameter Graph. Optimizes via *textual gradients* extracted from execution traces. Group Relative Agent Optimization (GRAO) is a meta-learning strategy learning from historical optimization episodes — so the optimizer itself co-evolves with the task.
+- **DiffMAS** [2604.21794] — Parameter-efficient supervised training over multi-agent *latent* trajectories (e.g., shared KV-caches). Decouples the external (interpretable) interface from the internal (efficient) communication channel. Consistent gains on math, science QA, code, commonsense benchmarks.
+- **Learning to Seek Help** [2604.17827] — Online-RL for a small model that learns *when* to invoke a large model and *what* to ask; paired LLM produces adaptive feedback rather than static completions. Clean scaling laws: stronger SLM → more autonomy; stronger LLM → fewer but denser interactions. Strategies transfer to unseen LLMs.
+
+### Connections
+- AgenticQwen ↔ LiteResearcher (2604.17931): both push "small open agent matches frontier" but AgenticQwen emphasizes industrial data flywheels vs. LiteResearcher's synthetic virtual-web.
+- AEL ↔ MIA (2604.04503): both equip agents with evolvable memory, but AEL adds a bandit-over-policies layer above memory, making *retrieval policy itself* a first-class learnable object.
+- TPGO ↔ MARS² (2604.14564): both extend GRPO to agent-level, but TPGO introduces graph-structured optimizer memory (meta-learning), while MARS² is single-session tree search.
+- DiffMAS ↔ LangMARL: direct challenge to the "communicate in English" paradigm; suggests the next generation of MAS will hybridize symbolic + latent interfaces.
+- Learning to Seek Help ↔ Rejection Criterion for Proxy Alignment (2604.16146): both formalize when/how small systems should defer, from opposite ends — alignment proxy rejection vs. capability-gap help-seeking.

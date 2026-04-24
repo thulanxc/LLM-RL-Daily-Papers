@@ -81,3 +81,14 @@ Combined with the emerging consensus from Beyond Distribution Sharpening (2604.1
 
 ### Post-GRPO Differentiation (April 23)
 The "critic vs. critic-free" debate is collapsing into a unified lens: EVPO treats the two as a continuum with a data-driven switching rule; CalibAdv focuses on the *direction* of the gradient rather than its magnitude; TA-MDP gives the theoretical ceiling for multi-component verifiable rewards. OLLM meanwhile argues the entire RL objective should re-architect the underlying sampling space rather than patch the policy gradient.
+
+## April 24, 2026 additions
+
+- **GRPO-VPS** [2604.20659] — Step-level advantage shaping from the policy's own confidence in the verifiable answer. Refines GRPO credit assignment without breaking its critic-free simplicity.
+- **polyGRPO** [2604.21593] — Adds *language* as a discrete exploration axis inside GRPO groups. Most other GRPO variants explore over decoding noise; polyGRPO exploits the latent-variable view of language to widen exploration cheaply.
+- **GRAO (inside TPGO)** [2604.20714] — First extension of group-relative advantage to the *agent / tool / workflow node* level of multi-agent systems. Makes the optimizer itself a learnable function of historical edit-evaluation trajectories.
+- **Reward-Balancing RL** [2604.20433] — Recasts iterative reward normalization as an optimal-control problem; offers tools for stability/convergence analysis that can inform KL-regularized PG and shaping-based LLM RL methods.
+
+### Cross-links
+- GRPO-VPS and polyGRPO represent the two dominant vectors of GRPO evolution this week: *depth of credit assignment* (step-level supervision) and *breadth of exploration* (cross-language probing).
+- GRAO extends the GRPO family vertically (token → response → agent-module); combined with TEPO (token-level) and StepPO (step-level), the field now has group-relative advantage at nearly every granularity.

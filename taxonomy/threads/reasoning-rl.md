@@ -113,3 +113,17 @@ The field is converging on a template: **structural diversity in training data �
 
 ### Key Trend (April 23): From Verifiable to Trainable-with-Guarantees
 POP and DCF both address how to make non-math reasoning RL-trainable with statistical safeguards: POP via self-generated rubrics + privileged access, DCF by making the conformal factuality loop differentiable. Together they chart a path from "RLVR on ground-truth answers" to "RL on open-ended tasks with principled reliability."
+
+## April 24, 2026 additions
+
+- **DDRL** [2604.21327] — Decomposes TTRL failure into two factors: *ambiguity-region samples* + *GRPO advantage amplification*. Fixes with frequency-based sampling (exclude ambiguous) + debiased fixed advantage. Consistently beats TTRL across AIME/MATH-500/Olympiad/Minerva on 3 LLM backbones.
+- **GRPO-VPS** [2604.20659] — Model-free verifiable process supervision. Segments generation into steps; probes the policy's own `P(correct answer | prefix)` at segment boundaries; injects these confidence gradients directly into GRPO advantage. No external PRM needed. Rehabilitates "the policy supervises itself" in an RLVR-compatible way.
+- **VPS Verbal Critique** [2604.21611] — Training-free iterative generate→critique→refine. Central claim: *critique granularity* (step-level vs. answer-level) dominates over whether there is verbal feedback at all. Reaches 94.9% on GPQA Diamond with R=4 and no gradient updates. +8.5–12.1 pp over Reflexion at matched compute.
+- **Weak-Supervision RLVR** [2604.18574] — Systematic study across scarce / noisy / self-supervised-proxy rewards. Identifies *reasoning faithfulness* (pre-RL) and *reward saturation dynamics* (during RL) as the two decisive predictors of generalization. Reasoning-trace SFT + domain CPT jointly rescue Llama3.2-3B across all three weak settings.
+- **polyGRPO** [2604.21593] — Treats *language choice* as a latent exploration variable inside GRPO groups. 18.1K multilingual math → +6.72 pp English MATH / +6.89 pp multilingual; also +4.9 pp on X-CSQA despite math-only training. Positions multilingual outputs as cheap high-value exploration axes.
+
+### Connections
+- GRPO-VPS ↔ IPVRM (2604.13197): both move past "outcome-only RLVR" into step signals, but IPVRM learns prefix-value functions while GRPO-VPS reads them off the policy itself.
+- VPS Verbal Critique ↔ ProCeedRL (2604.02006): both use a critic/supervisor over process, but VPS is training-free while ProCeedRL distills demonstrations; pair them for a "free SOTA, then train" pipeline.
+- Weak-Supervision RLVR ↔ Rethinking Generalization (2604.06628): faithfulness pre-diagnosis complements that paper's "SFT memorizes / RL generalizes" conditional — now we know *which* SFT is needed before RL.
+- polyGRPO ↔ ReasonXL (2604.12378): polyGRPO shows language is exploratory not lossy, directly answering questions ReasonXL raised about lossless cross-lingual RLVR.

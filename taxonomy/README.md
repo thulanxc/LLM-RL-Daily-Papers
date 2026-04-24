@@ -678,3 +678,51 @@ Five papers push honesty into training:
 4. **Honesty**: answer always → calibrated abstention (Abstain-R1); uniform uncertainty → typed uncertainty (UA-Bench); blind trust → Policy+RM joint red-teaming (ARES).
 
 Combined, the field is moving from "scale the same PPO pipeline" to "**decompose the pipeline into orthogonal design axes and study each axis as a first-class research object**".
+
+## April 24, 2026 — Morning Dispatch
+
+### 70. Self-Verifying Process Signal (Reasoning RL)
+
+Today three papers converge on a strong claim: *the process signal does not need to come from an external PRM.*
+
+- **GRPO-VPS** [2604.20659]: read the policy's own `P(correct answer | prefix)` across segment boundaries.
+- **VPS Verbal Critique** [2604.21611]: let a stronger LLM emit step-level natural-language critique; reach 94.9 % on GPQA Diamond with *no* gradient updates.
+- **DDRL** [2604.21327]: identify the dangerous ambiguity region and de-amplify it inside GRPO advantage.
+
+**Thesis**: "Process reward" is being re-internalized inside the RL loop (GRPO-VPS) or replaced by structured verbal supervision from stronger teachers (VPS) — in both cases *without training another model*. Combined with DDRL's diagnosis of GRPO-amplification failure modes, the field is converging on *self-verifying process signals*.
+
+### 71. Pre-RL Diagnostics
+
+**Weak-Supervision RLVR** [2604.18574] adds a decisive observation: whether RLVR generalizes is *predetermined* by reasoning-faithfulness before RL starts. This complements April 17's "RL stabilizes but does not expand capability." Together they suggest the next wave of RL research will include a **diagnostic/intervention stage before RL** — targeted SFT + domain CPT — rather than pure end-to-end RL tuning.
+
+### 72. Group-Relative Advantage Ascending the Abstraction Ladder
+
+**GRAO** (inside TPGO, 2604.20714) extends group-relative advantage to the *agent/tool/workflow node* level of multi-agent systems. Combined with:
+- **TEPO** (2604.12736): token-level group advantage
+- **StepPO** (2604.18401): step-level
+- **MARS²** (2604.14564) / **MAGRPO**: response/trajectory-level
+
+…GRPO's family now spans every granularity. The open question is no longer "which GRPO" but "which granularity matches this problem".
+
+### 73. Latent-Variable Exploration
+
+**polyGRPO** [2604.21593] and **DiffMAS** [2604.21794] both argue that LLM RL has been exploring too narrowly over *surface language*. polyGRPO uses language selection as an exploration axis; DiffMAS uses latent KV-cache channels. Together with April 20's **Latent CoT** position paper (2604.15726), this hints at a new research thread: **latent-space exploration inside RL**, where the exploration dimension is structural rather than lexical.
+
+### 74. Industrial-Grade Small Agents
+
+**AgenticQwen** [2604.21590] and **Learning to Seek Help** [2604.17827] both address the economics of deployment: small models made capable via RL + data flywheels, or via learned SLM↔LLM cooperation. LiteResearcher (04-22) and DR-Venus (04-22) already pointed this direction; today's papers specialize it into "dual-flywheel training" (AgenticQwen) and "cross-tier collaboration" (Help). The practical alignment question is shifting from "which 70 B model wins?" to "**how do we make 4 B models act like 200 B models only when they need to?**"
+
+### 75. Alignment Imprint as Detection
+
+**IRM** [2604.21223] reads AI-generated text by comparing instruct-tuned and base-model likelihoods — i.e. by reading the *DPO implicit reward* directly on candidate text. Together with April 20's "PolicyBank" and April 21's "LLM-as-judge improvements," this forms a clean thread: *alignment training leaves machine-detectable traces*, and those traces themselves are a valuable signal for detection, auditing, and safety.
+
+## Cross-Cutting Meta-Observation (April 24)
+
+**Theme of the day**: *LLM RL is becoming introspective — the policy is simultaneously actor, critic, verifier, and auditor.*
+
+1. **Actor + Critic** via the policy itself (GRPO-VPS reads policy confidence; VPS uses a stronger instance of the same model family).
+2. **Actor + Verifier**: DDRL stabilizes self-consistency verification inside the RL loop itself.
+3. **Actor + Auditor**: IRM says the model's own alignment-induced likelihood shift is detectable by other copies of itself.
+4. **System + Optimizer**: TPGO lets the MAS system be optimized by an optimizer that also evolves.
+
+Combined, these moves eliminate the external scaffolding of classic RLHF (separate RM, separate verifier, separate red-teamer) — replacing it with a self-referential loop where the policy *is* the probe of its own behavior.

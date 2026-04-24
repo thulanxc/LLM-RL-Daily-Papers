@@ -62,3 +62,16 @@ Today's RLVR work covers:
 - Calibrated abstention (Abstain-R1)
 
 The verifiable-reward paradigm is proving portable — provided one can design a domain-appropriate verifier.
+
+## April 24, 2026 additions
+
+- **DDRL (Debiased-Denoised TTRL)** [2604.21327] — First clear failure-mode decomposition of *Test-Time RLVR*: ambiguity-region pseudo-labels × GRPO's group-relative advantage amplification produce "spurious signal amplification." Fix: frequency-based sampling + fixed (debiased) advantage. Robust across multiple math benchmarks.
+- **GRPO-VPS** [2604.20659] — No-external-PRM process supervision for RLVR. Verifiable in the sense that the process signal is the *policy's own* conditional probability of the (verifiable) correct answer across segment boundaries. Extends the RLVR contract from outcome-only to step-wise while remaining fully outcome-verifiable at training time.
+- **Weak-Supervision RLVR** [2604.18574] — When does RLVR still work if the reward is not perfectly verifiable? Three settings (scarce / noisy / self-supervised proxy). Key predictor: reasoning faithfulness pre-RL. Intervention: reasoning-trace SFT + domain CPT before RL.
+- **Parallel-SFT** [2604.20835] — RLVR transfer across programming languages. Source-PL RL *hurts* target-PL performance unless SFT initialization contains parallel programs (same function in multiple PLs). Establishes the first cross-PL transferability result for code RLVR.
+
+### Connections
+- GRPO-VPS ↔ Plan-PRM (2604.17957) & IPVRM (2604.13197): three different stances on "where process signal comes from" — synthesized from planners, learned as prefix value, or read off the policy itself.
+- DDRL ↔ TTRL (2504.16084): formally identifies the failure mode TTRL was silent about, and delivers a direct replacement for its advantage estimator.
+- Weak-Supervision RLVR ↔ Imperfect Verifiers (2604.07666): complementary — Imperfect Verifiers tolerates 15% label noise, Weak-Supervision RLVR asks what pre-conditions let a model tolerate it.
+- Parallel-SFT ↔ SUPERNOVA (2604.08477): both identify that *SFT shape* (instruction diversity / parallel programs) is decisive for RLVR transfer.

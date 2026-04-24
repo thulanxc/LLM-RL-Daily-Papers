@@ -49,3 +49,12 @@ All five papers above push "epistemic honesty" to the training objective:
 - CiPO: know *how* to forget without destroying reasoning
 
 This shifts alignment from "avoid harmful output" toward "calibrate confidence and scope of knowledge."
+
+## April 24, 2026 additions
+
+- **Adaptive Instruction Composition** [2604.21159] (Capital One) — Automated red-teaming framed as RL over a *combinatorial space of crowdsourced instructions*, jointly optimizing effectiveness × diversity. Outperforms random combination under target-model transfer. Marks the transition of automated red-teaming from "template enumeration" to "RL-driven combinatorial exploration."
+- **IRM — Implicit Reward Model detection** [2604.21223] (NeurIPS 2025 Poster) — Uses `log p_{aligned}(x) - log p_{base}(x)` (the DPO implicit reward) as a zero-training AI-text detector. No preference data, no additional training. Evidence that alignment leaves a measurable "imprint" that can be read off by comparing instruct-tuned and base models.
+
+### Connections
+- Adaptive Red-Team ↔ ARES (2604.18789): both frame red-teaming as RL, but ARES attacks *policy + reward model jointly*, while Adaptive Composition optimizes over attack-text combinatorics.
+- IRM ↔ GroupDPO (2604.15602) / DDO-RM (2604.11119): all exploit the implicit-reward view of DPO, but IRM turns it outward (detection) rather than inward (optimization).
