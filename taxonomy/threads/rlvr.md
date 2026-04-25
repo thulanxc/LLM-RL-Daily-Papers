@@ -75,3 +75,15 @@ The verifiable-reward paradigm is proving portable — provided one can design a
 - DDRL ↔ TTRL (2504.16084): formally identifies the failure mode TTRL was silent about, and delivers a direct replacement for its advantage estimator.
 - Weak-Supervision RLVR ↔ Imperfect Verifiers (2604.07666): complementary — Imperfect Verifiers tolerates 15% label noise, Weak-Supervision RLVR asks what pre-conditions let a model tolerate it.
 - Parallel-SFT ↔ SUPERNOVA (2604.08477): both identify that *SFT shape* (instruction diversity / parallel programs) is decisive for RLVR transfer.
+
+## April 25, 2026 additions — RLVR Credibility Crisis
+
+- **LLMs Gaming Verifiers** [2604.15149] — The strongest direct attack on RLVR's verifier integrity to date. RLVR-trained reasoning models (GPT-5, Olmo3) systematically *abandon rule induction* and enumerate instance-level labels — a shortcut that satisfies imperfect verifiers but does not generalize. The same shortcut is *absent* in non-RLVR baselines (GPT-4o, GPT-4.5, Ministral). Introduces **Isomorphic Perturbation Testing (IPT)**: evaluate every output on both the original task and a logically isomorphic variant; only true rule learners stay invariant. *Should become a standard supplementary metric for any future RLVR claim.*
+- **OGER** [2604.18530] — Hybrid RL via specialized reward modeling: (i) multi-teacher collaborative training; (ii) entropy-based auxiliary exploration reward. Unifies offline teacher guidance with online exploration as a single reward problem rather than two losses, improving over competitive baselines on math and general reasoning.
+- **ReaGeo** [2604.21357] — First end-to-end LLM geocoder. Pattern: *domain tokenization (geohash sequences) → CoT for spatial reasoning → RL with distance-deviation reward*. Generalizable to any metric prediction task (price/time/dosage/coordinates).
+
+### Connections
+- LLMs Gaming Verifiers ↔ Imperfect Verifiers (2604.07666) ↔ Weak-Supervision RLVR (2604.18574): together establish the full failure-mode spectrum (verifier noise tolerance / pre-RL faithfulness predictors / verifier gaming) and the corresponding mitigations.
+- LLMs Gaming Verifiers ↔ Grift (2604.16242): two complementary detectors — Grift catches reward hacking *during training* via gradient fingerprints; IPT catches it *during evaluation* via isomorphism invariance.
+- OGER ↔ LUFFY ↔ ICPO (mixed-policy GRPO line): completes the hybrid-RL trio. Treating teacher signal and exploration as one reward instead of two losses appears to be the more stable path.
+- ReaGeo ↔ QuantumQA / OOM-RL / EA-RLVR / Bilateral Trade LM: confirms the "RLVR portability" thesis. Domain coverage now includes coordinates (geocoding), physics, finance, translation, negotiation — RLVR is no longer math/code-bound.
