@@ -127,3 +127,14 @@ POP and DCF both address how to make non-math reasoning RL-trainable with statis
 - VPS Verbal Critique ↔ ProCeedRL (2604.02006): both use a critic/supervisor over process, but VPS is training-free while ProCeedRL distills demonstrations; pair them for a "free SOTA, then train" pipeline.
 - Weak-Supervision RLVR ↔ Rethinking Generalization (2604.06628): faithfulness pre-diagnosis complements that paper's "SFT memorizes / RL generalizes" conditional — now we know *which* SFT is needed before RL.
 - polyGRPO ↔ ReasonXL (2604.12378): polyGRPO shows language is exploratory not lossy, directly answering questions ReasonXL raised about lossless cross-lingual RLVR.
+
+## April 26, 2026 additions
+
+- **QFT Reasoning Models** [2604.18936] — First academic study of how *theoretical-physics reasoning ability* develops during fine-tuning. 7B base model + a robust pipeline that synthesizes new problems and adapts existing human-authored ones. RL vs. SFT controlled experiments on 2,500+ QFT problems plus a curated human-derived set; benchmarks gains and cross-domain transfer to other physics.
+- **REVEAL** [2604.19172] — Reasoning-aware AI-generated text detector. SFT teaches reasoning chains, RL refines accuracy, logical consistency, and reduces hallucinations. Brings RLVR-style training into a long-standing classification task while keeping the model interpretable.
+- **Reasoning Primitives in Hybrid LLMs** [2604.21454] — Decomposes "reasoning" into recall (attention-based retrieval) and state-tracking (recurrent state updates). Matched Olmo3 transformer/hybrid pairs (instruction-tuned + reasoning-augmented) on synthetic primitive tasks. Findings: reasoning augmentation yields the largest overall improvement; hybrid reasoning models are substantially more robust as sequential dependence grows.
+
+### Connections
+- QFT Reasoning Models ↔ QuantumQA (2604.18176) ↔ MolReAct (2604.07669): three independent RL applications to verifiable scientific reasoning (physics, quantum chemistry-grade benchmarks, drug discovery), all converging on "synthetic verifier + RL on a 7B-class model" as the practical recipe.
+- REVEAL ↔ AtManRL (2604.16158): both put a *faithful-CoT* signal into the reward, but REVEAL targets classification interpretability while AtManRL targets reasoning-attention correspondence.
+- Reasoning Primitives ↔ LongAct (2604.14922) ↔ LLM Reasoning Is Latent (2604.15726): three positions on what is actually being trained — primitives (recall + state-tracking), latent activation patterns (LongAct), or a latent trajectory beneath surface CoT (Latent Reasoning).

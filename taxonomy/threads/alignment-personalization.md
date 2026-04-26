@@ -58,3 +58,11 @@ This shifts alignment from "avoid harmful output" toward "calibrate confidence a
 ### Connections
 - Adaptive Red-Team ↔ ARES (2604.18789): both frame red-teaming as RL, but ARES attacks *policy + reward model jointly*, while Adaptive Composition optimizes over attack-text combinatorics.
 - IRM ↔ GroupDPO (2604.15602) / DDO-RM (2604.11119): all exploit the implicit-reward view of DPO, but IRM turns it outward (detection) rather than inward (optimization).
+
+## April 26, 2026 additions
+
+- **Privacy GRPO via Normative Simulacra** [2604.20904, Cornell Tech] — *Fiction-derived norms* as RL training signal for contextual privacy. Pipeline: extract normative simulacra from fiction → SFT (instills conservative information-flow prior) → GRPO (learns context-conditioned permissive/deny decisions) → *per-completion contrastive scoring* against a randomly chosen wrong normative universe (functions as negative-sample regularization). Across 7 models, SFT alone over-restricts; SFT + GRPO achieves the highest law-compliance benchmark and the strongest correlation with crowdsourced human privacy expectations.
+
+### Connections
+- **Privacy GRPO ↔ CARO (2604.10072)** — both argue that alignment is fundamentally a *contextual* phenomenon (privacy norms / analogical reasoning) rather than a single global preference; both adopt training signals tied to context-specific consistency.
+- **Privacy GRPO ↔ PolicyBank (2604.15505)** — two complementary moves on alignment-as-policy: PolicyBank pushes alignment to *runtime* (policy lookup over the gap-closing distribution), Privacy GRPO pushes contextual norms into *parameters* via fiction simulacra. Together they bracket the design space of "static parametric alignment ↔ runtime configurable alignment".

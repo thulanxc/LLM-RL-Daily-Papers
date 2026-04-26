@@ -789,6 +789,48 @@ Two infrastructure papers worth noting for Agentic RL trainers:
 
 5. **Multi-agent meta-bias is real and trainable**: AOA (Dialectical Alignment) is a structural distortion in self-reflection / mutual-audit reward signals, with measurable consequences for multi-agent RL.
 
+### 83. Capability-Targeted Agentic Training (April 26)
+
+A new sub-thread that pushes Agentic RL past the "one global RL run" assumption.
+
+- **TRACE** [2604.05336, Stanford]: contrasts successful vs. failed trajectories to *automatically discover capability gaps*; for each gap, synthesizes a targeted training environment that rewards whether the capability was exercised; trains a LoRA adapter via RL on each environment; routes between adapters at inference. τ²-bench +14.1 over base, +9.2 over GRPO and +7.4 over GEPA at the same rollout budget.
+- **SKILL0** [2604.02268, ZJU-REAL]: an *in-context RL curriculum* that begins with full skill context and progressively withdraws it according to on-policy helpfulness, ending in zero-shot autonomous behavior. ALFWorld +9.7%, Search-QA +6.6% over standard RL, with per-step context < 0.5k tokens.
+
+**Connection**: Both papers share a thesis — *agentic capability is distributed and, once acquired, should sit in parameters not in the prompt*. Together with Latent Preference Tool Calling (2604.17886), they argue the future of Agentic RL is "less prompt scaffolding at inference."
+
+### 84. Cross-Domain GRPO (April 26)
+
+GRPO has clearly broken out of the math/code/logic comfort zone.
+
+- **OP-GRPO** [2604.04142]: first off-policy GRPO for flow-matching (image/video). Replay buffer + sequence-level IS correction + late-step truncation cuts training steps to 34.2% of Flow-GRPO.
+- **MolReAct** [2604.07669]: GRPO on a *synthesis-constrained* MDP — actions are chemistry reaction templates, with a tool-augmented LLM agent acting as the dynamic reaction environment. Lead optimization that respects chemical validity.
+- **Privacy GRPO** [2604.20904]: norms extracted from fiction novels as RL training signal; SFT establishes a conservative prior, GRPO + per-completion contrastive scoring conditions decisions on context. Strongest correlation with human privacy expectations across 7 models.
+
+**Connection**: Three independent groups, three completely different domains (visual generation, drug discovery, contextual privacy), all converging on GRPO as the practical default once a domain reward is well-defined. The GRPO family is becoming the *substrate* on top of which domain-specific RL is built.
+
+### 85. Foundational Maps (April 26)
+
+Two reference works that organize the field rather than advance a single algorithm:
+
+- **RL-under-Data-Scarcity Survey** [2604.17312, PKU + Shanghai AI Lab]: classifies *external* (expensive human labels / preference data / PRM) vs. *internal* (rollouts, trajectory length, exploration budget) data scarcity; organizes the field along *data-centric / training-centric / framework-centric* axes. The first systematic survey of LLM-RL data efficiency.
+- **Reasoning Primitives in Hybrid LLMs** [2604.21454]: separates reasoning into recall + state-tracking primitives; matched Olmo3 transformer ↔ hybrid pairs (instruction-tuned + reasoning-augmented) on synthetic primitive tasks. Reasoning augmentation gives the largest overall gain; hybrid reasoning models are markedly more robust as sequential dependence rises.
+
+**Connection**: These two works frame "what is being trained" (primitives) and "what data RL needs" (scarcity taxonomy) — together they set the questions any future RL training method should answer about itself.
+
+## Cross-Cutting Meta-Observation (April 26)
+
+**Theme of the day**: *Agentic RL is fragmenting into specialty methods (capability-targeted, skill-internalization), GRPO is generalizing across modalities (flow / chemistry / norms), and the field is finally producing structural surveys.*
+
+1. **One RL run ≠ one new agent**: TRACE shows capabilities are distributed; aiming RL at a single global objective leaves capability-specific deficits unaddressed.
+
+2. **Skills should leave the prompt**: SKILL0 demonstrates a clean curriculum that internalizes prompt-time skills into parameters; Latent Preference Tool Calling did this earlier for tool preferences. The prompt is becoming a *training-time scaffold*, not a runtime crutch.
+
+3. **GRPO is becoming a substrate**: Once a domain has a verifiable reward, OP-GRPO / MolReAct / Privacy GRPO show GRPO can be plugged in across image generation, chemistry, and contextual norms. Domain expertise is in the *reward design*, not the algorithm.
+
+4. **Surveys arrive**: The field is large enough that "what is RL-for-LLM data scarcity" needs a taxonomy. The 2604.17312 survey is the first to provide one.
+
+5. **Architecture × reasoning interactions matter**: Reasoning Primitives shows reasoning augmentation amplifies hybrid architectures' state-tracking advantage — RL trainers should pair their training method with the architecture that best supports its target primitives.
+
 ---
 
-*Last updated: April 25, 2026 · 9 new papers · running total 220+ papers tracked*
+*Last updated: April 26, 2026 · 13 new papers · running total 230+ papers tracked*

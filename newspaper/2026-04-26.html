@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>LLM RL 每日论文速报 · 2026年4月26日</title>
+<style>
+  :root {
+    --ink: #111;
+    --muted: #555;
+    --accent: #8a1d1d;
+    --rule: #bbb;
+    --paper: #fcfaf5;
+  }
+  body {
+    font-family: "Iowan Old Style", "Palatino Linotype", "Hoefler Text", "Source Serif Pro", Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 40px 80px;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  header.masthead {
+    border-top: 4px double var(--ink);
+    border-bottom: 4px double var(--ink);
+    text-align: center;
+    padding: 18px 0 12px;
+    margin-bottom: 18px;
+  }
+  header.masthead h1 {
+    font-family: "UnifrakturMaguntia", "Cinzel", "Playfair Display", serif;
+    font-size: 54px;
+    letter-spacing: 2px;
+    margin: 0;
+    font-weight: 900;
+  }
+  header.masthead .meta {
+    font-variant: small-caps;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-size: 14px;
+  }
+  header.masthead .tagline {
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 4px;
+    font-size: 15px;
+  }
+  .editorial {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 20px 26px;
+    margin-bottom: 30px;
+    column-count: 1;
+  }
+  .editorial h2 {
+    font-variant: small-caps;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 4px;
+    margin-top: 0;
+    letter-spacing: 2px;
+  }
+  .editorial p {
+    margin: 8px 0;
+  }
+  h2.section {
+    font-variant: small-caps;
+    letter-spacing: 3px;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0 6px;
+    margin-top: 40px;
+    margin-bottom: 18px;
+    font-size: 22px;
+    color: var(--accent);
+  }
+  article.paper {
+    border-left: 3px solid var(--accent);
+    padding: 2px 18px 8px;
+    margin-bottom: 26px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  article.paper h3 {
+    margin: 10px 0 2px;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  article.paper .authors {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 2px;
+    font-size: 14px;
+  }
+  article.paper .link {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  article.paper .link a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+  }
+  article.paper .summary, article.paper .takeaway, article.paper .method {
+    margin-top: 8px;
+  }
+  article.paper .label {
+    font-variant: small-caps;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+    margin-right: 4px;
+  }
+  blockquote.pull {
+    border-left: 4px solid var(--accent);
+    padding: 8px 16px;
+    margin: 16px 0;
+    background: #f7f3ea;
+    font-style: italic;
+    color: #444;
+  }
+  footer.colophon {
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+    margin-top: 50px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    font-variant: small-caps;
+    letter-spacing: 2px;
+  }
+  ul.bullets {
+    margin: 6px 0;
+    padding-left: 22px;
+  }
+  ul.bullets li {
+    margin-bottom: 3px;
+  }
+  .vol-label {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 8px;
+    font-variant: small-caps;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <h1>The RL Chronicle</h1>
+  <div class="meta">VOL. X · NO. 17 · 周日版 · 2026年4月26日</div>
+  <div class="tagline">"All the Reinforcement Learning that's Fit to Print"</div>
+</header>
+
+<section class="editorial">
+  <h2>编者按 · 周日复盘日：从"通用 RLVR"走向"能力定向训练"与"技能内化"</h2>
+  <p>4 月 26 日为周日，arXiv 周末提交节奏放缓，今日数字版收录 13 篇此前未在本专栏出现过的 LLM RL 与 LLM 智能体研究——尽管发表日期略早，但它们围绕本周本专栏所追踪的几条关键主线给出了重要补充。今天没有新的"主算法发明"，但有四个值得被看见的方向性信号：</p>
+
+  <p><strong>第一，Agentic RL 的训练范式正在从"通用 RL"走向"能力定向训练（capability-targeted training）"。</strong>Stanford 的 <strong>TRACE (2604.05336)</strong> 给出了今年最干净的论证——基于"对比成功/失败轨迹自动识别能力缺口 → 为每种缺口合成定向环境 → 在每个合成环境上训练一个 LoRA adapter → 推理时按能力路由"的 pipeline，在 τ²-bench 上比 base agent 提升 +14.1 分、比 GRPO 与 GEPA 等同 rollout 预算的强基线高出 +9.2 / +7.4 分。这是对"一份 RL 训练就能改善所有能力"这一隐含假设的明确否定：能力是<em>分散</em>而非<em>整体</em>的，训练应该匹配这种分散性。</p>
+
+  <p><strong>第二，"技能内化（skill internalization）"开始挑战"运行时技能注入"。</strong>浙大 REAL Lab 的 <strong>SKILL0 (2604.02268)</strong> 提出"训练时把 skill context 完整给到模型，并随训练进度按 on-policy helpfulness 线性退场"的课程式 in-context RL，让 agent 最终在零 skill 检索条件下完成任务，每步上下文压缩到 0.5k token 以内，同时在 ALFWorld 上比标准 RL +9.7%、Search-QA +6.6%。这与 TRACE 共同指出一个新方向——<em>把 prompt 工程的智能"焊到"参数里</em>。这一思路与本周早些时候报道的 <em>Latent Preference Tool Calling (2604.17886)</em>（用 1.24% token 达到等同工具调用准确率）形成同方向呼应。</p>
+
+  <p><strong>第三，GRPO 终于走出了"语言模型 + 数学/代码"的舒适区，扩展到 flow-matching、分子化学、隐私推理等新场景。</strong>本期收录三个跨域 GRPO 应用：<strong>OP-GRPO (2604.04142)</strong> 是首个针对 flow-matching（图像/视频生成）的<em>off-policy</em> GRPO 框架——通过重放缓冲、序列级重要性采样修正、晚期去噪步骤截断，达到 Flow-GRPO 同等性能但只需 34.2% 训练步数；<strong>MolReAct (2604.07669)</strong> 把先导化合物优化建模为合成约束动作空间上的 MDP，让工具增强 LLM agent 充当反应环境，再用 GRPO 训练策略——把 LLM RL 的范式扩展到"动作空间由化学反应模板定义"的真实科研场景；<strong>Privacy GRPO (2604.20904)</strong> 则把虚构小说中的"规范性 simulacra"作为情境隐私推理的训练信号，用 SFT + GRPO + per-completion contrastive scoring，在 7 个模型上把 LLM 的隐私决策与众包人类期望对齐。</p>
+
+  <p><strong>第四，多份重磅综述/分析文献开始系统化"data-scarce RL"与"reasoning primitives"两个底层问题。</strong>北大与上海 AI Lab 联合的 <strong>RL-under-Data-Scarcity 综述 (2604.17312)</strong> 第一次系统化把 RL for LLM 的"数据稀缺性"分为外部稀缺（昂贵的人类标注/偏好/PRM）与内部稀缺（rollout 数、轨迹长度、探索预算），并以"data-centric / training-centric / framework-centric"自底向上分类整理领域；<strong>Reasoning Primitives in Hybrid LLMs (2604.21454)</strong> 则用 Olmo3 transformer 与 hybrid 模型的对照实验，分离 recall 与 state-tracking 两个推理基元——发现 reasoning augmentation 给出的整体提升最大，而 hybrid 架构在序列依赖增加时显著更稳健。这两篇是给 RL 训练设计者提供"上游土壤"的工作。</p>
+
+  <p>综合来看，本期把这些工作分为四个版面：<em>策略优化与跨域 GRPO</em>、<em>Agentic RL 训练框架（能力定向 + 技能内化）</em>、<em>Reasoning RL 与领域适配</em>、<em>综述与基础分析</em>。明日（周一）arXiv 将进入新一周的提交高峰期，本专栏将继续追踪 LLM RL 领域的最新动态。</p>
+</section>
+
+<h2 class="section">第一版 · 策略优化与跨域 GRPO</h2>
+
+<article class="paper">
+  <h3><span class="vol-label">头条</span>OP-GRPO: Efficient Off-Policy GRPO for Flow-Matching Models</h3>
+  <div class="authors">（图像/视频生成 RL 团队）</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.04142">2604.04142</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>GRPO 在 flow-matching 模型（图像/视频生成）的后训练中已被证明非常有效，但其<strong>纯 on-policy 范式</strong>导致样本效率极低——每一步 rollout 用一次就丢弃。OP-GRPO 是<em>第一个</em>面向 flow-matching 的 off-policy GRPO 框架，把"高质量轨迹缓冲 + 重用"引入这一类视觉生成 RL，将训练步数压到原来的 34.2%。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li><strong>主动选择高质量轨迹</strong>纳入 replay buffer，而不是随机采样：让 GRPO 的 group-relative advantage 仍然在"正向 + 充分对比"的轨迹上工作。</li>
+      <li><strong>序列级重要性采样修正</strong>（sequence-level importance sampling correction），防止旧轨迹与当前策略分布漂移过大导致的偏差。</li>
+      <li><strong>晚期去噪步骤截断</strong>（truncate at late steps）：理论与实验都发现 flow matching 的晚期 step 上 off-policy ratio 过于病态（ill-conditioned），直接截断比加权更稳健。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">为什么重要：</span>这是把"LLM RL 加速学（off-policy GRPO、prioritized replay、token/seq 重要性修正）"完整迁移到生成式扩散/flow 模型的第一篇——之后的视觉 RLVR、视频 RL 工作都很可能沿用其重要性修正配方。在图像和视频生成 benchmark 上以 34.2% 训练步数达到与 Flow-GRPO 相当或更优的生成质量，意味着扩散模型 RL 的数据效率有明显提升空间。</div>
+  <blockquote class="pull">"流匹配模型的 RL 后训练终于能像 LLM RL 一样'吃旧轨迹'，这把扩散 RL 的算力账本一次性砍掉 2/3。"</blockquote>
+</article>
+
+<article class="paper">
+  <h3>MolReAct: Reinforcement Learning with LLM-Guided Action Spaces for Synthesizable Lead Optimization</h3>
+  <div class="authors">Tao Li, Kaiyuan Hou, Tuan Vinh, Monika Raj, Zhichun Guo, Carl Yang（Emory & Oxford 等）</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.07669">2604.07669</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>把先导化合物优化（lead optimization）形式化为<strong>"合成约束动作空间上的 MDP"</strong>：动作空间不再是任意分子图编辑，而是经过验证的化学反应模板（reaction templates）。一个工具增强的 LLM agent 充当动态反应环境，调用化学分析工具识别反应位点并提出合规变换；策略模型用 GRPO 在这些约束动作中选择，最大化多步反应的长程 oracle 奖励。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>"LLM 作为反应环境"——LLM 负责生成 chemically grounded 的局部变换提议，与传统纯枚举/纯生成式分子优化区别开。</li>
+      <li>动作空间收敛到合成可行性，避免直接 LLM 生成法常见的"化学结构无效"问题。</li>
+      <li>用 GRPO 把多步合成 reward（oracle scores）端到端地反传到策略 LLM 的 token 上。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">为什么重要：</span>这是 LLM RL 跨入"动作空间由领域规则严格限制"的真实科研流水线的代表作。与 ReaGeo（坐标 token 化）、QuantumQA（物理推理）一道，把 RLVR 范式从代码/数学扩展到"任意可由领域工具+度量奖励组合定义的科学问题"。</div>
+</article>
+
+<article class="paper">
+  <h3>Reinforcing Privacy Reasoning in LLMs via Normative Simulacra from Fiction</h3>
+  <div class="authors">Matt Franchi, Madiha Zahrah Choksi, Hal Triedman, Helen Nissenbaum（Cornell Tech）</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.20904">2604.20904</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>当前 LLM agent 的隐私决策与用户的"情境隐私期望"系统性失配。作者提出从虚构小说中提取<strong>"规范性 simulacra"</strong>（包含人物角色、信息流、隐性规范的结构化片段），用之 SFT + GRPO 训练 LLM 形成<em>情境化</em>的隐私推理能力。为防止过拟合特定小说场景，引入 <strong>per-completion contrastive scoring</strong>：每个补全分别在"正确规范宇宙"与"随机错误规范宇宙"上评分，强迫模型对情境而非源材料进行条件化。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>把"小说中的隐性规范"作为<em>RL 监督信号</em>——这是把人文学科文本作为 reward 数据源的少数实证。</li>
+      <li>SFT 给出"保守先验"（默认限制信息流），GRPO 在此基础上学习<em>情境化的放行/拒绝</em>，弥补 SFT 单一倾向。</li>
+      <li>对比评分机制等价于在 reward 层面引入 negative sampling，提升泛化稳定性。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">关键发现：</span>跨 7 个不同模型，SFT-only 一致引入"过度保守"的隐私先验；而 SFT + GRPO 在法律合规基准上拿到最高分，并与众包人类隐私期望的相关性最高。表明<em>隐私推理</em>不能只靠静态 SFT，而需要 RL 来平衡"保守先验"与"情境化放行"。</div>
+</article>
+
+<h2 class="section">第二版 · Agentic RL：能力定向训练与技能内化</h2>
+
+<article class="paper">
+  <h3><span class="vol-label">头条</span>TRACE: Capability-Targeted Agentic Training</h3>
+  <div class="authors">Stanford Scaling Intelligence Lab</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.05336">2604.05336</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>把"通用 RL 训练 LLM agent"拆解为"<strong>识别能力缺口 → 合成定向环境 → 训练定向 LoRA → 推理时按能力路由</strong>"四步 pipeline。这一切的核心抽象是"<em>capability</em>"——指在 trajectory 中执行某些必要动作以解决一类子任务的能力。TRACE 用对比成功/失败轨迹来自动找出 base agent 的具体能力缺口，然后为每个缺口合成一个奖励"该能力是否被锻炼"的合成训练环境，并在每个环境上训练独立的 LoRA adapter。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li><strong>对比式能力发现</strong>（contrast successful vs. failed trajectories）：让 LLM 自动归纳"成功轨迹独有但失败轨迹缺失"的动作模式，从而把"训练目标"从模糊的"任务完成率"细分为可定向的能力单元。</li>
+      <li><strong>合成定向环境</strong>：每个能力对应一个专门设计、奖励信号专门指向该能力是否被使用的合成环境，避免"在真实环境上训练时各能力学习信号互相干扰"。</li>
+      <li><strong>多 LoRA + 能力路由</strong>：每个能力一个 adapter，推理时根据上下文路由到对应 adapter——保留 base 模型的通用性，同时获得分散的能力增强。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">关键发现：</span>在 τ²-bench（客户服务）上比 base agent +14.1 分；在 ToolSandbox（工具使用）上 +7 个 perfect score。<strong>同等 rollout 预算</strong>下，TRACE 比 GRPO 高出 +9.2 分、比 GEPA 高出 +7.4 分——后者是去年 SOTA 的 prompt 优化方法。这意味着"能力定向"的训练效率显著高于"统一目标 + 通用 RL"。</div>
+  <blockquote class="pull">"在通用 RL 看来'要变好'是一句话；但在 agent 行为上，'要变好'是一组分散的能力——TRACE 把这件事搬到训练前台。"</blockquote>
+</article>
+
+<article class="paper">
+  <h3>SKILL0: In-Context Agentic Reinforcement Learning for Skill Internalization</h3>
+  <div class="authors">浙大 REAL Lab（ZJU-REAL）</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.02268">2604.02268</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>当前 agent skills（程序化知识 + 可执行资源的结构化包）通常是<em>推理时</em>注入到 prompt 中——这导致检索噪声、token 预算膨胀、以及"模型从不真正学会，只是跟着 skill 文档照做"。SKILL0 提出"训练时给完整 skill 上下文，但<strong>课程式地、按 on-policy helpfulness 线性退场</strong>"，最终得到一个零 skill 检索仍能完成任务的 agent。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>把 skill 文件按类别离线分组，渲染为带交互历史的紧凑视觉上下文，统一教模型"工具调用 + 多轮任务完成"。</li>
+      <li><strong>动态课程</strong>：每个 skill 文件评估其对当前策略的 on-policy helpfulness，仅保留那些"当前策略仍然能从中获益"的部分，预算线性退场——保证从"完整 skill 注入"平滑过渡到"完全无 skill 自主操作"。</li>
+      <li>整体训练框架是 in-context RL：奖励是任务完成度，但 skill 上下文同时作为<em>探索引导</em>与<em>训练信号源</em>，最终被吸收进策略参数。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">关键发现：</span>在 ALFWorld 上比标准 RL +9.7%、Search-QA +6.6%；推理时每步上下文压缩到 0.5k token 以内。这是把"prompt 中的智能"焊到"参数中的智能"的代表作——和 TRACE 一道把 Agentic RL 推到了"训练完后 prompt 工程退场"这个位置。</div>
+</article>
+
+<article class="paper">
+  <h3>STEP-HRL: Hierarchical Reinforcement Learning with Augmented Step-Level Transitions for LLM Agents</h3>
+  <div class="authors">Shuai Zhen, Yanhua Yu, Ruopei Guo, Nan Cheng, Yang Deng</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.05808">2604.05808</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>现有 LLM agent 普遍依赖"越来越长的交互历史"来做决策，导致计算成本与可扩展性吃紧。STEP-HRL 是一个 HRL 框架，让 agent <strong>仅以单步 transition（而非完整交互历史）为条件</strong>进行 step 级学习，再用层级化的子任务摘要承载长程依赖。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>任务被 hierarchically 拆解为子任务，已完成子任务的摘要承担"全局进度"角色，避免在每一步把整段历史送回模型。</li>
+      <li>引入<strong>"局部进度模块"</strong>，在子任务内部迭代地、有选择地总结交互历史，形成一份紧凑的 local progress summary。</li>
+      <li>RL 训练目标围绕"在全局/局部摘要约束下做出与全历史等价的决策"展开，让 step-level policy 在丢弃多数原始 token 的情况下保持决策一致性。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">为什么重要：</span>"长程历史 vs. 决策延迟/算力开销"是 Agentic RL 的核心 tradeoff。STEP-HRL 给出"层级摘要 + step-level policy"的工程化解法，与本周早些时候的 NGC（学会 forget KV cache）、StructMem（结构化记忆）共同构成"长程信息的几种 RL 友好压缩范式"。</div>
+</article>
+
+<article class="paper">
+  <h3>CoARS: Self-Distilled Reinforcement Learning for Co-Evolving Agentic Recommender Systems</h3>
+  <div class="authors">Zongwei Wang 等</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.10029">2604.10029</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>把 LLM 驱动的 agentic 推荐系统从"Reflexion 风格的外置文本记忆"迁移到"<strong>把交互经验消化进参数</strong>"。CoARS 把"推荐 agent ↔ 用户 agent"建模为多轮可微的协同学习问题：双方在同一轨迹中互相影响，需要被同时训练；同时把过去的轨迹自蒸馏为 token 级 credit 信号，避免"只看最终结果"的稀疏奖励。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li><strong>Interaction reward</strong>：从同一交互轨迹给推荐 agent 和用户 agent 同时派发耦合的任务级监督——把多轮交互的密集信号同时供给双方。</li>
+      <li><strong>Self-distilled credit assignment</strong>：把历史轨迹转换成 token 级的信用信号，相当于把"过去的成功/失败回放进梯度"。</li>
+      <li>整套设计避免了 Reflexion 风格"把记忆塞进 prompt"的 token 膨胀和参数无更新问题。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">为什么重要：</span>多数现有 ARS 把过去的反馈作为 prompt 上下文使用——但参数本身不变。CoARS 第一次系统化展示如何把"agent ↔ agent 多轮交互"用 RL 端到端融合训练，并在多个推荐数据集上超越代表性 ARS 基线。这是 Agentic RL 在推荐这一传统应用域的方法论补完。</div>
+</article>
+
+<article class="paper">
+  <h3>OpenGame: Open Agentic Coding for Games (with Execution-Grounded RL)</h3>
+  <div class="authors">CUHK MMLab</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.18394">2604.18394</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>当前 LLM 与代码 agent 在"独立的 programming 任务"上表现不错，但在"从高层设计生成完整可玩 web 游戏"这种<em>多文件强耦合</em>任务上经常崩塌——跨文件不一致、场景接线断裂、逻辑不连贯。OpenGame 是首个开源、面向端到端 web 游戏开发的 agentic 框架，包含 <em>Game Skill</em>（Template Skill 库 + Debug Skill 协议）+ <strong>GameCoder-27B</strong>。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>GameCoder-27B 经过三阶段训练：continual pre-training → SFT → <strong>execution-grounded RL</strong>——RL 阶段奖励直接来自"无头浏览器执行 + VLM 评判"，把"游戏是否真的能跑、能玩、是否符合设计意图"转化为可微/可优化的 reward。</li>
+      <li>Game Skill：Template Skill 把项目骨架的可重用经验积累成库；Debug Skill 维护一份"已验证修复"的活协议，避免重复踩坑。</li>
+      <li>OpenGame-Bench：以 Build Health、Visual Usability、Intent Alignment 三维评估，由无头浏览器执行 + VLM 评判驱动——这本身是给后续游戏 RL 训练的<em>评测协议</em>。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">为什么重要：</span>这是把"<strong>execution-grounded RL</strong>"从单文件代码 RL（SWE-Bench 等）扩展到"<em>多文件、强耦合、有运行时反馈</em>"的真实软件开发场景。它与 SWE-RL、AdaExplore 等共同构成本年度"软件 agent + 执行反馈 RL"这一新支线的代表作。</div>
+</article>
+
+<article class="paper">
+  <h3>AdaExplore: Failure-Driven Adaptation and Diversity-Preserving Search for Efficient Kernel Generation</h3>
+  <div class="authors">Weihua Du 等（11 位作者）</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.16625">2604.16625</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>面向"GPU kernel 生成（Triton 等 DSL）"这一类<em>领域特定 + 强执行反馈</em>的代码生成场景，AdaExplore 用 LLM agent 把<strong>失败驱动的适配</strong>与<strong>多样性保持的搜索</strong>组合起来——避免"每个问题独立处理 + 不积累知识"的常见失效模式。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li><strong>Failure-Driven Adaptation</strong>：在 adaptation 阶段，agent 合成任务并把反复出现的失败模式转换为"可复用的合规规则记忆"——后续生成都先经过这份合规库过滤，保留在可行集内。</li>
+      <li><strong>Diversity-Preserving Search</strong>：在 search 阶段，把候选 kernel 组织成树，交替进行小幅局部精炼和较大的结构性重生成，避免过早收敛到局部最优。</li>
+      <li>整套设计可以理解为"执行反馈版 self-play"：失败会被规则化、成功会被结构化。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">关键发现：</span>在 KernelBench Level-2 / Level-3 上，AdaExplore 在 100 步内分别取得 3.12× / 1.72× 加速；并随更多算力持续提升。对 LLM RL 关注者：这是"测试时执行反馈 RL"在 kernel/编译器 agent 这一硬核领域的强 baseline，也是未来训练阶段 RL 设计可以直接复用的失败-成功轨迹结构。</div>
+</article>
+
+<h2 class="section">第三版 · Reasoning RL 与领域适配</h2>
+
+<article class="paper">
+  <h3>Fine-Tuning Small Reasoning Models for Quantum Field Theory</h3>
+  <div class="authors">Nathaniel S. Woodward, Zhiqi Gao, Yurii Kvasiuk, Kendrick M. Smith, Frederic Sala, Moritz Münchmeyer</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.18936">2604.18936</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>第一项围绕"<strong>理论物理推理能力是如何在训练过程中长出来的</strong>"开展的学院派 fine-tuning 研究。作者把 7B 小模型作为 QFT（量子场论）reasoning specialist 的最小工作底座，配套搭建一条强健的数据生成 pipeline——既能合成新题，也能把已有人类题改造为可训练形式。同时在同一份数据上做 RL 与 SFT 的对照实验，记录性能增益曲线，并测试到其他物理域的泛化。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>合成 2,500+ QFT 训练问题 + 一份从 arXiv 与教学资源里 curate 出来的人工改造题集——形成 RL 训练所需的"<em>可验证奖励</em>"任务底盘。</li>
+      <li>对同一数据做 RL vs. SFT 的细粒度对照实验，明确每种范式各自的增益与边际效应；并测量训练后模型在其他物理子域的泛化。</li>
+      <li>这是把 RLVR 思路放到"高度专业化、训练数据稀缺、答案可验证"的科学场景的少数实证之一，与早些时候报道的 QuantumQA（验证感知 RLVR）形成互补。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">为什么重要：</span>它不仅是一个新的 domain-specific RL 工作，更重要的是它把"<em>可验证奖励 + 小模型 RL</em>"的方法论搬到了"开放式高复杂度科学问题"。这条路通向"7B 模型 + 大量合成可验证科学题 + RL 训练"的 specialist agent——这是通向 AI for Science 的一条务实路线。</div>
+</article>
+
+<article class="paper">
+  <h3>REVEAL: Reasoning-Aware AIGC Detection via Alignment and Reinforcement</h3>
+  <div class="authors">Zhao Wang, Max Xiong, Jianxun Lian, Zhicheng Dou</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.19172">2604.19172</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>面向 AI 生成内容（AIGC）检测——这个任务因 LLM 持续进化而越来越难。REVEAL 不是"拿一个判别器分类"，而是先生成<strong>可解释的推理链</strong>再做分类。作者发布 AIGC-text-bank（多领域、多 LLM 来源、多作者场景的综合数据集），并采用<strong>SFT + RL 两阶段训练</strong>：SFT 培育推理能力，RL 改善准确率、增强逻辑一致性、降低幻觉。</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>把 detection 任务从"标签预测"重塑为"推理 + 标签预测"，让模型在 token 上显式留下判别理由——这本身就提供了可审计性。</li>
+      <li>RL 奖励同时面向"分类正确性 + 推理逻辑一致性 + 反幻觉"——这是把多维奖励组合在 detection 任务上的早期实证，方法论可被其他二分类/多分类推理任务复用。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">为什么重要：</span>这把"reasoning + RL"范式从数学/代码/物理推理的舒适区，下探到"可解释判别器"这一长期被认为不需要 reasoning 的实用任务——在 AIGC 检测上拿到 SOTA 的同时维持透明度。这条路对许多内容审核、安全过滤、合规检测任务都是直接借鉴的训练范式。</div>
+</article>
+
+<article class="paper">
+  <h3>Reasoning Primitives in Hybrid and Non-Hybrid LLMs</h3>
+  <div class="authors">（架构 × 推理基元研究团队）</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.21454">2604.21454</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>把 LLM 的"推理"分解为两个更原子的能力——<strong>recall</strong>（基于 attention 的检索）与 <strong>state-tracking</strong>（基于循环状态更新）——并用 Olmo3 的 transformer 与 hybrid 变体（包括 instruction-tuned 与 reasoning-augmented 版本）做匹配对照实验，研究：在<em>同时</em>需要这两类基元的任务上，hybrid 架构是否比纯 attention 模型更适合？</div>
+  <div class="method"><span class="label">方法亮点：</span>
+    <ul class="bullets">
+      <li>设计一系列任务难度可控、recall × state-tracking 比例可调的合成基元任务。</li>
+      <li>把"reasoning augmentation"作为可拨动的实验变量，与架构选择正交——这样能区分"<em>哪些增益来自 reasoning 训练</em>"与"<em>哪些增益来自架构本身</em>"。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">关键发现：</span>
+    <ul class="bullets">
+      <li><strong>Reasoning augmentation 带来的整体增益最大</strong>——比架构层面的差异更显著，并能扩展模型保持有效的难度区间。</li>
+      <li>在某些任务上，<em>hybrid reasoning 模型</em>对"序列依赖增加"明显更鲁棒——意味着对长程 state-tracking 任务，"hybrid 架构 × reasoning 训练"会有协同效应。</li>
+    </ul>
+    <p>对 LLM RL 关注者：这给"<em>RL 训练在哪些架构上效率最高</em>"提供了实证指引——hybrid + reasoning RL 是值得后续 RL 训练设计者重点对照的一组配置。</p>
+  </div>
+</article>
+
+<h2 class="section">第四版 · 综述与基础分析</h2>
+
+<article class="paper">
+  <h3>A Survey of Reinforcement Learning for Large Language Models under Data Scarcity: Challenges and Solutions</h3>
+  <div class="authors">Zhiyin Yu, Yuchen Mou, Juncheng Yan, Junyu Luo, Chunchun Chen, Xing Wei, Yunhui Liu 等（北大、上海 AI Lab、新加坡国立、南开、同济、南大、上海交大、Wisconsin-Madison 等）</div>
+  <div class="link">arXiv: <a href="https://arxiv.org/abs/2604.17312">2604.17312</a></div>
+  <div class="summary"><span class="label">核心贡献：</span>该综述第一次系统化把 LLM 后训练里的"<strong>数据稀缺性</strong>"问题分成两类：<em>外部数据稀缺</em>（细粒度人类反馈、偏好数据、专家标注、step-by-step 推理 trace 等高成本监督信号）与 <em>内部数据稀缺</em>（rollout 数、轨迹长度、探索预算等模型自生成数据的限制）。在此分类下，自底向上构建一个三层框架：<em>data-centric</em>（数据本身的获取、增强、合成与过滤）、<em>training-centric</em>（在算法层面对稀缺数据更鲁棒的训练目标，如 PRM、reward shaping、curriculum）、<em>framework-centric</em>（系统级解决方案如 distillation、self-play、合成环境）。</div>
+  <div class="method"><span class="label">为什么这个综述重要：</span>
+    <ul class="bullets">
+      <li><strong>外部 vs. 内部稀缺的分类</strong>把过去散落于 PRM、RLAIF、self-play、合成偏好数据等领域的方法放到统一的视野里——你可以一眼看出"我现在缺的是哪种数据，应该读哪一类方法"。</li>
+      <li>三层框架（data / training / framework）让<em>方法</em>与<em>研究问题</em>对齐，避免每篇新论文都自我宣称"独立的新方法"，实际上是在某个分类里再添一笔。</li>
+      <li>对从业者：这是 2026 年第一份"我应该如何用最少高质量信号训出 RL LLM"的索引；对研究者：这是给当前领域空白和重叠之处的清晰图景。</li>
+    </ul>
+  </div>
+  <div class="takeaway"><span class="label">阅读建议：</span>建议结合本周早些时候报道的 PreRL（pretrain-space RL）、CAPO（calibration）、SPO（multi-turn）、Causal-Decomposition RM、CRAFT 等具体工作一起读——这些工作分别落在该综述的不同子节中。本综述更像是"把当下散乱的 RL-for-LLM 工作收拢成一张可导航的地图"。</div>
+</article>
+
+<footer class="colophon">
+  本期共 13 条 · 数据截至 2026-04-26 · 编辑：The RL Chronicle Editorial Desk
+</footer>
+
+</body>
+</html>

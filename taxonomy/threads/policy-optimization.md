@@ -92,3 +92,11 @@ The "critic vs. critic-free" debate is collapsing into a unified lens: EVPO trea
 ### Cross-links
 - GRPO-VPS and polyGRPO represent the two dominant vectors of GRPO evolution this week: *depth of credit assignment* (step-level supervision) and *breadth of exploration* (cross-language probing).
 - GRAO extends the GRPO family vertically (token → response → agent-module); combined with TEPO (token-level) and StepPO (step-level), the field now has group-relative advantage at nearly every granularity.
+
+## April 26, 2026 additions
+
+- **OP-GRPO** [2604.04142] — *First off-policy GRPO for flow-matching models.* Three pieces: (i) actively select high-quality trajectories into a replay buffer; (ii) sequence-level importance-sampling correction to mitigate distribution shift; (iii) *truncate trajectories at late denoising steps* because their off-policy ratios are theoretically and empirically ill-conditioned. Achieves Flow-GRPO performance with only 34.2% of training steps on image and video generation benchmarks. Most direct port of "LLM RL acceleration tricks" (off-policy + replay + IS) into the diffusion / flow-matching family.
+
+### Cross-links
+- **OP-GRPO ↔ Freshness-Aware PER (2604.16918)** — both replay-based accelerations for online policy gradient, but on different model classes (flow vs. autoregressive LM). Replay design (priority, freshness, IS correction) is converging across modalities.
+- **OP-GRPO ↔ MAR-GRPO (2604.06966)** — within image generation, the GRPO family is now also forking into hybrid AR-diffusion specialists; off-policy and architecture-aware variants will likely combine.
