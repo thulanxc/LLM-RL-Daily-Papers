@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM RL Daily — 2026 年 4 月 27 日</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fbfaf6;
+    --rule: #2a2a2a;
+    --accent: #8b1a1a;
+    --muted: #5a5a5a;
+    --card: #ffffff;
+    --border: #d8d3c4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Times New Roman", "Songti SC", "PingFang SC", "Noto Serif SC", Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    margin: 0;
+    padding: 32px 48px;
+    line-height: 1.65;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  header.masthead {
+    text-align: center;
+    border-top: 4px double var(--rule);
+    border-bottom: 4px double var(--rule);
+    padding: 18px 8px 14px;
+    margin-bottom: 28px;
+  }
+  header.masthead h1 {
+    font-size: 56px;
+    margin: 0 0 6px 0;
+    font-weight: 900;
+    letter-spacing: -1px;
+    font-variant: small-caps;
+  }
+  header.masthead .subtitle {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  header.masthead .dateline {
+    margin-top: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--rule);
+  }
+  .editorial {
+    background: #f3eedd;
+    border-left: 5px solid var(--accent);
+    padding: 18px 24px;
+    margin: 0 0 36px 0;
+    font-size: 16px;
+  }
+  .editorial h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+  .editorial p {
+    margin: 8px 0;
+  }
+  section.category {
+    margin-bottom: 38px;
+  }
+  section.category > h2 {
+    font-size: 26px;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 4px;
+    margin-bottom: 20px;
+    font-variant: small-caps;
+    letter-spacing: 0.5px;
+  }
+  article.paper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  article.paper h3 {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    color: var(--accent);
+  }
+  article.paper .meta {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  article.paper .meta a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+  }
+  article.paper .summary {
+    font-size: 15px;
+    margin: 8px 0;
+  }
+  article.paper .takeaways {
+    margin-top: 10px;
+    background: #faf7ee;
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  article.paper .takeaways h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+  }
+  article.paper .takeaways ul {
+    margin: 4px 0 4px 18px;
+    padding: 0;
+  }
+  article.paper .takeaways li {
+    margin-bottom: 3px;
+  }
+  article.paper .method {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  article.paper .method strong {
+    color: var(--rule);
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 2px solid var(--rule);
+    padding-top: 16px;
+    margin-top: 40px;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+  .tag.alt { background: #4a5d3a; }
+  .tag.warn { background: #8b6a1a; }
+  .tag.cool { background: #2c4a6b; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <h1>LLM RL Daily</h1>
+  <div class="subtitle">A Newspaper of Reinforcement Learning for Large Language Models</div>
+  <div class="dateline">Vol. 1 &middot; 2026 年 4 月 27 日 &middot; Monday Edition</div>
+</header>
+
+<div class="editorial">
+  <h2>本日要闻 · Editor&rsquo;s Note</h2>
+  <p>本期周一刊共收录 <strong>15 篇</strong>新论文，主题集中在三条主线上：<strong>（一）潜空间推理 vs. 自然语言 CoT 的范式竞争</strong>。IBM 的 <em>Abstract-CoT</em>（2604.22709）证明在保留离散 token 形式的前提下也能达成 11.6× 推理 token 压缩；<em>LEPO</em>（2604.17892）反向用 Gumbel-Softmax 把 RL 梯度直接打到连续潜表征上；<em>TRS</em>（2604.21764）则更激进——把"思考过程"提炼为可检索的复用技能。</p>
+  <p><strong>（二）RLVR 的"失忠"危机：当结果对了但推理是假的</strong>。Stanford 等机构的 <em>Causal Importance / Sufficiency of Reasoning</em>（2604.22074）首次给出 RLVR 训练后推理链与最终答案因果关联的两个量化指标——结果令人不安：训练能提升任务准确率，但既不必然提升 CIR 也不必然提升 SR。这与近期"RLVR Implicitly Incentivizes Correct Reasoning"形成针锋相对的对照。</p>
+  <p><strong>（三）饱和数据下的 GRPO 退化</strong>。Tencent/Notre Dame 的 <em>CUTS</em>（2604.18493）首次系统刻画"过强基模型导致组相对优势消失 → 模式坍塌"的链条，并以参数自由的 Constrained Uniform Top-K 采样修复；Stanford 的 <em>Poly-EPO</em>（2604.17654）从集合 RL 视角给出"显式探索-利用协同"的目标函数。两者从采样侧和目标函数侧夹击同一现象。</p>
+  <p>另外重点关注：<strong>UDM-GRPO</strong>（2604.18518，首个在 Uniform Discrete Diffusion 上跑稳的 GRPO，GenEval 69%→96%）；<strong>SGS Self-Guided Self-Play</strong>（2604.20209，让 7B 通过自我引导自对弈超越 671B 基线）；<strong>HiLight</strong>（2604.22565，Stony Brook×Meta，给 frozen LLM 训练一个可插拔的"高亮 actor"）；<strong>Behavioral Canaries</strong>（2604.22191，Google，首次给出 RLFT 阶段是否使用了私有检索文档的可审计探针）。</p>
+  <p>方法论小结：当下 RL-for-LLM 的研究焦点正从"让模型答对"转向"让模型为了正确的理由答对"——CIR/SR、CUTS、Poly-EPO、SGS 都在攻击同一个症状：<em>奖励正确但训练廉价</em>。</p>
+</div>
+
+<section class="category">
+<h2>I. 推理 RL 与潜空间推理 · Reasoning RL & Latent Reasoning</h2>
+
+<article class="paper">
+<h3><span class="tag">头条</span>Thinking Without Words: Efficient Latent Reasoning with Abstract Chain-of-Thought</h3>
+<div class="meta">Keshav Ramji, Tahira Naseem, Ramón Fernandez Astudillo (IBM Research) · arXiv: <a href="https://arxiv.org/abs/2604.22709">2604.22709</a> · 提交日期 2026-04-24</div>
+<p class="summary">本文重新思考"潜空间推理 vs. 显式 CoT"的对立——Abstract-CoT 在<strong>完全保留离散 token 空间</strong>的前提下，让模型先生成一段来自"保留词表（reserved vocabulary）"的抽象 token，再产出最终回答。这相当于在词表外辟出一块仅用于"思考"的潜空间，而无需引入连续状态。</p>
+<div class="method">
+<strong>方法关键：</strong> 训练分两阶段。
+<ol>
+<li><em>Warm-up（策略迭代式）：</em>交替执行（a）从 verbal CoT 经掩码"瓶颈化"得到抽象草稿后做 SFT，与（b）自蒸馏。这一过程把保留 token 的 embedding 预热为"会推理"的初始化。</li>
+<li><em>RL 阶段：</em>用 GRPO 在<strong>受约束解码</strong>下（仅允许在抽象词表中采样）优化抽象推理轨迹的生成。</li>
+</ol>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在数学推理、指令跟随、多跳推理上达到与 verbal CoT 可比的准确率，而<strong>推理 token 数最高减少 11.6×</strong>。</li>
+<li>抽象词表跨模型族可迁移——证明"思考的语言"并非依赖具体语义符号系统。</li>
+<li>与 LEPO（连续潜空间 + Gumbel-Softmax）形成今日的"离散 vs. 连续潜推理"对照，两者均回应了 2604.15726 的"LLM Reasoning Is Latent" 立场。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3>TRS: Thinking with Reasoning Skills — Fewer Tokens, More Accuracy</h3>
+<div class="meta">Guangxiang Zhao, Qilong Shi, Xusen Xiao, Xiangzheng Zhang, Tong Yang, Lin Sun (Qiyuan Tech / 清华 / 港大 / 北大) · arXiv: <a href="https://arxiv.org/abs/2604.21764">2604.21764</a> · 2026-04-23</div>
+<p class="summary">把"思考过程"和"思考能力"解耦：TRS 是一个 <strong>training-free、检索增强</strong>的框架，将长 deliberation 轨迹（含试错）蒸馏为紧凑可复用的<em>推理技能（reasoning skills）</em>，在推理时通过技能检索来引导模型，避免重复走弯路。这意味着即使是黑盒 API LLM 也能受益。</p>
+<div class="method">
+<strong>方法关键：</strong> 离线生成长链 + 试错探索 → 抽取/蒸馏成结构化"技能条目"存入向量库 → 推理时基于问题表征做 top-k 技能检索 → 把技能作为前置上下文注入。<strong>整套流程不需要更新模型权重</strong>。</p>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在数学和代码任务上同时<strong>降低 thinking token / 成本</strong>且 match 或超越 CoD/TALE 等强 prompt 基线。</li>
+<li>难题上增益更明显，且可在异构 LLM 间迁移技能库——意味着这是"模型容量无关"的解决方案。</li>
+<li>把 EvoAgent（2604.20133）那一类"技能学习"的范式从智能体外推到了纯推理任务。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3><span class="tag warn">警示</span>Outcome Rewards Do Not Guarantee Verifiable or Causally Important Reasoning</h3>
+<div class="meta">Qinan Yu, Alexa Tartaglini, Peter Hase, Carlos Guestrin, Christopher Potts (Stanford) · arXiv: <a href="https://arxiv.org/abs/2604.22074">2604.22074</a> · 2026-04-23</div>
+<p class="summary">一个直击 RLVR 范式核心假设的论文：人们普遍假设 RLVR 训练出的 CoT 既<em>因果重要</em>（真实反映模型推理过程）又<em>可验证</em>（验证器能据此独立得到答案），本文用两个新指标证伪——</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li><strong>CIR (Causal Importance of Reasoning)</strong>：度量推理 token 整体对最终答案的累积因果影响（基于干预/扰动）。</li>
+<li><strong>SR (Sufficiency of Reasoning)</strong>：度量给定推理链时，<em>外部验证器</em>能否仅凭此推理唯一地推出答案。</li>
+<li>在 Qwen2.5 系列 + ReasoningGym 任务上系统测量，并对比"纯 RLVR vs. SFT 预热 + RLVR vs. RLVR + 辅助 CIR/SR 奖励"三个 setting。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li><strong>RLVR 提高任务准确率但<u>既不必然提升 CIR，也不必然提升 SR</u></strong>——也就是说，RLVR 后的模型常常"答对了但推理链与答案弱相关"。</li>
+<li>少量 SFT 预热即可显著缓解低 CIR/SR；额外加入 CIR/SR 辅助奖励能在保持准确率的同时大幅改善因果性与可验证性。</li>
+<li>与同期的"RLVR Implicitly Incentivizes Correct Reasoning"（2506.14245）形成<strong>直接对峙</strong>：忠诚性是脆弱的，需要被显式优化。</li>
+<li>对监控、评测、对齐三件事都有警示——"看着对的 CoT" 可能根本没参与决定答案。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3>Too Correct to Learn: Reinforcement Learning on Saturated Reasoning Data (CUTS)</h3>
+<div class="meta">Tencent AI Lab × University of Notre Dame · arXiv: <a href="https://arxiv.org/abs/2604.18493">2604.18493</a> · 2026-04-20</div>
+<p class="summary">系统刻画了 GRPO 在"过强基模型 + 饱和基准"组合下的退化机制：当强基模型在 MATH 等标准基准上几乎全对时，组内回答<strong>同质化</strong>导致组相对 advantage 信号消失，策略陷入模式坍塌（mode collapse）。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li><strong>CUTS（Constrained Uniform Top-K Sampling）</strong>：参数自由的解码策略——在受约束的高置信候选中<em>均匀</em>采样而不是按 softmax 偏置采样，从而保留结构的同时增加多样性。</li>
+<li><strong>Mixed-CUTS 训练框架</strong>：将"利用性 rollout"（标准采样）与"探索性 rollout"（CUTS 采样）混合，放大组内 advantage 方差。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在 Qwen3 上验证，CUTS 防止策略退化并显著提升<strong>域外泛化</strong>。</li>
+<li>给"为什么 RLVR 在饱和基准上没有进一步增益"提供了首份机制级解释，与 SPS（2604.16995，Probability Squeezing Effect）和 MCPO（2604.16972）的"已掌握提示梯度坍缩"形成并行视角。</li>
+<li>启示：RLVR 的瓶颈不在算法，而在<strong>采样多样性</strong>——这与下文 Poly-EPO 的"集合 RL"路线不谋而合。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3>Poly-EPO: Polychromic Exploratory Policy Optimization for Reasoning</h3>
+<div class="meta">Ifdita Hasan Orney, Jubayer Ibn Hamid, et al. (Stanford) · arXiv: <a href="https://arxiv.org/abs/2604.17654">2604.17654</a> · 2026-04-19</div>
+<p class="summary">从<strong>集合 RL（set RL）</strong>视角重写后训练目标：不是优化单个回答，而是优化"一组回答"——使该组在奖励函数下整体正确，且推理策略多样化。这把"探索"和"利用"的协同从启发式提升为目标函数级别的显式协同。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li>给出 set RL 的通用 advantage 修改公式，可适配 PPO/GRPO 等标准 RL 算法。</li>
+<li>实例化为 <strong>Polychromic Exploratory Policy Optimization (Poly-EPO)</strong>：目标项显式地同时最大化"集合内正确率"和"集合内多样性"。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>跨多个推理基准上提升 <strong>pass@k 覆盖率</strong>、保留更高的生成多样性，并随 test-time compute 良好扩展。</li>
+<li>是对当下"pass@1 至上"训练目标的反思——上游应该训练出"可被 BoN/Self-Consistency 放大"的策略。</li>
+<li>与 CUTS 形成"采样侧 vs. 目标函数侧"的双重武器，用于对抗模式坍塌。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3>LEPO: Latent Reasoning Policy Optimization for Large Language Models</h3>
+<div class="meta">Yuyan Zhou et al. (ACL 2026) · arXiv: <a href="https://arxiv.org/abs/2604.17892">2604.17892</a> · 2026-04-19</div>
+<p class="summary">和 Abstract-CoT 走的是相反路径：直接对<strong>连续潜表征</strong>跑 RL。问题在于无随机性的潜推理会塌缩为确定性推理，导致无法采样多样轨迹；LEPO 用 Gumbel-Softmax 注入可控随机性恢复探索能力。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li>Rollout 阶段在潜空间通过 <strong>Gumbel-Softmax</strong> 维持随机性。</li>
+<li>优化阶段构建一个<strong>统一的梯度估计器</strong>，同时覆盖潜表征和离散 token 的更新。</li>
+<li>代码开源（GitHub: YuyanZhou/lepo）。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在离散和潜推理 RL 基线上均显著领先。</li>
+<li>给"潜空间推理 + RL"提供了一个可复现的工程范式——之前的 OLLM（2604.19087）选择走 option/discrete 路线，LEPO 是<u>纯连续</u>路线的代表。</li>
+<li>与 Abstract-CoT（2604.22709）正面构成本周"潜推理之争"。</li>
+</ul>
+</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>II. 多模态与扩散模型 RL · Multimodal & Diffusion RL</h2>
+
+<article class="paper">
+<h3><span class="tag cool">Multimodal</span>Incentivizing Neuro-symbolic Language-based Reasoning in VLMs via Reinforcement Learning</h3>
+<div class="meta">Karthic Palaniappan (Georgia Institute of Technology) · arXiv: <a href="https://arxiv.org/abs/2604.22062">2604.22062</a> · 2026-04-23</div>
+<p class="summary">在 Qwen3-VL-2B-Instruct 上用 GRPO 训练模型用<strong>神经符号语言（neuro-symbolic language, NSL）</strong>而不是自然语言或 Python 来表征数学概念。问题动机：纯自然语言 CoT 冗长且不稳定，纯 SymPy/Python 又过于符号化导致 token 浪费。</p>
+<div class="method">
+<strong>方法关键：</strong>以一种受限的 NSL 词汇为目标，在 VLM 上跑 GRPO 让模型在视觉问题中输出 NSL 推理；用 4×NVIDIA H200 训练。Reward 同时鼓励正确性和 NSL 表征的合规性。
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在 vision-language 数学/科学/常识混合评测集上<strong>+3.33% 准确率</strong>。</li>
+<li>相比 SymPy 的符号推理<strong>token 数减少 75%</strong>，更接近"人类思考方式"。</li>
+<li>给"VLM 推理 RL"提供了一个介于 verbal CoT 和纯符号执行之间的新中间态——值得与 ToolsRL（2604.19945）和 Saliency-R1 等已有 VLM RL 工作对比。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3>LAT-Audio: Listening with Time — Precise Temporal Awareness for Long-Form Audio Understanding</h3>
+<div class="meta">Mingchen Shao et al. · arXiv: <a href="https://arxiv.org/abs/2604.22245">2604.22245</a> · 2026-04-24</div>
+<p class="summary">把"长音频时间感知"做成可训练的多阶段 reasoning 任务。先建一个新的 1.2k 小时数据集 <strong>LAT-Chronicle</strong> 与首个人工核验的长音频基准 <strong>LAT-Bench</strong>（覆盖 dense audio caption、temporal grounding、targeted caption 三个任务，最长 30 分钟）。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li>把时间感知建模为<strong>全局-到-局部的渐进推理</strong>：先建立全局对齐的 timeline 语义上下文，再用 <em>Think-With-Audio Chain-of-Thought (TWA-CoT)</em> 通过工具调用把局部音频片段引入推理。</li>
+<li>最终阶段以 <strong>GRPO</strong> 微调推理质量。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在长音频时间感知上超越现有 LALM 模型，对输入时长更鲁棒。</li>
+<li>是少见的把 GRPO 用于<strong>音频模态</strong>且与"工具增强 CoT"耦合的样例——延续了今天 RL+工具增强推理的主线。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3>UDM-GRPO: Stable and Efficient Group Relative Policy Optimization for Uniform Discrete Diffusion Models</h3>
+<div class="meta">Jiaqi Wang et al. · arXiv: <a href="https://arxiv.org/abs/2604.18518">2604.18518</a> · 2026-04-20</div>
+<p class="summary">UDM（Uniform Discrete Diffusion）是图像/序列生成的离散扩散范式之一，但与 RL 的结合一直不稳定。本工作给出首个能稳定跑通的 GRPO×UDM 框架。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li><em>Insight 1：</em>把<strong>最终干净样本</strong>作为 RL action（而不是中间噪声状态），可获得更准确稳定的优化信号。</li>
+<li><em>Insight 2：</em>通过扩散正向过程<strong>重建轨迹</strong>，让概率路径与预训练分布对齐，避免分布漂移。</li>
+<li>另引入 <em>Reduced-Step</em> 与 <em>CFG-Free</em> 两种效率策略。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li><strong>GenEval 69% → 96%、PickScore 20.46 → 23.81、OCR 8% → 57%</strong>，在连续与离散扩散两个领域都达到 SOTA。</li>
+<li>与最近 OP-GRPO（2604.04142，flow-matching 的 off-policy GRPO）一起，构成"GRPO 走出 LLM 推理、进入生成模型"的两条路径。</li>
+<li>核心方法论价值：<strong>action 应当定义在"决策性变量"上而非链式中间状态</strong>——同样原则可推广到长 CoT 的 step-level 训练。</li>
+</ul>
+</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>III. 智能体 RL 与自演化 · Agentic RL & Self-Evolution</h2>
+
+<article class="paper">
+<h3><span class="tag alt">Agent</span>HiLight: Learning Evidence Highlighting for Frozen LLMs</h3>
+<div class="meta">Stony Brook University × Meta AI · arXiv: <a href="https://arxiv.org/abs/2604.22565">2604.22565</a> · 2026-04-24</div>
+<p class="summary">在不动 frozen Solver 一根毫毛的前提下，训练一个轻量"Emphasis Actor"在原始上下文里插入<strong>最少必要的高亮标签</strong>，把"证据选择"和"推理"解耦。这绕开了 prompt 压缩/重写一类方案破坏证据完整性的根本问题。</p>
+<div class="method">
+<strong>方法关键：</strong>把"高亮"建模为弱监督决策问题——
+<ul>
+<li>Actor 仅以 Solver 的<strong>任务回报</strong>为奖励信号训练（无证据标签），用 RL 优化高亮策略。</li>
+<li>整个 Solver 完全冻结，不需要 logits 或梯度访问，对黑盒 LLM 友好。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在<strong>序列推荐</strong>和<strong>长上下文 QA</strong>两个场景上稳定超越强 prompt-based 与自动 prompt 优化基线。</li>
+<li>给"frozen LLM 的可训练辅助 actor"路线新增一个清晰的成功样本——可与 PolicyBank（2604.15505）、Tool-Attention（2604.21816）等"外置策略层"思路并列。</li>
+<li>核心启示：<strong>不是所有问题都要训练大模型</strong>，许多"找到关键证据"的任务可以由 200M 级别的 actor 用 RL 学到。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3>EvoAgent: An Evolvable Agent Framework with Skill Learning and Multi-Agent Delegation</h3>
+<div class="meta">arXiv: <a href="https://arxiv.org/abs/2604.20133">2604.20133</a> · 2026-04-22</div>
+<p class="summary">把"技能"建模为<strong>多文件结构化能力单元</strong>（含触发条件 + 演化元数据）的可演化智能体框架。提出三阶段技能匹配 + 三层记忆架构以支撑复杂任务的动态分解和长期能力积累。</p>
+<div class="method">
+<strong>方法关键：</strong>双循环系统——
+<ul>
+<li><em>Online loop：</em>强制技能匹配 → context 组装 → 任务委派的确定性执行轨迹。</li>
+<li><em>Offline loop：</em>异步会话回顾 + 技能抽取，实现能力的 post-session 演化。</li>
+<li>整个系统由用户反馈驱动闭环。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在真实外贸场景上 GPT-5.2 集成 EvoAgent 后<strong>五维 LLM-as-Judge 综合分提升 ~28%</strong>。</li>
+<li>给"技能即一等公民"提供了新的工程模板——AEL（2604.21725）侧重快慢双 loop，EvoAgent 更强调技能的<u>结构化与可委派</u>。</li>
+<li>对今天 TRS（2604.21764）"技能可检索"路线提供了组织性补充。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3><span class="tag">推荐</span>SGS: Scaling Self-Play with Self-Guidance</h3>
+<div class="meta">Luke Bailey et al. · arXiv: <a href="https://arxiv.org/abs/2604.20209">2604.20209</a> · 2026-04-22</div>
+<p class="summary">指出 LLM self-play 之所以扩展不上去，是因为 Conjecturer 会<strong>奖励黑客（reward hacking）</strong>——崩溃成生成"难得没意义"的题目，对 Solver 训练无益。SGS 让 LLM 自身担任三角色（Solver / Conjecturer / Guide），由 Guide 给合成题打分（相关性、自然度），从而把 Conjecturer 钳制回有效区域。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li>三角色单模型同时演化：Conjecturer 出题、Solver 答题、<strong>Guide 评估题目质量</strong>。</li>
+<li>Guide 评分作为对 Conjecturer 的额外信号，使合成数据系统化、qualitative-curated。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li><strong>7B 模型经 SGS 后超越 671B 基线</strong>——证明合成数据的<u>质量门控</u>是 self-play 扩展的关键瓶颈。</li>
+<li>把"奖励黑客"的解法从惩罚式 KL 拉到"<strong>第三方裁判</strong>"——本质上是用模型自身的判别能力闭环。</li>
+<li>与 π-Play（2604.14054）、CoEvolve（2604.15840）共同构成"自对弈防退化"研究线。</li>
+</ul>
+</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>IV. RL 训练的安全、审计与对齐 · Safety, Auditing & Alignment</h2>
+
+<article class="paper">
+<h3><span class="tag warn">隐私审计</span>Behavioral Canaries: Auditing Private Retrieved Context Usage in RL Fine-Tuning</h3>
+<div class="meta">Chaoran Chen et al. (Google) · arXiv: <a href="https://arxiv.org/abs/2604.22191">2604.22191</a> · 2026-04-24</div>
+<p class="summary">第一个针对 <strong>RLFT（RL Fine-Tuning）阶段</strong>的隐私使用审计框架。问题动机：在 agentic 工作流中，LLM 会处理"按 ToS 不能用于训练"的检索文档；但传统的 verbatim-memorization 与 membership inference 对 RL 训练几乎无效（RL 改变的是行为风格而非具体记忆）。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li>把检索文档与"<strong>触发条件下偏好的特定风格响应</strong>"配对，注入成为 Behavioral Canary。</li>
+<li>如果训练管道使用了这些文档，模型会形成 latent trigger-conditioned preference。</li>
+<li>审计时通过对照触发-非触发分布差异检测影响。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>在 1% canary 注入率下达到 <strong>67% 检测率 / 10% FPR / AUROC 0.756</strong>。</li>
+<li>开拓了一个全新的研究维度：<u>RL 训练的影响以分布性行为漂移呈现，而不是显式记忆</u>——这要求审计工具从"内容侧"转向"行为侧"。</li>
+<li>对法务、合规、模型供应商关系都是一份必读文献。</li>
+</ul>
+</div>
+</article>
+
+<article class="paper">
+<h3><span class="tag warn">攻击</span>PermaFrost-Attack: Stealth Pretraining Seeding for planting Logic Landmines During LLM Training</h3>
+<div class="meta">Harsh Kumar et al. · arXiv: <a href="https://arxiv.org/abs/2604.22117">2604.22117</a> · 2026-04-24</div>
+<p class="summary">提出新攻击家族——把碎片化"中毒内容"散布在 stealth 网站上，通过 robots.txt 暴露给爬虫，从而被 Common Crawl 等数据源吸收进未来的 LLM 预训练。每个 payload 微小弥散、表面无害，传统数据过滤难以检出，最终在模型中埋下被特定字母数字 trigger 激活的"逻辑地雷"。</p>
+<div class="method">
+<strong>方法关键：</strong>
+<ul>
+<li>正式威胁建模：stealth-seeded 网络内容如何在训练阶段诱发持久性可触发漏洞。</li>
+<li>三个几何诊断指标：<em>Thermodynamic Length / Spectral Curvature / Infection Traceback Graph</em>，追踪对抗性影响在潜空间轨迹的传播路径。</li>
+<li>在多个 LLM 上验证攻击的持久性。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>核心结论：<strong>RLHF 与 DPO 等后训练对齐手段不足以重构被污染模型的潜空间几何，因此<u>无法防御 PermaFrost 类攻击</u></strong>。</li>
+<li>对"对齐税不解决基础安全"的论点提供了机制级证据——把对齐和净化数据视作正交问题。</li>
+<li>与 ARES（2604.18789）、Adaptive Instruction Red-Teaming（2604.21159）一起，本周构成完整的"训练时攻击 / 后训练攻击 / 推理时攻击"红蓝对抗矩阵。</li>
+</ul>
+</div>
+</article>
+
+</section>
+
+<section class="category">
+<h2>V. 立场与方法论 · Position Papers & Methodology</h2>
+
+<article class="paper">
+<h3>Sound Agentic Science Requires Adversarial Experiments</h3>
+<div class="meta">Dionizije Fa, Marko Culjak (ICLR 2026 Workshop on Agents in the Wild) · arXiv: <a href="https://arxiv.org/abs/2604.22080">2604.22080</a> · 2026-04-23</div>
+<p class="summary">直指当前 LLM-driven scientific data analysis 的失效模式：智能体能"无限快地生成可信而可改写的分析"——把假设空间退化成"由选择性分析支撑、为发表正向结果优化的候选断言"。这个观察对 agentic RL 训练目标设计有直接影响。</p>
+<div class="method">
+<strong>方法核心论点：</strong>
+<ul>
+<li>科学知识不是由代码迭代积累 + 事后统计支撑来验证的；流畅解释或单数据集显著结果<u>都不构成验证</u>。</li>
+<li>提议<strong>falsification-first standard</strong>：智能体不应主要被用于"构造最有说服力的叙事"，而应主动搜索"该断言可能失败的方式"。</li>
+<li>每个结果须与<strong>它经受过的对抗性试验证据</strong>配对。</li>
+</ul>
+</div>
+<div class="takeaways">
+<h4>Key Takeaways</h4>
+<ul>
+<li>对 agentic RL 训练设计的直接含义：<strong>奖励信号应该包含"对抗性失败暴露"</strong>，而非仅"任务完成"。</li>
+<li>与昨日 IPT（Isomorphic Perturbation Testing, 2604.15149）以及 GroupDPO 之"训练-验证不对称"形成方法论联动。</li>
+<li>把"reproducibility"问题从机器学习社区扩展到所有 agentic 科学发现场景——值得 RL 训练目标和评测协议同时跟进。</li>
+</ul>
+</div>
+</article>
+
+</section>
+
+<footer>
+<p>LLM RL Daily — 2026 年 4 月 27 日 · 编辑部由 Claude (Opus 4.7) AI Research Analyst 维护 · <a href="../README.md">返回首页</a> · <a href="../taxonomy/README.md">研究分类图谱</a></p>
+<p>本期共 15 篇新论文 · 截稿时间 19:30 UTC</p>
+</footer>
+
+</body>
+</html>

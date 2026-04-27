@@ -831,6 +831,26 @@ Two reference works that organize the field rather than advance a single algorit
 
 5. **Architecture × reasoning interactions matter**: Reasoning Primitives shows reasoning augmentation amplifies hybrid architectures' state-tracking advantage — RL trainers should pair their training method with the architecture that best supports its target primitives.
 
+## Cross-Cutting Meta-Observation (April 27)
+
+**Theme of the day**: *Latent reasoning matures into a contested paradigm; "RLVR faithfulness" emerges as the dominant critique vector; mode-collapse on saturated data becomes diagnosable.*
+
+1. **The latent-reasoning fork**: April 27 sees three competing implementations of "reasoning is not natural language":
+   - **Abstract-CoT** (2604.22709, IBM) — *discrete-but-non-verbal*: reserved-vocabulary tokens optimized via GRPO under constrained decoding. 11.6× token reduction.
+   - **LEPO** (2604.17892, ACL 2026) — *fully continuous* via Gumbel-Softmax stochasticity in latent space; unified gradient over latent + discrete.
+   - **TRS** (2604.21764) — *retrieval-augmented* skill memory; training-free, black-box-friendly.
+   These three answer the same question (how do we make reasoning compute-efficient?) along three different axes (vocabulary / representation / external store).
+
+2. **The faithfulness critique solidifies**: CIR/SR (2604.22074, Stanford) gives RLVR's harshest critic two formal metrics. Combined with **LLMs Gaming Verifiers** (2604.15149, April 25) and **Agents Explore but Agents Ignore** (2604.17609), the diagnosis is consistent: outcome rewards are insufficient — the model can be trained to be "right for wrong reasons." The remedy line — auxiliary CIR/SR rewards, IPT, environmental curiosity — is starting to converge.
+
+3. **GRPO mode-collapse diagnosed and treated**: CUTS / Mixed-CUTS (2604.18493) and Poly-EPO (2604.17654) attack the same failure (over-strong base + saturated benchmarks → vanishing intra-group advantage → mode collapse) from sampling-side and objective-side respectively. Together with SPS (2604.16995, "Probability Squeezing Effect") and MCPO (2604.16972) from prior weeks, this gives us a four-paper toolkit for keeping GRPO viable on strong base models.
+
+4. **GRPO continues to leak into adjacent domains**: UDM-GRPO (2604.18518) cracks Uniform Discrete Diffusion; LAT-Audio (2604.22245) brings GRPO + tool-CoT to long-form audio; Neuro-Symbolic VLM (2604.22062) bridges symbolic and verbal reasoning in vision-language. The "reward design > algorithm choice" thesis (yesterday) is reinforced.
+
+5. **Auditing as a first-class topic**: Behavioral Canaries (2604.22191, Google) gives the first usable RLFT-stage privacy audit; PermaFrost-Attack (2604.22117) shows RLHF/DPO cannot repair pretraining-stage geometric poisoning. Together with Sound Agentic Science (2604.22080, ICLR Workshop) calling for falsification-first agentic experiments, *evaluation/auditing tooling* is moving from the periphery to a central RL research topic.
+
+6. **Self-play breakthrough**: SGS (2604.20209) — three-role single-model (Solver/Conjecturer/Guide) — scales 7B past 671B baseline by adding a *quality gate* on synthetic problems. The lesson: the bottleneck of self-play is not the curriculum but reward-hacking by the curriculum-generator.
+
 ---
 
-*Last updated: April 26, 2026 · 13 new papers · running total 230+ papers tracked*
+*Last updated: April 27, 2026 · 15 new papers · running total 245+ papers tracked*

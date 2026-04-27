@@ -100,3 +100,15 @@ The "critic vs. critic-free" debate is collapsing into a unified lens: EVPO trea
 ### Cross-links
 - **OP-GRPO ↔ Freshness-Aware PER (2604.16918)** — both replay-based accelerations for online policy gradient, but on different model classes (flow vs. autoregressive LM). Replay design (priority, freshness, IS correction) is converging across modalities.
 - **OP-GRPO ↔ MAR-GRPO (2604.06966)** — within image generation, the GRPO family is now also forking into hybrid AR-diffusion specialists; off-policy and architecture-aware variants will likely combine.
+
+## April 27, 2026 additions
+
+- **UDM-GRPO** [2604.18518] — *First stable, efficient GRPO on Uniform Discrete Diffusion.* Two key insights: (i) treat the **final clean sample** as the RL action (not intermediate noise states) for accurate, stable optimization signal; (ii) reconstruct trajectories via the diffusion *forward* process so probability paths align with pretraining. Plus Reduced-Step + CFG-Free for efficiency. Empirically: GenEval 69%→96%, OCR 8%→57%, PickScore 20.46→23.81.
+- **Poly-EPO (Polychromic Exploratory Policy Optimization)** [2604.17654, Stanford] — Generalizes RL post-training to **set RL**: optimize a *set* of responses jointly, with explicit set-level objectives for both correctness and diversity. Provides a general advantage-modification recipe that applies to PPO/GRPO. Improves pass@k while preserving generation diversity.
+- **CUTS / Mixed-CUTS** [2604.18493, Tencent×Notre Dame] — Sampling-side fix for GRPO mode-collapse on saturated benchmarks: parameter-free **Constrained Uniform Top-K Sampling** and Mixed-CUTS (alternating exploitative/exploratory rollouts). Pairs with Poly-EPO as the sampling-vs-objective dual treatment of the same underlying disease.
+- **LEPO (Latent Reasoning Policy Optimization)** [2604.17892, ACL 2026] — Extends policy gradient onto a **continuous latent reasoning trace**: Gumbel-Softmax stochasticity in the latent during rollout, unified gradient across latent + discrete tokens during update.
+
+### Cross-links
+- **UDM-GRPO ↔ OP-GRPO (2604.04142) ↔ MAR-GRPO (2604.06966)** — three independent ports of GRPO into generative-model land. UDM-GRPO's "action = final clean sample" insight likely transfers to other diffusion/flow methods.
+- **CUTS ↔ Poly-EPO** — sampling-side and objective-side treatments of the same mode-collapse failure mode in GRPO. Suggests a future hybrid that combines both.
+- **LEPO ↔ Abstract-CoT (2604.22709)** — both extend policy optimization to non-verbal reasoning, but LEPO operates in a *continuous* latent space while Abstract-CoT optimizes a *discrete reserved-vocabulary* latent. The discrete-vs-continuous question for latent RL is now actively contested.

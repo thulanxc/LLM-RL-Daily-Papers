@@ -21,3 +21,12 @@ Extending RL training from text-only to multimodal inputs (image, video, audio).
 Multimodal RL is maturing along two complementary axes:
 1. **Infrastructure (Relax)** catching up with algorithms.
 2. **Internal-signal supervision** emerging — both MedVR (entropy + consensus) and Saliency-R1 (logit-decomposition saliency) derive training signal from *model-internal quantities*, not external human annotation. This is the multimodal analogue to Thread 8's "Agentic Self-Supervision".
+
+## April 27, 2026 additions
+
+- **Neuro-Symbolic VLM RL** [2604.22062, Georgia Tech] — Trains Qwen3-VL-2B-Instruct via GRPO to use a constrained **neuro-symbolic language (NSL)** instead of natural language or raw Python for math/science VLM reasoning. Token efficiency: **75% fewer tokens than SymPy**; +3.33% on a vision-language math/science/general benchmark. Stakes out a useful middle ground between verbal CoT (over-long) and pure symbolic execution (over-rigid).
+- **LAT-Audio (Listening with Time)** [2604.22245] — RL meets long-form audio: dataset (LAT-Chronicle, 1.2k hours), benchmark (LAT-Bench, audio up to 30 min), model with a **Think-With-Audio CoT** that progressively zooms global→local via tool calls; final stage uses **GRPO** to refine reasoning quality. Surpasses prior LALMs on temporal awareness.
+- **UDM-GRPO** [2604.18518] — Cross-listed from Policy Optimization: stabilizes GRPO on Uniform Discrete Diffusion. Brings GRPO to text-to-image generation with major SOTA jumps.
+
+### Connection
+The April 27 multimodal additions reinforce a broader observation: **GRPO is becoming a substrate that ports to any modality with a verifiable reward**. Image (UDM-GRPO), audio (LAT-Audio), VLM with symbolic reasoning (Neuro-Symbolic VLM) — the algorithm is the same; the reward design and action-space framing are where domain expertise lives.
