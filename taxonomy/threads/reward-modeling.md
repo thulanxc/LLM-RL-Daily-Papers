@@ -151,3 +151,11 @@ The trend: PRMs are being rebuilt from "scalar classifier of step-correctness" t
 
 ### Key Trend: Rewards Beyond "Format + Accuracy"
 R2IF quantifies CoT quality, Tool-Overuse Illusion quantifies tool-call appropriateness, Multi-Role Dual Reward quantifies summarization faithfulness, and TA-MDP provides the theoretical framework to combine them. The era of single-signal RLVR is giving way to multi-dimensional, theoretically motivated composite rewards.
+
+## April 28, 2026 additions
+
+- **TCRM (Reward Models Are Secretly Value Functions)** [2604.22981] — Reframes the Bradley-Terry reward model as a value function: trained well, its output at *any* token should equal the conditional expectation of final reward given the prefix. Adds two regularizers — Monte-Carlo consistency (intermediate-token prediction → final reward) and Temporal Difference (smoothness across adjacent tokens). Result: middle-token pairwise accuracy 50% → **88.9%**; ProcessBench mean F1 **44.9% (SOTA PRM)**; in PPO, the unified reward/value model removes the need for a separate critic, reducing **peak GPU memory by 27% and step time by 19%**.
+- **K-Score** [2604.23056] — Replaces running-mean reward normalization with an online 1D Kalman filter, producing principled latent-mean estimation under non-stationary rewards. Concurrent work KRPO applies the same idea to GRPO's group-mean baseline; together they argue that GRPO/PG advantage estimation should adopt classical online filtering rather than ad-hoc heuristics.
+
+### Key Trend: Reward = Value Function
+TCRM closes a long-standing conceptual gap: the dichotomy between "reward model" (sequence-level scalar) and "value function" (token-level baseline) is artificial — both should converge under proper regularization. This unifies the IPVRM/GenAC line (April 22) and the PRM line into a single object, and provides direct PPO efficiency gains. Combined with K-Score's principled normalization, April 28 marks a decisive theoretical step: reward modeling is becoming value modeling, and value modeling is becoming a filtering problem.

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM RL Daily — 2026 年 4 月 28 日</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fbfaf6;
+    --rule: #2a2a2a;
+    --accent: #8b1a1a;
+    --muted: #5a5a5a;
+    --card: #ffffff;
+    --border: #d8d3c4;
+    --tag-bg: #e8e3d2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Times New Roman", "Songti SC", "PingFang SC", "Noto Serif SC", Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    margin: 0 auto;
+    padding: 32px 48px;
+    line-height: 1.7;
+    max-width: 1180px;
+  }
+  header.masthead {
+    text-align: center;
+    border-top: 4px double var(--rule);
+    border-bottom: 4px double var(--rule);
+    padding: 18px 8px 14px;
+    margin-bottom: 28px;
+  }
+  header.masthead h1 {
+    font-size: 56px;
+    margin: 0 0 6px 0;
+    font-weight: 900;
+    letter-spacing: -1px;
+    font-variant: small-caps;
+  }
+  header.masthead .subtitle {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  header.masthead .dateline {
+    margin-top: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--rule);
+  }
+  .editorial {
+    background: #f3eedd;
+    border-left: 5px solid var(--accent);
+    padding: 18px 24px;
+    margin: 0 0 36px 0;
+    font-size: 16px;
+  }
+  .editorial h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+  .editorial p { margin: 8px 0; }
+  .editorial ul { padding-left: 22px; }
+  .editorial li { margin: 4px 0; }
+  section.category { margin-bottom: 38px; }
+  section.category > h2 {
+    font-size: 26px;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 4px;
+    margin-bottom: 20px;
+    font-variant: small-caps;
+    letter-spacing: 0.5px;
+  }
+  article.paper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  article.paper h3 {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    color: var(--accent);
+  }
+  article.paper .meta {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  article.paper .meta a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  article.paper .meta a:hover { text-decoration: underline; }
+  article.paper .body p { margin: 8px 0; }
+  article.paper .body strong.label {
+    display: inline-block;
+    color: var(--accent);
+    font-variant: small-caps;
+    margin-right: 6px;
+    letter-spacing: 0.5px;
+  }
+  article.paper .takeaways {
+    background: #f8f4e6;
+    border-left: 3px solid var(--accent);
+    padding: 10px 16px;
+    margin-top: 10px;
+    border-radius: 3px;
+  }
+  article.paper .takeaways ul { padding-left: 20px; margin: 4px 0; }
+  article.paper .tags { margin-top: 10px; }
+  article.paper .tags span {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--rule);
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+  footer.colophon {
+    margin-top: 40px;
+    padding: 14px 0;
+    border-top: 4px double var(--rule);
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <h1>LLM RL Daily</h1>
+  <div class="subtitle">Reinforcement Learning · Reasoning · Agents · Reward Modeling</div>
+  <div class="dateline">第 14 期 · 2026 年 4 月 28 日 · 星期二</div>
+</header>
+
+<div class="editorial">
+  <h2>编者按 · Editor's Note</h2>
+  <p>今天的最大新闻是一份令整个 LLM RL 社区为之一震的复现报告：<strong>《SFT-then-RL Outperforms Mixed-Policy Methods》(2604.23747)</strong> 揭示，过去半年大量声称击败「SFT→RL」标准两段式 pipeline 的混合策略方法（LUFFY、ReLIFT、Prefix-RFT、SRFT 等），其性能优势竟主要来自一个 DeepSpeed CPU offload 优化器 bug 与一个 OpenRLHF 损失聚合 bug，这些缺陷悄悄抑制了 SFT 基线的真实表现。修正后 Llama-3.1-8B 上 SFT-then-RL 比此前 SOTA 高出 +22.2 分。这是 2026 年第一份「重写 RL 训练叙事」的工作。</p>
+  <p>除此之外，今日另有几条值得关注的主线：</p>
+  <ul>
+    <li><strong>Reward 建模理论化</strong>：TCRM (2604.22981) 把 Bradley-Terry reward model 重新解读为「价值函数」，并通过 MC 与 TD 风格正则得到时间一致的 token 级奖励轨迹，PPO 训练时显存与步耗显著下降。</li>
+    <li><strong>RL 不可重训练范式</strong>：When Policies Cannot Be Retrained (2604.22873) 用闭式分析统一了 PoE 与 KL 调节式 deployment-time steering，给出冻结 actor 在目标漂移下的可靠组合公式。</li>
+    <li><strong>Agentic RL 与多 agent 拓扑</strong>：CoFi-PGMA (2604.22785) 把多 agent LLM 的过滤反馈学习问题正式化为反事实策略梯度；COSPLAY (2604.20987) 让 LLM 决策代理与可学习技能库联合演化，长程任务奖励提升 25%。</li>
+    <li><strong>安全与对抗</strong>：KARL (2604.22779) 用知识边界感知奖励训练模型「该弃答时弃答」；NVIDIA 的 General Red Teaming (2604.23067) 第一次系统训练「不绑定特定评估器」的红队代理。</li>
+  </ul>
+  <p>从趋势看，4 月底的研究重心正从「设计新 RL 算法」转向「真正理解既有 pipeline」——bug 修正、奖励即价值、闭式 deployment steering、verifier 是否被 game——这种科学化转向，可能比任何新算法都更深刻地影响下一代 reasoning 模型的训练范式。</p>
+</div>
+
+<section class="category">
+  <h2>I · 头版头条 · Headline</h2>
+
+  <article class="paper">
+    <h3>SFT-then-RL Outperforms Mixed-Policy Methods for LLM Reasoning</h3>
+    <div class="meta">
+      Alexis Limozin, Eduard Durech, Torsten Hoefler, Imanol Schlag, Valentina Pyatkin · ETH AI Center / ETH Zürich / EPFL / AI2 · <a href="https://arxiv.org/abs/2604.23747" target="_blank">arXiv:2604.23747</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">背景：</strong>过去一年，「混合策略优化」（mixed-policy optimization）成为 LLM reasoning 训练的热门方向：LUFFY、ReLIFT、Prefix-RFT、SRFT 等方法在 SFT 与 RL 信号之间动态切换或加权混合，普遍声称比经典「先 SFT 再 RL」两段式管线更强。</p>
+      <p><strong class="label">核心发现：</strong>作者复现这些工作时定位到两个被忽视的实现缺陷：(1) <em>DeepSpeed CPU-offloaded optimizer bug</em>——在 gradient accumulation 时静默丢弃中间 micro-batch；该 bug 已渗透到 TRL、OpenRLHF、Llama-Factory 等下游框架；(2) <em>OpenRLHF loss aggregation bug</em>——以错误权重聚合 per-mini-batch loss。两个 bug 共同压低了 SFT 基线，使 mixed-policy 看起来「赢得很轻松」。</p>
+      <p><strong class="label">修正结果：</strong>修复后，<strong>Qwen2.5-Math-7B</strong> 上 SFT-then-RL 比 SRFT 高 +3.8 分，<strong>Llama-3.1-8B</strong> 上更高 +22.2 分。在 in-distribution 任务上，仅修正后的 SFT 单段（52.2）已超过 LUFFY (46.3)、ReLIFT (48.8)、Prefix-RFT (51.8)；再叠加 RL 后均值跃至 57.0。</p>
+      <p><strong class="label">方法学贡献：</strong>论文不仅给出修复补丁与重新评估，还系统化呼吁社区在每篇 RL post-training 论文中报告所用框架的精确 commit 与 optimizer 配置，并把 SFT 基线作为强 anchor 而非弱 baseline。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>
+        <ul>
+          <li>过去半年「mixed-policy 优于 SFT→RL」的故事在很大程度上需要重写。</li>
+          <li>RL 工程栈的隐性 bug 可以让 baseline 性能差距达 20+ 分，超过任何算法创新。</li>
+          <li>SFT 阶段的 dense reward 信号对后续 RL 至关重要，不应被视为「过时」。</li>
+        </ul>
+      </div>
+      <div class="tags">
+        <span>Reasoning RL</span><span>SFT-then-RL</span><span>复现研究</span><span>Bug 报告</span><span>GRPO</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>II · 奖励建模 · Reward Modeling</h2>
+
+  <article class="paper">
+    <h3>Reward Models Are Secretly Value Functions: Temporally Coherent Reward Modeling</h3>
+    <div class="meta">
+      Alex Nikulkov · <a href="https://arxiv.org/abs/2604.22981" target="_blank">arXiv:2604.22981</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">核心洞察：</strong>标准 RLHF 中 reward model 仅在 final token 上输出标量，丢弃了对中间位置的丰富信号。论文论证：一个训练良好的 reward model，在任意 token 处的输出本应代表「给定当前响应前缀，最终 reward 的条件期望」——这正是<strong>价值函数</strong>的定义。</p>
+      <p><strong class="label">方法：TCRM（Temporally Coherent Reward Modeling）</strong>在标准 Bradley-Terry 损失之上增加两项正则：(1) Monte-Carlo 一致性项——中间 token 的预测应逼近最终 reward；(2) Temporal Difference 项——相邻 token 之间的预测应保持平滑过渡。这相当于让 reward model 同时学习 V 函数。</p>
+      <p><strong class="label">关键结果：</strong>(1) <strong>可解释性</strong>——中间 token 的 pairwise accuracy 由 50%（随机）跃升到 88.9%，可视化得到 token 级 reward trajectory；(2) <strong>SOTA PRM</strong>——ProcessBench 平均 F1 44.9%；(3) <strong>统一 reward / value</strong>——PPO 训练时不再需要单独的 critic，<strong>显存峰值降低 27%、step time 降低 19%</strong>，与 critic-free 方法（如 GRPO）相比仍保留逐 token 价值。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>
+        <ul>
+          <li>把 reward model 视作 value function，是 PRM 与 PPO critic 的统一视角。</li>
+          <li>Bradley-Terry 之外加 MC + TD 正则，是用 dense 信号「无监督」获得过程奖励的轻量做法。</li>
+          <li>对训练栈的工程意义：可省掉单独 critic，加速 PPO。</li>
+        </ul>
+      </div>
+      <div class="tags">
+        <span>Reward Model</span><span>PRM</span><span>Value Function</span><span>RLHF</span><span>PPO</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3>K-Score: Kalman Filter as a Principled Alternative to Reward Normalization in RL</h3>
+    <div class="meta">
+      Sumxia (匿名通讯) · <a href="https://arxiv.org/abs/2604.23056" target="_blank">arXiv:2604.23056</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">问题：</strong>策略梯度方法普遍依赖经验式 reward normalization（running mean/std），在非平稳奖励环境下不稳定。GRPO 的 group-mean baseline 同样面临这一问题。</p>
+      <p><strong class="label">方法：</strong>引入<strong>1D Kalman filter</strong>对 latent reward 均值（与方差）进行在线估计；将其用作 advantage 预处理。开销极小（一个标量滤波器），无需修改 policy 网络。</p>
+      <p><strong class="label">实验：</strong>LunarLander、CartPole 上 REINFORCE / Actor-Critic / GAE / PPO 均加速收敛、降低 training variance。论文与并发工作 KRPO（将 Kalman 应用于 GRPO baseline）形成互补：K-Score 关注「通用 RL 的 advantage 标准化」，KRPO 关注「LLM reasoning 中的 group baseline」。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>把 reward 估计当作经典在线滤波问题，是替代 running-mean 的更原则化做法；对 LLM RL 而言，可在 GRPO/RLOO 上无缝替换 group baseline。</div>
+      <div class="tags">
+        <span>Advantage 估计</span><span>Reward Normalization</span><span>Kalman Filter</span><span>GRPO 友好</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>III · Agentic RL · 智能体强化学习</h2>
+
+  <article class="paper">
+    <h3>COSPLAY: Co-Evolving LLM Decision and Skill Bank Agents for Long-Horizon Tasks</h3>
+    <div class="meta">
+      Xiyang Wu et al. · <a href="https://arxiv.org/abs/2604.20987" target="_blank">arXiv:2604.20987</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">动机：</strong>LLM 在长程任务中常因缺乏「跨 episode 复用结构化技能」的机制而表现不一致。</p>
+      <p><strong class="label">方法：COSPLAY 协同演化框架</strong>——(1) <strong>决策 agent</strong>：每步从可学习的 skill bank 检索技能以指导动作选择；(2) <strong>skill pipeline</strong>：从未标注的 rollout 中自动发现可复用技能并归档进 bank。两者通过迭代 RL 联合演化：决策 agent 用更好技能产生更好 trajectory，pipeline 在更好 trajectory 中提取更优技能。</p>
+      <p><strong class="label">实验：</strong>跨 6 个游戏环境，COSPLAY 用 8B 基模就实现单玩家任务 <strong>+25.1% 平均奖励</strong>提升，超过 4 个 frontier LLM baseline；多人社交推理游戏上保持竞争力。代码与项目页公开。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>「skill bank + decision agent 的双向 RL 协同演化」是把短程 RL 提升到长程任务的有效抽象，避开单一 token-level RL 难以处理的稀疏奖励。
+      </div>
+      <div class="tags">
+        <span>Agentic RL</span><span>Skill Library</span><span>Long-Horizon</span><span>Co-Evolution</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3>CoFi-PGMA: Counterfactual Policy Gradients under Filtered Feedback for Multi-Agent LLMs</h3>
+    <div class="meta">
+      Stela Tong, Elai Ben-Gal · <a href="https://arxiv.org/abs/2604.22785" target="_blank">arXiv:2604.22785</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">问题设定：</strong>多 LLM 协作系统（路由竞争 / 协同生成）只能观察「最终输出」的反馈，而不知道每个 agent 的边际贡献——这是经典 multi-agent credit assignment 在 LLM 场景的再现。</p>
+      <p><strong class="label">方法：</strong>把 COMA（Counterfactual Multi-Agent Policy Gradients）框架迁移到 LLM——为每个 agent 推导基于<strong>边际贡献</strong>的反事实 per-agent 训练目标，统一处理 routing（竞争）与 collaborative generation（协作）两类机制。论文还给出在「过滤式反馈」下的实用估计器（仅观察 top-k 而非全集）。</p>
+      <p><strong class="label">意义：</strong>为多 agent LLM 系统提供了第一份原则化的 credit assignment 工具；对 mixture-of-experts、orchestration 框架（如 ml-intern、MAS-Orchestra）有直接借鉴意义。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>多 agent LLM 不再「只能整体打分」——counterfactual baseline 把信用分配从黑盒变成可估计量。
+      </div>
+      <div class="tags">
+        <span>Multi-Agent RL</span><span>LLM Routing</span><span>Counterfactual</span><span>Credit Assignment</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3>RouteGuard: Internal-Signal Detection of Skill Poisoning in LLM Agents</h3>
+    <div class="meta">
+      <a href="https://arxiv.org/abs/2604.22888" target="_blank">arXiv:2604.22888</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">威胁模型：</strong>当 LLM agent 通过外部「skill / tool」库扩展能力时，恶意 skill 描述可以悄悄诱导 agent 偏向恶意工具——这是一种新型间接 prompt injection。论文将其命名为「skill poisoning」。</p>
+      <p><strong class="label">关键观察：</strong>成功投毒会触发「<strong>attention hijacking</strong>」——响应阶段的注意力从 trusted context 转向恶意 skill span，留下可检测的内部信号。</p>
+      <p><strong class="label">方法：RouteGuard</strong>——冻结 backbone，通过响应条件下的 attention 与 hidden state alignment 做可靠性门控（reliability-gated late fusion）的二分类检测。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>Agentic RL 不只是要训练「更强 agent」，也要训练「能识别工具被污染的 agent」；attention pattern 是廉价高信号的探针。
+      </div>
+      <div class="tags">
+        <span>Agent Safety</span><span>Skill / Tool RL</span><span>Prompt Injection</span><span>Attention 探针</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>IV · 对齐、安全与红队 · Alignment, Safety &amp; Red Teaming</h2>
+
+  <article class="paper">
+    <h3>KARL: Mitigating Hallucinations in LLMs via Knowledge-Boundary-Aware RL</h3>
+    <div class="meta">
+      <a href="https://arxiv.org/abs/2604.22779" target="_blank">arXiv:2604.22779</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">出发点：</strong>「让模型该弃答时弃答」是缓解幻觉的最直接路径，但与模型的<strong>知识边界</strong>动态绑定——边界随训练进展不断扩张／收缩。</p>
+      <p><strong class="label">方法：</strong>(1) <strong>Knowledge-Boundary-Aware Reward</strong>：根据样本是否在模型当前能力边界内，动态决定「正确作答 / 弃答 / 错误」的奖励权重；(2) <strong>两阶段 RL</strong>：阶段一探索知识边界，阶段二把错误回答转化为弃答（abstention）。这一设计避免了静态 abstain 标签所带来的 over-refusal。</p>
+      <p><strong class="label">意义：</strong>把「不知道」当成可学习行为，而不是 prompt 工程的副产物；与 RLHF safety 训练正交，可叠加。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>RL 对齐不仅可以塑造「答得更好」，也可以塑造「该不答时不答」；用动态奖励跟踪知识边界比固定标签更稳健。
+      </div>
+      <div class="tags">
+        <span>幻觉</span><span>Abstention</span><span>RLHF</span><span>知识边界</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3>Training a General Purpose Automated Red Teaming Model</h3>
+    <div class="meta">
+      Aishwarya Padmakumar, Leon Derczynski, Traian Rebedea, Christopher Parisien · NVIDIA · <a href="https://arxiv.org/abs/2604.23067" target="_blank">arXiv:2604.23067</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">现状：</strong>当前自动化红队工作几乎都绑定在「内容安全 / moderation」目标上——红队模型针对一个内容审核模型做对抗优化。这导致两个问题：(1) 训练时需要预存评估器；(2) 在新对抗目标（提示注入、越权、隐私）上不可迁移。</p>
+      <p><strong class="label">方法：</strong>提出可泛化到任意对抗意图的红队训练 pipeline。关键设计：把对抗目标抽象为可参数化的「攻击意图描述」，使用 GRPO 进行多目标 RL 训练，<strong>不依赖训练时已有评估器</strong>，对未见过的目标也能产生有效攻击。</p>
+      <p><strong class="label">意义：</strong>为通用对抗评测建立基础，可与 frontier model evaluation suite 配套使用。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>红队模型本身需要 RL「泛化训练」，否则只是过拟合内容审核器。NVIDIA 的方案让评估器与攻击者解耦。
+      </div>
+      <div class="tags">
+        <span>红队</span><span>GRPO</span><span>对齐评测</span><span>NVIDIA</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3>When Policies Cannot Be Retrained: Closed-Form Post-Training Steering for Offline RL</h3>
+    <div class="meta">
+      <a href="https://arxiv.org/abs/2604.22873" target="_blank">arXiv:2604.22873</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">问题：</strong>很多产品场景下 actor 训练完便冻结，但部署时目标可能漂移（数据分布变化、合规要求变化、多 SKU 切换）。如何「在不重训」的前提下做 post-training steering？</p>
+      <p><strong class="label">主要结果：</strong>对角高斯 actor / prior 的设定下，论文给出闭式定理：<strong>Product-of-Experts 组合（系数 α）等价于 KL 正则适配（β = α/(1−α)）</strong>下的同一确定性策略，仅协方差差一个全局标量。这把多种 deployment-time steering 方法统一在一条公式下。</p>
+      <p><strong class="label">实验：</strong>4 个 D4RL 环境、3,900 MuJoCo 回合，在退化 / 随机 prior 下，<em>precision-weighted</em> 组合保持锚定到原 actor，而 additive / prior-only 适配会崩溃；KL-budget selector 常能恢复到接近 oracle 的工作点（HELP/FROZEN/HURT 比例 4/5/3）。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>对 LLM RL 落地有直接指导意义——RLHF 模型部署后再做 inference-time alignment / steering 时，PoE 与 KL 调节并非独立技巧，而是同一闭式族。
+      </div>
+      <div class="tags">
+        <span>Offline RL</span><span>Post-Training Steering</span><span>KL 调节</span><span>闭式分析</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>V · 多 Agent 与系统层 · Multi-Agent &amp; Systems</h2>
+
+  <article class="paper">
+    <h3>CODA: Coordination via On-Policy Diffusion for Multi-Agent Offline RL</h3>
+    <div class="meta">
+      <a href="https://arxiv.org/abs/2604.23308" target="_blank">arXiv:2604.23308</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">问题：</strong>离线多 agent RL 训练时常见「coordination failure」——agent 各自最优但联合策略糟糕。本文将其视作「联合 trajectory 与 joint policy 不匹配」。</p>
+      <p><strong class="label">方法：CODA</strong>——基于扩散模型的多 agent 联合 trajectory 生成器，采样时以当前 joint policy 为条件，使生成的 trajectory 与 policy 同步演化（co-adapt）。这把扩散模型从「数据增强」升级为「协调机制」。</p>
+      <p><strong class="label">与 LLM RL 的关系：</strong>当 LLM 作为多 agent（router、specialist、verifier）协作时，CODA 的「on-policy 扩散」思路可以借鉴——以扩散 prior 替代 GRPO 中的 group-mean 基线，实现策略间协调。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>扩散模型不仅可以生成 reasoning，也可以做多 agent 协调；与 token-level RL 形成互补。
+      </div>
+      <div class="tags">
+        <span>Multi-Agent RL</span><span>Diffusion</span><span>Offline RL</span><span>Coordination</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="paper">
+    <h3>Prism-Reranker: Beyond Relevance Scoring — Joint Contributions and Evidence for Agentic Retrieval</h3>
+    <div class="meta">
+      Dun Zhang · <a href="https://arxiv.org/abs/2604.23734" target="_blank">arXiv:2604.23734</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">问题：</strong>RAG / agent 系统中，下游消费者需要的不是简单 relevance 标量——它们要决定「这段是否有用、为什么有用、能否裁剪」。传统 reranker 只输出分数，迫使 agent 把整篇文档塞进 context。</p>
+      <p><strong class="label">方法：</strong>Prism-Reranker 基于 Qwen3.5（0.8B / 2B / 4B / 9B 四档）。每次判断不仅给出 yes/no relevance，<strong>当判断为 yes 时</strong>额外输出：(1) <em>contribution statement</em>：本文档对查询的具体贡献；(2) <em>evidence passage</em>：保留所有 query 相关信号、剔除噪声的自包含改写。训练采用 hybrid 目标——从强商业 reranker API 做 point-wise 蒸馏 + 在 contribution / evidence 标注上做 SFT。</p>
+      <p><strong class="label">为何收录：</strong>虽然主体是 SFT + 蒸馏，但其设计直接服务于 agentic RL 的检索调用（reduce context、提供 evidence 给 verifier 用），是「让 retriever 服务于 RL 训练的 agent」的代表性工作。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>RAG 中 reranker 的角色应升级为「agent 友好」——给出可裁剪的 evidence，从而让上游 agentic RL 训练时获得更稳定 reward 信号。
+      </div>
+      <div class="tags">
+        <span>Reranker</span><span>Agentic RAG</span><span>Evidence 抽取</span><span>Qwen3.5</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>VI · 领域应用与方法学 · Domain Applications</h2>
+
+  <article class="paper">
+    <h3>C-MORAL: Controllable Multi-Objective Molecular Optimization with Reinforcement Alignment for LLMs</h3>
+    <div class="meta">
+      Rui Gao, Youngseung Jeon, Swastik Roy, Morteza Ziyadi, Xiang 'Anthony' Chen · UCLA / Amazon · <a href="https://arxiv.org/abs/2604.23061" target="_blank">arXiv:2604.23061</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">背景：</strong>药物分子设计要求模型在多个互相竞争的属性（活性、毒性、ADMET 等）间做可控折中——这是典型的 multi-objective alignment 问题。</p>
+      <p><strong class="label">方法：</strong>C-MORAL 是基于 RL 的 LLM 后训练框架，三大组件：(1) group-based relative optimization（GRPO 风格组采样优化）；(2) 跨异质目标的 property-score alignment（把不同尺度属性映射到同一相对分布）；(3) 连续非线性 reward aggregation（处理 trade-off 而非简单加权和）。</p>
+      <p><strong class="label">实验：</strong>C-MuMOInstruct benchmark 上，IND 任务 Success Optimized Rate 达 <strong>48.9%</strong>、OOD 任务 <strong>39.5%</strong>，均为 SOTA。</p>
+      <div class="takeaways">
+        <strong>关键启示：</strong>把 multi-objective alignment 当成 GRPO 的扩展——而不是单独的 Pareto 算法——是把通用 LLM RL 工程移植到科学领域的可行路径。
+      </div>
+      <div class="tags">
+        <span>多目标对齐</span><span>分子优化</span><span>GRPO 扩展</span><span>科学 LLM</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="category">
+  <h2>VII · 当日值得关注 · Quick Picks</h2>
+
+  <article class="paper">
+    <h3>Rethinking Math Reasoning Evaluation: A Robust LLM-as-a-Judge Framework Beyond Symbolic Rigidity</h3>
+    <div class="meta">
+      <a href="https://arxiv.org/abs/2604.22597" target="_blank">arXiv:2604.22597</a>
+    </div>
+    <div class="body">
+      <p><strong class="label">速读：</strong>主张当前 RL post-training（特别是 RLVR / GRPO）评测过度依赖符号匹配的 ground-truth verifier——它在不同表达形式（小数 vs 分数、不同代数恒等式）下脆弱。论文构建了 LLM-as-a-judge 评测框架，覆盖更广的解题表达。<em>对 RLVR 训练的隐含含义：当前的 verifier 可能比想象中更狭窄，可能解释了部分「reward hacking」现象。</em></p>
+      <div class="tags">
+        <span>评测</span><span>RLVR</span><span>LLM-as-Judge</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<footer class="colophon">
+  <p>LLM RL Daily · 由 Anthropic Claude 自动生成 · 数据来源：arXiv / HuggingFace Papers / Web Search · <strong>本期共 11 篇新论文</strong></p>
+</footer>
+
+</body>
+</html>

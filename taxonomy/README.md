@@ -853,4 +853,24 @@ Two reference works that organize the field rather than advance a single algorit
 
 ---
 
-*Last updated: April 27, 2026 · 15 new papers · running total 245+ papers tracked*
+## Cross-Cutting Meta-Observation (April 28)
+
+**Theme of the day**: *The field enters a calibration era — bug-fix reproductions and theoretical unifications matter as much as new algorithms.*
+
+1. **The mixed-policy story collapses under scrutiny**: SFT-then-RL Outperforms Mixed-Policy Methods (2604.23747, ETH/EPFL/AI2) traces nearly all the headline-grabbing improvements of LUFFY / ReLIFT / Prefix-RFT / SRFT to two latent infrastructure bugs (DeepSpeed CPU-offload optimizer + OpenRLHF loss aggregation). Once fixed, plain SFT-then-RL **+22.2 over SRFT on Llama-3.1-8B**. Reading list: every RL paper from the past year that compared against an OpenRLHF/TRL baseline now needs re-examination.
+
+2. **Reward = value function, formalized**: TCRM (2604.22981) closes the gap between PRMs and PPO critics by adding MC + TD regularizers on Bradley-Terry. Token-level pairwise accuracy 50% → 88.9%; PPO peak GPU memory −27%, step time −19%. Together with K-Score (2604.23056)'s Kalman-filtered reward normalization (and concurrent KRPO), the field is moving from heuristic baselines to filtering-theoretic baselines.
+
+3. **Multi-agent LLM credit assignment becomes principled**: CoFi-PGMA (2604.22785) brings COMA-style counterfactual gradients to LLM router/specialist stacks; CODA (2604.23308) adds on-policy diffusion for multi-agent coordination. Combined with DiffMAS / TPGO from previous weeks, multi-agent LLM RL now has a coherent toolkit for assigning credit beyond "global reward."
+
+4. **Skills become RL-on-policy**: COSPLAY (2604.20987) — first framework where the *skill bank itself* co-evolves with the decision agent under RL; +25.1% mean reward across 6 game environments with an 8B base. Earlier work (TRACE, EvoAgent) treated skill libraries as separate artifacts; COSPLAY makes them part of the policy gradient.
+
+5. **Inference-time alignment, unified**: When Policies Cannot Be Retrained (2604.22873) proves PoE composition ≡ KL-regularized adaptation under Gaussian assumptions. Combined with PolicyBank (April 20) and Selective Parameter Optimization (April 21), post-training adaptation is now a continuum from "no-update" (PoE) to "minimal-update" (selective gradient) — direct guidance for any RLHF model that ships in a multi-tenant deployment.
+
+6. **Safety/red-team RL matures**: NVIDIA's General Red Teaming (2604.23067) decouples attacker training from a specific evaluator, while RouteGuard (2604.22888) uses attention-hijacking signals to detect skill poisoning at inference. KARL (2604.22779) makes "knowing when not to answer" an RL objective tied to the moving knowledge boundary. The agent-RL safety stack (training-time → runtime → audit) is now end-to-end.
+
+7. **GRPO leaks to molecular design**: C-MORAL (2604.23061, UCLA/Amazon) extends group-based relative optimization to multi-objective drug-design — IND SOR 48.9%, OOD 39.5% SOTA. The "RL-for-LLM as a substrate" thesis from April 26–27 continues to hold.
+
+---
+
+*Last updated: April 28, 2026 · 11 new papers · running total 256+ papers tracked*

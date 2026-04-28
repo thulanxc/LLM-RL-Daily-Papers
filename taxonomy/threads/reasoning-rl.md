@@ -152,3 +152,16 @@ POP and DCF both address how to make non-math reasoning RL-trainable with statis
 - Abstract-CoT ↔ LEPO ↔ TRS: three implementations of "reasoning is not natural language," along three different axes (vocabulary / continuous representation / external skill memory). Abstract-CoT and LEPO pair particularly well — they answer "discrete vs. continuous?" with comparable empirical gains.
 - CIR/SR ↔ LLMs Gaming Verifiers (2604.15149) ↔ Agents Explore but Agents Ignore (2604.17609): three different probes converging on the same critique — *outcome rewards do not produce faithful or curious models*. The remedy line (auxiliary causal rewards + IPT + curiosity bonuses) is now a multi-paper convergence.
 - CUTS ↔ Poly-EPO ↔ SPS (2604.16995) ↔ MCPO (2604.16972): four-paper toolkit for keeping GRPO viable on strong base models — sampling-side (CUTS, SPS), objective-side (Poly-EPO, MCPO).
+
+## April 28, 2026 additions — The Re-evaluation
+
+- **SFT-then-RL Outperforms Mixed-Policy Methods** [2604.23747, ETH AI Center / ETH Zürich / EPFL / Allen AI] — A paradigm-shifting reproduction. Identifies two latent bugs that have shaped the 2025–2026 mixed-policy literature: (1) DeepSpeed CPU-offload optimizer silently dropping intermediate micro-batches under gradient accumulation (propagated into TRL, OpenRLHF, Llama-Factory); (2) OpenRLHF's per-mini-batch loss aggregation. Both depress the SFT baseline. After fixes: corrected SFT alone (52.2) > LUFFY (46.3), ReLIFT (48.8), Prefix-RFT (51.8); SFT-then-RL pushes to 57.0, **+3.8 over SRFT** on Qwen2.5-Math-7B and **+22.2 on Llama-3.1-8B**.
+- **Rethinking Math Reasoning Evaluation** [2604.22597] — LLM-as-judge framework intended to replace rigid symbolic-match evaluation in RLVR pipelines; surfaces a probable contributor to past "RLVR reward hacking" reports — symbolic verifiers may be the bottleneck, not the policies.
+
+### Connections
+- SFT-then-RL ↔ LUFFY / ReLIFT / Prefix-RFT / SRFT (multiple prior digests): forces a re-reading of every "mixed-policy beats two-stage" claim.
+- SFT-then-RL ↔ CIR/SR (2604.22074, April 27): both expose that the *appearance of progress* in RLVR has been distorted — by faulty baselines (this paper) and by faithfulness illusions (CIR/SR).
+- Math Reasoning Evaluation ↔ LLMs Gaming Verifiers (2604.15149): independent observations that current RLVR verifiers are less robust than assumed.
+
+### New Movement: Calibration Era
+April 27–28 papers (CIR/SR, CUTS, Abstract-CoT, SFT-then-RL, LLM-as-judge eval) collectively mark the start of a "calibration era" in reasoning RL: less new-method promotion, more verification of what we already think we know. The next six months of progress will likely be defined by which results survive this calibration.
